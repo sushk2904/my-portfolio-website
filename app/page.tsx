@@ -2,6 +2,7 @@
 
 import ScrollFoodHero from "./components/ScrollFoodHero";
 import StickyNavbar from "./components/StickyNavbar";
+import DashboardPreview from "./components/DashboardPreview";
 
 export default function Home() {
   return (
@@ -9,13 +10,7 @@ export default function Home() {
       <StickyNavbar />
       <ScrollFoodHero />
 
-      {/* Dashboard Preview / Footer Placeholder */}
-      <section className="h-screen bg-black flex items-center justify-center border-t border-zinc-800">
-        <div className="text-center">
-          <h3 className="text-zinc-500 text-sm tracking-widest uppercase mb-4">CraveLogic Dashboard</h3>
-          <p className="text-white text-2xl font-light">The intelligence continues.</p>
-        </div>
-      </section>
+      <DashboardPreview />
     </main>
   );
 }
