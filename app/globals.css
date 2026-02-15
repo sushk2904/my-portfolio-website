@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-crave-bg: #020617;
-  --color-crave-accent: #10b981;
-  --color-crave-text: #ffffff;
+  --color-luxury-black: #0a0a0a;
+  --color-luxury-gray: #a1a1aa;
+  --color-luxury-white: #ffffff;
+  --color-luxury-accent: #94a3b8;
+  /* Slate-400 equivalent for metallic feel */
   --font-sans: var(--font-inter);
 }
 
 :root {
-  --background: #020617;
+  --background: #0a0a0a;
   --foreground: #ffffff;
 }
 
@@ -16,11 +18,16 @@ body {
   background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-  antialiased: true;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom scrollbar hiding */
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
 }

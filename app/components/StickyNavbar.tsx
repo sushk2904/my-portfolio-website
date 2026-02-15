@@ -28,22 +28,22 @@ export default function StickyNavbar() {
         >
             {/* Left: Logo */}
             <div className="text-white font-medium tracking-tight text-sm flex items-center gap-2">
-                <div className="w-2 h-2 bg-crave-accent rounded-full" />
-                CRAVELOGIC
+                <div className="w-2 h-2 bg-luxury-accent rounded-full" />
+                SUSHANT KUMAR
             </div>
 
             {/* Center: Links (Hidden on mobile) */}
             <div className="hidden md:flex items-center gap-8 text-xs font-medium text-white/70">
-                <a href="#" className="hover:text-crave-accent transition-colors">Intelligence</a>
-                <a href="#" className="hover:text-crave-accent transition-colors">Platform</a>
-                <a href="#" className="hover:text-crave-accent transition-colors">API</a>
-                <a href="#" className="hover:text-crave-accent transition-colors">Safety</a>
+                <a href="#" className="hover:text-luxury-accent transition-colors">Work</a>
+                <a href="#" className="hover:text-luxury-accent transition-colors">Stack</a>
+                <a href="#" className="hover:text-luxury-accent transition-colors">About</a>
+                <a href="#" className="hover:text-luxury-accent transition-colors">Contact</a>
             </div>
 
             {/* Right: CTA */}
             <div>
-                <button className="bg-crave-accent text-crave-bg text-xs font-bold px-4 py-1.5 rounded-full hover:brightness-110 transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-                    Access Data
+                <button className="bg-white text-black text-xs font-bold px-4 py-1.5 rounded-full hover:bg-luxury-gray transition-all">
+                    Resume
                 </button>
             </div>
         </motion.nav>

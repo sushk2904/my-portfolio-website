@@ -1,16 +1,19 @@
-"use client";
-
-import ScrollFoodHero from "./components/ScrollFoodHero";
+import HeroSection from "./components/HeroSection";
+import TechStack from "./components/TechStack";
+import Projects from "./components/Projects";
 import StickyNavbar from "./components/StickyNavbar";
-import DashboardPreview from "./components/DashboardPreview";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-crave-bg">
+    <main className="relative min-h-screen bg-luxury-black">
       <StickyNavbar />
-      <ScrollFoodHero />
+      <HeroSection />
+      <TechStack />
+      <Projects />
 
-      <DashboardPreview />
+      <footer className="py-12 border-t border-white/5 text-center text-luxury-gray text-xs uppercase tracking-widest">
+        © 2026 Sushant Kumar. Engineering Excellence.
+      </footer>
     </main>
   );
 }

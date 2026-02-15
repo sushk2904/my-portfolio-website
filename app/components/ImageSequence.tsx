@@ -1,38 +1,45 @@
 "use client";
 
-import { useScroll, useMotionValueEvent } from "framer-motion";
+import { MotionValue, useScroll, useMotionValueEvent } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 interface ImageSequenceProps {
     folderPath?: string;
     frameCount?: number;
     filePrefix?: string;
-    className?: string; // Allow custom styling positioning
+    digitPadding?: number;
+    className?: string;
+    scrollProgress?: MotionValue<number>;
 }
 
 export default function ImageSequence({
     folderPath = "/food_bowl_animation",
     frameCount = 240,
     filePrefix = "ezgif-frame-",
-    className = ""
+    digitPadding = 3,
+    className = "",
+    scrollProgress
 }: ImageSequenceProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [images, setImages] = useState<HTMLImageElement[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
-    const { scrollYProgress } = useScroll();
+
+    // Use passed motion value or fallback to global page scroll
+    const defaultScroll = useScroll().scrollYProgress;
+    const activeProgress = scrollProgress || defaultScroll;
 
     // Preload images
     useEffect(() => {
         const loadedImages: HTMLImageElement[] = [];
         let loadedCount = 0;
+        let isMounted = true;
 
         for (let i = 1; i <= frameCount; i++) {
             const img = new Image();
-            // Adjust padding for filenames: ezgif-frame-001.jpg
-            // Assuming 3 digits padding based on previous file inspection
-            const frameIndex = i.toString().padStart(3, "0");
+            const frameIndex = i.toString().padStart(digitPadding, "0");
             img.src = `${folderPath}/${filePrefix}${frameIndex}.jpg`;
             img.onload = () => {
+                if (!isMounted) return;
                 loadedCount++;
                 if (loadedCount === frameCount) {
                     setIsLoaded(true);
@@ -41,67 +48,72 @@ export default function ImageSequence({
             loadedImages.push(img);
         }
         setImages(loadedImages);
-    }, [folderPath, frameCount, filePrefix]);
+        return () => { isMounted = false; };
+    }, [folderPath, frameCount, filePrefix, digitPadding]);
 
-    // Draw frame based on scroll
-    const renderFrame = (index: number) => {
+    // Resize Handler - Only set canvas dimensions on resize
+    useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas || !images[index]) return;
+        if (!canvas) return;
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-
-        const img = images[index];
-
-        // Cover logic
-        // We want the image to behave like object-fit: cover
-        // The canvas itself is 100vw/100vh
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
-        const x = (canvas.width / 2) - (img.width / 2) * scale;
-        const y = (canvas.height / 2) - (img.height / 2) * scale;
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // Draw seamless background if needed, but image should rely on transparency or matching bg
-        // Assuming image is black bg.
-        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-    };
-
-    // Listen to scroll changes
-    useMotionValueEvent(scrollYProgress, "change", (latest) => {
-        if (!isLoaded) return;
-        const frameIndex = Math.min(
-            frameCount - 1,
-            Math.floor(latest * (frameCount - 1))
-        );
-        requestAnimationFrame(() => renderFrame(frameIndex));
-    });
-
-    // Initial Render
-    useEffect(() => {
-        if (isLoaded) {
-            renderFrame(0);
-        }
-    }, [isLoaded]);
-
-    // Handle Resize
-    useEffect(() => {
         const handleResize = () => {
-            if (isLoaded) {
-                // Recalculate current frame
-                const currentProgress = scrollYProgress.get();
-                const frameIndex = Math.min(
-                    frameCount - 1,
-                    Math.floor(currentProgress * (frameCount - 1))
-                );
-                renderFrame(frameIndex);
-            }
+            // Set internal resolution to match window size for sharpness
+            // Could strictly limit this for performance if needed (e.g. max 1920)
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         };
+
+        handleResize(); // Initial size
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [isLoaded, scrollYProgress]);
+    }, []);
+
+    // Optimized Render Loop
+    useEffect(() => {
+        if (!isLoaded || images.length === 0) return;
+
+        const canvas = canvasRef.current;
+        const ctx = canvas?.getContext("2d", { alpha: false }); // alpha: false optimize for non-transparent
+        if (!canvas || !ctx) return;
+
+        let animationFrameId: number;
+        let lastFrameIndex = -1;
+
+        const render = () => {
+            const currentProgress = activeProgress.get();
+            // Clamp and map progress to frame index
+            const frameIndex = Math.min(
+                frameCount - 1,
+                Math.max(0, Math.floor(currentProgress * (frameCount - 1)))
+            );
+
+            // Only draw if frame changed
+            if (frameIndex !== lastFrameIndex && images[frameIndex]) {
+                const img = images[frameIndex];
+
+                // Calculate cover (assuming canvas is already sized correctly by resize listener)
+                // We calculate draw dimensions here to handle aspect ratio changes
+                const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+                const x = (canvas.width / 2) - (img.width / 2) * scale;
+                const y = (canvas.height / 2) - (img.height / 2) * scale;
+                const width = img.width * scale;
+                const height = img.height * scale;
+
+                // Optimization: no need to clearRect if we cover the whole canvas (which cover does)
+                // ctx.clearRect(0, 0, canvas.width, canvas.height); 
+                ctx.drawImage(img, x, y, width, height);
+
+                lastFrameIndex = frameIndex;
+            }
+
+            animationFrameId = requestAnimationFrame(render);
+        };
+
+        // Start loop
+        render();
+
+        return () => cancelAnimationFrame(animationFrameId);
+    }, [isLoaded, images, activeProgress, frameCount]);
 
     return (
         <div className={`sticky top-0 h-screen w-full overflow-hidden bg-luxury-black ${className}`}>
@@ -111,7 +123,7 @@ export default function ImageSequence({
             />
             {!isLoaded && (
                 <div className="absolute inset-0 flex items-center justify-center bg-luxury-black text-luxury-gold">
-                    <p className="animate-pulse text-sm tracking-widest uppercase">Loading Experience...</p>
+                    <p className="animate-pulse text-sm tracking-widest uppercase text-white/50">Loading Experience...</p>
                 </div>
             )}
         </div>
