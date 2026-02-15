@@ -18,7 +18,7 @@ export default function HeroSection() {
     const filter = useMotionTemplate`blur(${textBlur}px)`;
 
     return (
-        <section ref={containerRef} className="relative h-[2000vh] bg-luxury-black">
+        <section ref={containerRef} className="relative h-[1100vh] bg-luxury-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
                     folderPath="/portfolio_final"
