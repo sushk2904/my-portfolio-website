@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 interface ImageSequenceProps {
     folderPath?: string;
     frameCount?: number;
+    startFrame?: number;
     filePrefix?: string;
     digitPadding?: number;
     className?: string;
