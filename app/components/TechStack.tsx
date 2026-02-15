@@ -123,9 +123,12 @@ export default function TechStack() {
     return (
         <section
             ref={sectionRef}
-            className="py-44 bg-[#0d0d0d] px-6 md:px-12 border-t border-white/5"
+            className="relative py-44 bg-[#191919] px-6 md:px-12"
         >
-            <div className="max-w-7xl mx-auto">
+            {/* Smooth gradient transition from Hero */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-luxury-black to-[#191919]" />
+
+            <div className="relative max-w-7xl mx-auto">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     animate={isVisible ? { opacity: 1, y: 0 } : {}}
