@@ -26,3 +26,12 @@ body {
   width: 0px;
   background: transparent;
 }
+
+/* 120Hz smooth scrolling optimizations */
+canvas,
+img,
+video {
+  transform: translateZ(0);
+  /* Force GPU acceleration */
+  -webkit-transform: translateZ(0);
+}

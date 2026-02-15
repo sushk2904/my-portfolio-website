@@ -1,6 +1,6 @@
 "use client";
 
-import { MotionValue, useScroll, useMotionValueEvent } from "framer-motion";
+import { MotionValue, useScroll } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 interface ImageSequenceProps {
@@ -57,8 +57,6 @@ export default function ImageSequence({
         if (!canvas) return;
 
         const handleResize = () => {
-            // Set internal resolution to match window size for sharpness
-            // Could strictly limit this for performance if needed (e.g. max 1920)
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         };
@@ -68,42 +66,48 @@ export default function ImageSequence({
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // Optimized Render Loop
+    // Buttery smooth render loop with frame interpolation
     useEffect(() => {
         if (!isLoaded || images.length === 0) return;
 
         const canvas = canvasRef.current;
-        const ctx = canvas?.getContext("2d", { alpha: false }); // alpha: false optimize for non-transparent
+        const ctx = canvas?.getContext("2d", {
+            alpha: false,
+            desynchronized: true // Hint browser for smoother animation
+        });
         if (!canvas || !ctx) return;
 
         let animationFrameId: number;
-        let lastFrameIndex = -1;
+        let currentFrame = 0; // Smooth interpolated frame position
 
         const render = () => {
             const currentProgress = activeProgress.get();
-            // Clamp and map progress to frame index
-            const frameIndex = Math.min(
+            // Calculate target frame
+            const targetFrame = Math.min(
                 frameCount - 1,
-                Math.max(0, Math.floor(currentProgress * (frameCount - 1)))
+                Math.max(0, currentProgress * (frameCount - 1))
             );
 
-            // Only draw if frame changed
-            if (frameIndex !== lastFrameIndex && images[frameIndex]) {
+            // Lerp (linear interpolation) for buttery smoothness
+            // Higher lerp = faster catch-up, lower = smoother but more lag
+            const lerpFactor = 0.12;
+            currentFrame += (targetFrame - currentFrame) * lerpFactor;
+
+            // Get the actual frame index to display
+            const frameIndex = Math.round(currentFrame);
+
+            // Always render for smooth interpolation
+            if (images[frameIndex]) {
                 const img = images[frameIndex];
 
-                // Calculate cover (assuming canvas is already sized correctly by resize listener)
-                // We calculate draw dimensions here to handle aspect ratio changes
+                // Calculate cover fit
                 const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
                 const x = (canvas.width / 2) - (img.width / 2) * scale;
                 const y = (canvas.height / 2) - (img.height / 2) * scale;
                 const width = img.width * scale;
                 const height = img.height * scale;
 
-                // Optimization: no need to clearRect if we cover the whole canvas (which cover does)
-                // ctx.clearRect(0, 0, canvas.width, canvas.height); 
                 ctx.drawImage(img, x, y, width, height);
-
-                lastFrameIndex = frameIndex;
             }
 
             animationFrameId = requestAnimationFrame(render);
@@ -122,7 +126,9 @@ export default function ImageSequence({
                 className="block w-full h-full object-cover"
                 style={{
                     imageRendering: '-webkit-optimize-contrast',
-                    WebkitFontSmoothing: 'antialiased'
+                    WebkitFontSmoothing: 'antialiased',
+                    transform: 'translateZ(0)', // GPU acceleration
+                    willChange: 'transform'
                 }}
             />
             {!isLoaded && (
