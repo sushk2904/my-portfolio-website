@@ -123,7 +123,7 @@ export default function TechStack() {
     return (
         <section
             ref={sectionRef}
-            className="py-44 bg-luxury-black px-6 md:px-12 border-t border-white/5"
+            className="py-44 bg-[#0d0d0d] px-6 md:px-12 border-t border-white/5"
         >
             <div className="max-w-7xl mx-auto">
                 <motion.h2
