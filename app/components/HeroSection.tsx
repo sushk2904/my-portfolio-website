@@ -11,11 +11,11 @@ export default function HeroSection() {
         offset: ["start start", "end start"]
     });
 
-    const opacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
-    const y = useTransform(scrollYProgress, [0, 0.15], [0, 100]);
+    const opacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
+    const y = useTransform(scrollYProgress, [0, 0.08], [0, 100]);
 
     return (
-        <section ref={containerRef} className="relative h-[500vh] bg-luxury-black">
+        <section ref={containerRef} className="relative h-[1200vh] bg-luxury-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
                     folderPath="/portfolio_final"

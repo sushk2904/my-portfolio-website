@@ -22,12 +22,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar hiding */
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
-}
-
-html {
-  scroll-behavior: smooth;
 }

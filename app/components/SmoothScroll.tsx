@@ -1,11 +1,7 @@
 "use client";
 
-import { ReactLenis } from "@studio-freight/react-lenis";
-
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-  return (
-    <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
-      {children}
-    </ReactLenis>
-  );
+  // Removed ReactLenis for precise scroll control on image sequences
+  // The momentum-based smoothing was causing large jumps in frame position
+  return <>{children}</>;
 }
