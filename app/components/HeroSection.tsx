@@ -20,7 +20,7 @@ export default function HeroSection() {
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
                     folderPath="/portfolio_final"
-                    frameCount={225}
+                    frameCount={215}
                     filePrefix="ezgif-frame-"
                     digitPadding={3}
                     className="opacity-60 mix-blend-screen"
