@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
 import { useRef } from "react";
 import ImageSequence from "./ImageSequence";
 
@@ -12,9 +12,10 @@ export default function HeroSection() {
     });
 
     // Apple-style reveal: Scale + blur on entrance, then fade out
-    const textOpacity = useTransform(scrollYProgress, [0, 0.03, 0.12, 0.25], [0, 1, 1, 0]);
-    const textScale = useTransform(scrollYProgress, [0, 0.03, 0.12], [0.95, 1, 1.02]);
-    const textBlur = useTransform(scrollYProgress, [0, 0.03], [10, 0]);
+    const textOpacity = useTransform(scrollYProgress, [0, 0.04, 0.15, 0.28], [0, 1, 1, 0]);
+    const textScale = useTransform(scrollYProgress, [0, 0.04, 0.15], [0.96, 1, 1.03]);
+    const textBlur = useTransform(scrollYProgress, [0, 0.04], [8, 0]);
+    const filter = useMotionTemplate`blur(${textBlur}px)`;
 
     return (
         <section ref={containerRef} className="relative h-[1200vh] bg-luxury-black">
@@ -34,7 +35,7 @@ export default function HeroSection() {
                         style={{
                             opacity: textOpacity,
                             scale: textScale,
-                            filter: `blur(${textBlur.get()}px)`
+                            filter
                         }}
                         className="text-center px-6 max-w-7xl"
                     >

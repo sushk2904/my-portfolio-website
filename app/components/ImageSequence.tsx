@@ -120,6 +120,10 @@ export default function ImageSequence({
             <canvas
                 ref={canvasRef}
                 className="block w-full h-full object-cover"
+                style={{
+                    imageRendering: '-webkit-optimize-contrast',
+                    WebkitFontSmoothing: 'antialiased'
+                }}
             />
             {!isLoaded && (
                 <div className="absolute inset-0 flex items-center justify-center bg-luxury-black text-luxury-gold">
