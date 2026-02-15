@@ -16,6 +16,7 @@ interface ImageSequenceProps {
 export default function ImageSequence({
     folderPath = "/food_bowl_animation",
     frameCount = 240,
+    startFrame = 1,
     filePrefix = "ezgif-frame-",
     digitPadding = 3,
     className = "",
@@ -35,7 +36,7 @@ export default function ImageSequence({
         let loadedCount = 0;
         let isMounted = true;
 
-        for (let i = 1; i <= frameCount; i++) {
+        for (let i = startFrame; i < startFrame + frameCount; i++) {
             const img = new Image();
             const frameIndex = i.toString().padStart(digitPadding, "0");
             img.src = `${folderPath}/${filePrefix}${frameIndex}.jpg`;
@@ -50,7 +51,7 @@ export default function ImageSequence({
         }
         setImages(loadedImages);
         return () => { isMounted = false; };
-    }, [folderPath, frameCount, filePrefix, digitPadding]);
+    }, [folderPath, frameCount, startFrame, filePrefix, digitPadding]);
 
     // Resize Handler - Only set canvas dimensions on resize
     useEffect(() => {

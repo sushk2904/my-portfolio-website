@@ -23,6 +23,7 @@ export default function HeroSection() {
                 <ImageSequence
                     folderPath="/portfolio_final"
                     frameCount={203}
+                    startFrame={13}
                     filePrefix="ezgif-frame-"
                     digitPadding={3}
                     className="opacity-60 mix-blend-screen"
