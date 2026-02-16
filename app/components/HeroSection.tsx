@@ -22,7 +22,7 @@ export default function HeroSection() {
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
                     folderPath="/portfolio_final"
-                    frameCount={203}
+                    frameCount={193}
                     startFrame={13}
                     filePrefix="ezgif-frame-"
                     digitPadding={3}
