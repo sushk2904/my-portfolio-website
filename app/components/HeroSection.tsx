@@ -27,7 +27,7 @@ export default function HeroSection() {
                     filePrefix="ezgif-frame-"
                     digitPadding={3}
                     className="opacity-60 mix-blend-screen"
-                    triggerElement="body"
+                    scrollProgress={scrollYProgress}
                 />
 
                 {/* Apple-style text overlay */}

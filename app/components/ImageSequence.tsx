@@ -1,13 +1,7 @@
 "use client";
 
+import { MotionValue, useScroll } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-// Register ScrollTrigger plugin
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
 
 interface ImageSequenceProps {
     folderPath?: string;
@@ -16,7 +10,7 @@ interface ImageSequenceProps {
     filePrefix?: string;
     digitPadding?: number;
     className?: string;
-    triggerElement?: string; // CSS selector for scroll trigger
+    scrollProgress?: MotionValue<number>;
 }
 
 export default function ImageSequence({
@@ -26,13 +20,15 @@ export default function ImageSequence({
     filePrefix = "ezgif-frame-",
     digitPadding = 3,
     className = "",
-    triggerElement = "body"
+    scrollProgress
 }: ImageSequenceProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
     const [images, setImages] = useState<HTMLImageElement[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
-    const frameIndexRef = useRef({ value: 0 }); // GSAP will animate this object
+
+    // Use passed motion value or fallback to global page scroll
+    const defaultScroll = useScroll().scrollYProgress;
+    const activeProgress = scrollProgress || defaultScroll;
 
     // Preload images
     useEffect(() => {
@@ -57,7 +53,7 @@ export default function ImageSequence({
         return () => { isMounted = false; };
     }, [folderPath, frameCount, startFrame, filePrefix, digitPadding]);
 
-    // Canvas resize handler
+    // Resize Handler
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -72,41 +68,38 @@ export default function ImageSequence({
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // GSAP ScrollTrigger animation
+    // Buttery smooth render loop with frame interpolation
     useEffect(() => {
-        if (!isLoaded || images.length === 0 || !containerRef.current) return;
+        if (!isLoaded || images.length === 0) return;
 
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext("2d", {
             alpha: false,
-            desynchronized: true,
-            willReadFrequently: false
+            desynchronized: true
         });
         if (!canvas || !ctx) return;
 
-        // Configure high-quality rendering
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = "high";
+        let animationFrameId: number;
+        let currentFrame = 0;
 
-        // Render function
         const render = () => {
-            const frameIndex = Math.min(
+            const currentProgress = activeProgress.get();
+            const targetFrame = Math.min(
                 frameCount - 1,
-                Math.max(0, Math.round(frameIndexRef.current.value))
+                Math.max(0, currentProgress * (frameCount - 1))
             );
+
+            // Lerp for buttery smoothness
+            const lerpFactor = 0.12;
+            currentFrame += (targetFrame - currentFrame) * lerpFactor;
+
+            const frameIndex = Math.round(currentFrame);
 
             if (images[frameIndex]) {
                 const img = images[frameIndex];
 
-                // Clear with black background
-                ctx.fillStyle = "#000000";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
                 // Calculate cover fit
-                const scale = Math.max(
-                    canvas.width / img.width,
-                    canvas.height / img.height
-                );
+                const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
                 const x = (canvas.width / 2) - (img.width / 2) * scale;
                 const y = (canvas.height / 2) - (img.height / 2) * scale;
                 const width = img.width * scale;
@@ -114,47 +107,25 @@ export default function ImageSequence({
 
                 ctx.drawImage(img, x, y, width, height);
             }
+
+            animationFrameId = requestAnimationFrame(render);
         };
 
-        // GSAP ScrollTrigger setup
-        const scrollTrigger = ScrollTrigger.create({
-            trigger: triggerElement,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 0.1, // Reduced for less lag (was 0.5)
-            onUpdate: (self) => {
-                // Animate frameIndex smoothly
-                gsap.to(frameIndexRef.current, {
-                    value: self.progress * (frameCount - 1),
-                    duration: 0.15, // Reduced from 0.3
-                    ease: "power1.out",
-                    onUpdate: render
-                });
-            }
-        });
-
-        // Initial render
         render();
 
-        return () => {
-            scrollTrigger.kill();
-        };
-    }, [isLoaded, images, frameCount, triggerElement]);
+        return () => cancelAnimationFrame(animationFrameId);
+    }, [isLoaded, images, activeProgress, frameCount]);
 
     return (
-        <div
-            ref={containerRef}
-            className={`sticky top-0 h-screen w-full overflow-hidden bg-luxury-black ${className}`}
-        >
+        <div className={`sticky top-0 h-screen w-full overflow-hidden bg-luxury-black ${className}`}>
             <canvas
                 ref={canvasRef}
                 className="block w-full h-full object-cover"
                 style={{
-                    imageRendering: 'crisp-edges',
+                    imageRendering: '-webkit-optimize-contrast',
                     WebkitFontSmoothing: 'antialiased',
-                    transform: 'translateZ(0) scale(1.001)', // GPU layer + slight scale for sharpness
-                    willChange: 'transform',
-                    backfaceVisibility: 'hidden'
+                    transform: 'translateZ(0)',
+                    willChange: 'transform'
                 }}
             />
             {!isLoaded && (
