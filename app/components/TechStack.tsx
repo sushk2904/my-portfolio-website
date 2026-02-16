@@ -122,6 +122,7 @@ export default function TechStack() {
 
     return (
         <section
+            id="stack"
             ref={sectionRef}
             className="relative py-44 bg-[#191919] px-6 md:px-12"
         >
