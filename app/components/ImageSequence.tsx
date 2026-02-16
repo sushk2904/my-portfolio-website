@@ -121,12 +121,12 @@ export default function ImageSequence({
             trigger: triggerElement,
             start: "top top",
             end: "bottom bottom",
-            scrub: 0.5, // Smoothness factor (0 = instant, 1 = very smooth/laggy)
+            scrub: 0.1, // Reduced for less lag (was 0.5)
             onUpdate: (self) => {
                 // Animate frameIndex smoothly
                 gsap.to(frameIndexRef.current, {
                     value: self.progress * (frameCount - 1),
-                    duration: 0.3,
+                    duration: 0.15, // Reduced from 0.3
                     ease: "power1.out",
                     onUpdate: render
                 });
