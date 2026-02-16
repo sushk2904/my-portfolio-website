@@ -63,19 +63,10 @@ export default function StickyNavbar() {
                 backdropFilter: "blur(12px)",
                 opacity
             }}
-            className="fixed top-0 left-0 right-0 z-50 flex h-14 items-center justify-between px-6 md:px-12 border-b border-white/5 transition-opacity duration-500"
+            className="fixed top-0 left-0 right-0 z-50 flex h-14 items-center justify-center px-6 md:px-12 border-b border-white/5 transition-opacity duration-500"
         >
-            {/* Left: Logo */}
-            <button
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="text-white font-medium tracking-tight text-sm flex items-center gap-2 hover:text-luxury-accent transition-colors cursor-pointer"
-            >
-                <div className="w-2 h-2 bg-luxury-accent rounded-full" />
-                SUSHANT KUMAR
-            </button>
-
-            {/* Center: Links (Hidden on mobile) */}
-            <div className="hidden md:flex items-center gap-8 text-xs font-medium text-white/70">
+            {/* Center: Navigation Links */}
+            <div className="flex items-center gap-8 text-xs font-medium text-white/70 mr-12">
                 {navItems.map(({ label, id }) => (
                     <button
                         key={id}
@@ -88,8 +79,8 @@ export default function StickyNavbar() {
                 ))}
             </div>
 
-            {/* Right: CTA */}
-            <div>
+            {/* Right: Resume Button */}
+            <div className="absolute right-6 md:right-12">
                 <a
                     href="/resume.pdf"
                     target="_blank"
