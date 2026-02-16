@@ -1,7 +1,13 @@
 "use client";
 
-import { MotionValue, useScroll } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register ScrollTrigger plugin
+if (typeof window !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ImageSequenceProps {
     folderPath?: string;
@@ -10,7 +16,7 @@ interface ImageSequenceProps {
     filePrefix?: string;
     digitPadding?: number;
     className?: string;
-    scrollProgress?: MotionValue<number>;
+    triggerElement?: string; // CSS selector for scroll trigger
 }
 
 export default function ImageSequence({
@@ -20,15 +26,13 @@ export default function ImageSequence({
     filePrefix = "ezgif-frame-",
     digitPadding = 3,
     className = "",
-    scrollProgress
+    triggerElement = "body"
 }: ImageSequenceProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const [images, setImages] = useState<HTMLImageElement[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
-
-    // Use passed motion value or fallback to global page scroll
-    const defaultScroll = useScroll().scrollYProgress;
-    const activeProgress = scrollProgress || defaultScroll;
+    const frameIndexRef = useRef({ value: 0 }); // GSAP will animate this object
 
     // Preload images
     useEffect(() => {
@@ -53,7 +57,7 @@ export default function ImageSequence({
         return () => { isMounted = false; };
     }, [folderPath, frameCount, startFrame, filePrefix, digitPadding]);
 
-    // Resize Handler - Only set canvas dimensions on resize
+    // Canvas resize handler
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -63,47 +67,46 @@ export default function ImageSequence({
             canvas.height = window.innerHeight;
         };
 
-        handleResize(); // Initial size
+        handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // Buttery smooth render loop with frame interpolation
+    // GSAP ScrollTrigger animation
     useEffect(() => {
-        if (!isLoaded || images.length === 0) return;
+        if (!isLoaded || images.length === 0 || !containerRef.current) return;
 
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext("2d", {
             alpha: false,
-            desynchronized: true // Hint browser for smoother animation
+            desynchronized: true,
+            willReadFrequently: false
         });
         if (!canvas || !ctx) return;
 
-        let animationFrameId: number;
-        let currentFrame = 0; // Smooth interpolated frame position
+        // Configure high-quality rendering
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
 
+        // Render function
         const render = () => {
-            const currentProgress = activeProgress.get();
-            // Calculate target frame
-            const targetFrame = Math.min(
+            const frameIndex = Math.min(
                 frameCount - 1,
-                Math.max(0, currentProgress * (frameCount - 1))
+                Math.max(0, Math.round(frameIndexRef.current.value))
             );
 
-            // Lerp (linear interpolation) for buttery smoothness
-            // Higher lerp = faster catch-up, lower = smoother but more lag
-            const lerpFactor = 0.12;
-            currentFrame += (targetFrame - currentFrame) * lerpFactor;
-
-            // Get the actual frame index to display
-            const frameIndex = Math.round(currentFrame);
-
-            // Always render for smooth interpolation
             if (images[frameIndex]) {
                 const img = images[frameIndex];
 
+                // Clear with black background
+                ctx.fillStyle = "#000000";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
                 // Calculate cover fit
-                const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+                const scale = Math.max(
+                    canvas.width / img.width,
+                    canvas.height / img.height
+                );
                 const x = (canvas.width / 2) - (img.width / 2) * scale;
                 const y = (canvas.height / 2) - (img.height / 2) * scale;
                 const width = img.width * scale;
@@ -111,26 +114,47 @@ export default function ImageSequence({
 
                 ctx.drawImage(img, x, y, width, height);
             }
-
-            animationFrameId = requestAnimationFrame(render);
         };
 
-        // Start loop
+        // GSAP ScrollTrigger setup
+        const scrollTrigger = ScrollTrigger.create({
+            trigger: triggerElement,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.5, // Smoothness factor (0 = instant, 1 = very smooth/laggy)
+            onUpdate: (self) => {
+                // Animate frameIndex smoothly
+                gsap.to(frameIndexRef.current, {
+                    value: self.progress * (frameCount - 1),
+                    duration: 0.3,
+                    ease: "power1.out",
+                    onUpdate: render
+                });
+            }
+        });
+
+        // Initial render
         render();
 
-        return () => cancelAnimationFrame(animationFrameId);
-    }, [isLoaded, images, activeProgress, frameCount]);
+        return () => {
+            scrollTrigger.kill();
+        };
+    }, [isLoaded, images, frameCount, triggerElement]);
 
     return (
-        <div className={`sticky top-0 h-screen w-full overflow-hidden bg-luxury-black ${className}`}>
+        <div
+            ref={containerRef}
+            className={`sticky top-0 h-screen w-full overflow-hidden bg-luxury-black ${className}`}
+        >
             <canvas
                 ref={canvasRef}
                 className="block w-full h-full object-cover"
                 style={{
-                    imageRendering: '-webkit-optimize-contrast',
+                    imageRendering: 'crisp-edges',
                     WebkitFontSmoothing: 'antialiased',
-                    transform: 'translateZ(0)', // GPU acceleration
-                    willChange: 'transform'
+                    transform: 'translateZ(0) scale(1.001)', // GPU layer + slight scale for sharpness
+                    willChange: 'transform',
+                    backfaceVisibility: 'hidden'
                 }}
             />
             {!isLoaded && (

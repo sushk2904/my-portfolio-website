@@ -18,7 +18,7 @@ export default function HeroSection() {
     const filter = useMotionTemplate`blur(${textBlur}px)`;
 
     return (
-        <section ref={containerRef} className="relative h-[1100vh] bg-luxury-black">
+        <section ref={containerRef} className="relative h-[2500vh] bg-luxury-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
                     folderPath="/portfolio_final"
@@ -27,7 +27,7 @@ export default function HeroSection() {
                     filePrefix="ezgif-frame-"
                     digitPadding={3}
                     className="opacity-60 mix-blend-screen"
-                    scrollProgress={scrollYProgress}
+                    triggerElement="body"
                 />
 
                 {/* Apple-style text overlay */}
