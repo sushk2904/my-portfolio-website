@@ -90,7 +90,8 @@ export default function ImageSequence({
             );
 
             // Lerp for buttery smoothness
-            const lerpFactor = 0.12;
+            // Higher = faster catch-up, lower = smoother but more lag
+            const lerpFactor = 0.2; // Increased from 0.12 for snappier response
             currentFrame += (targetFrame - currentFrame) * lerpFactor;
 
             const frameIndex = Math.round(currentFrame);

@@ -11,10 +11,10 @@ export default function HeroSection() {
         offset: ["start start", "end start"]
     });
 
-    // Apple-style reveal: Scale + blur on entrance, then fade out
-    const textOpacity = useTransform(scrollYProgress, [0, 0.04, 0.15, 0.28], [0, 1, 1, 0]);
-    const textScale = useTransform(scrollYProgress, [0, 0.04, 0.15], [0.96, 1, 1.03]);
-    const textBlur = useTransform(scrollYProgress, [0, 0.04], [8, 0]);
+    // Optimized Apple-style reveal: faster, lighter animations
+    const textOpacity = useTransform(scrollYProgress, [0, 0.03, 0.15, 0.25], [0, 1, 1, 0]);
+    const textScale = useTransform(scrollYProgress, [0, 0.03, 0.12], [0.98, 1, 1.02]);
+    const textBlur = useTransform(scrollYProgress, [0, 0.03], [4, 0]); // Reduced from 8px
     const filter = useMotionTemplate`blur(${textBlur}px)`;
 
     return (
