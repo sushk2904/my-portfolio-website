@@ -22,7 +22,7 @@ export default function HeroSection() {
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
                     folderPath="/new_portfolio_animation"
-                    frameCount={66}
+                    frameCount={60}
                     startFrame={0}
                     filePrefix="Cinematic_applestyle_product_1080p_202602151_"
                     digitPadding={3}

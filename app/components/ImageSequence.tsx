@@ -95,7 +95,7 @@ export default function ImageSequence({
             );
 
             // Lower lerp = smoother, more gradual transitions
-            const lerpFactor = 0.27; // Reduced from 0.2
+            const lerpFactor = 0.37; // Reduced from 0.2
             currentFrame += (targetFrame - currentFrame) * lerpFactor;
 
             const frameIndex = Math.round(currentFrame);
