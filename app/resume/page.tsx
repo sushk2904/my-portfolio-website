@@ -31,7 +31,7 @@ export default function ResumePage() {
                 <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
                         <h1 className="text-6xl md:text-7xl font-bold mb-6 lowercase">
-                            sushant kumar
+                            Sushant Kumar
                         </h1>
                         <p className="text-xl text-gray-600 mb-8">
                             AI Systems Engineer building production-grade intelligent systems.
