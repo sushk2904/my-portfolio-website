@@ -18,15 +18,15 @@ export default function HeroSection() {
     const filter = useMotionTemplate`blur(${textBlur}px)`;
 
     return (
-        <section ref={containerRef} className="relative h-[2500vh] bg-luxury-black">
+        <section ref={containerRef} className="relative h-[3000vh] bg-luxury-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
                     folderPath="/new_portfolio_animation"
-                    frameCount={74}
+                    frameCount={66}
                     startFrame={0}
                     filePrefix="Cinematic_applestyle_product_1080p_202602151_"
                     digitPadding={3}
-                    className="opacity-60 mix-blend-screen"
+                    className="opacity-75"
                     scrollProgress={scrollYProgress}
                 />
 

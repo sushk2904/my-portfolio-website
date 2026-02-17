@@ -75,9 +75,14 @@ export default function ImageSequence({
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext("2d", {
             alpha: false,
-            desynchronized: true
+            desynchronized: true,
+            willReadFrequently: false
         });
         if (!canvas || !ctx) return;
+
+        // High-quality rendering settings
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
 
         let animationFrameId: number;
         let currentFrame = 0;
@@ -89,9 +94,8 @@ export default function ImageSequence({
                 Math.max(0, currentProgress * (frameCount - 1))
             );
 
-            // Lerp for buttery smoothness
-            // Higher = faster catch-up, lower = smoother but more lag
-            const lerpFactor = 0.35; // Increased from 0.12 for snappier response
+            // Lower lerp = smoother, more gradual transitions
+            const lerpFactor = 0.27; // Reduced from 0.2
             currentFrame += (targetFrame - currentFrame) * lerpFactor;
 
             const frameIndex = Math.round(currentFrame);
@@ -106,6 +110,8 @@ export default function ImageSequence({
                 const width = img.width * scale;
                 const height = img.height * scale;
 
+                // Clear canvas first for clean rendering
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, x, y, width, height);
             }
 
