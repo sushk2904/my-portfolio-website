@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function StickyNavbar() {
     const { scrollY } = useScroll();
@@ -79,15 +80,13 @@ export default function StickyNavbar() {
                 ))}
             </div>
 
-            {/* Right: Resume Button */}
             <div className="absolute right-6 md:right-12">
-                <a
-                    href="/resume.pdf"
-                    target="_blank"
+                <Link
+                    href="/resume"
                     className="bg-white text-black text-xs font-bold px-4 py-1.5 rounded-full hover:bg-luxury-gray transition-all inline-block"
                 >
                     Resume
-                </a>
+                </Link>
             </div>
         </motion.nav>
     );
