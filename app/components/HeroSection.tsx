@@ -21,10 +21,10 @@ export default function HeroSection() {
         <section ref={containerRef} className="relative h-[2500vh] bg-luxury-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
-                    folderPath="/portfolio_final"
-                    frameCount={193}
-                    startFrame={13}
-                    filePrefix="ezgif-frame-"
+                    folderPath="/new_portfolio_animation"
+                    frameCount={74}
+                    startFrame={0}
+                    filePrefix="Cinematic_applestyle_product_1080p_202602151_"
                     digitPadding={3}
                     className="opacity-60 mix-blend-screen"
                     scrollProgress={scrollYProgress}
