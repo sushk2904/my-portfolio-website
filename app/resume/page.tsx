@@ -2,43 +2,60 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Accordion component matching original Webflow behavior
+// ─── Design tokens matching main site ───────────────────────────────────────
+// bg:      #0a0a0a  (luxury-black)
+// surface: #111111  (slightly lighter)
+// card:    #1a1a1a  (card bg)
+// border:  rgba(255,255,255,0.08)
+// accent:  #94a3b8  (slate-400 metallic)
+// text:    #ffffff / #a1a1aa (muted)
+// font:    ClashGrotesk (headings) + Inter (body)
+
 function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
     const [open, setOpen] = useState(false);
     return (
-        <div style={{ border: "2px solid #000", marginTop: "-2px" }}>
-            <div
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: "-1px" }}>
+            <button
                 onClick={() => setOpen(!open)}
                 style={{
-                    borderBottom: "2px solid #000",
-                    backgroundColor: "#03cd69",
-                    cursor: "pointer",
+                    width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    padding: "30px 10px 30px 20px",
+                    padding: "28px 0",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: "#fff",
+                    textAlign: "left",
                 }}
             >
-                <h2 style={{ margin: 0, fontSize: "26px", fontWeight: 500, lineHeight: "1.1em" }}>{title}</h2>
-                <div style={{ display: "flex", flexDirection: "column", gap: "4px", width: "20px" }}>
-                    <div style={{ height: "2px", backgroundColor: "#000", transition: "transform 0.3s", transform: open ? "rotate(45deg) translateY(6px)" : "none" }} />
-                    <div style={{ height: "2px", backgroundColor: "#000", transition: "opacity 0.3s", opacity: open ? 0 : 1 }} />
-                    <div style={{ height: "2px", backgroundColor: "#000", transition: "transform 0.3s", transform: open ? "rotate(-45deg) translateY(-6px)" : "none" }} />
-                </div>
-            </div>
+                <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500 }}>{title}</span>
+                <span style={{
+                    width: "28px", height: "28px",
+                    border: "1px solid rgba(255,255,255,0.2)",
+                    borderRadius: "50%",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "#94a3b8",
+                    fontSize: "18px",
+                    flexShrink: 0,
+                    transition: "transform 0.3s",
+                    transform: open ? "rotate(45deg)" : "none",
+                }}>+</span>
+            </button>
             <AnimatePresence initial={false}>
                 {open && (
                     <motion.div
-                        initial={{ height: 0 }}
-                        animate={{ height: "auto" }}
-                        exit={{ height: 0 }}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         style={{ overflow: "hidden" }}
                     >
-                        <div style={{ padding: "30px 20px" }}>{children}</div>
+                        <div style={{ paddingBottom: "28px", color: "#a1a1aa" }}>{children}</div>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -46,7 +63,6 @@ function Accordion({ title, children }: { title: string; children: React.ReactNo
     );
 }
 
-// Experience card with hover overlay
 function ExperienceCard({ company, year, role, period, description, posts }: {
     company: string; year: string; role: string; period: string; description: string; posts: string[];
 }) {
@@ -56,41 +72,50 @@ function ExperienceCard({ company, year, role, period, description, posts }: {
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             style={{
-                backgroundColor: "#f5f5f5",
+                backgroundColor: "#111111",
+                border: "1px solid rgba(255,255,255,0.06)",
                 flexDirection: "column",
-                padding: "50px",
+                padding: "40px",
                 display: "flex",
                 position: "relative",
                 overflow: "hidden",
-                minHeight: "280px",
+                minHeight: "260px",
+                transition: "border-color 0.3s",
+                borderColor: hovered ? "rgba(148,163,184,0.3)" : "rgba(255,255,255,0.06)",
             }}
         >
-            <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "42px", fontWeight: 500, margin: "0 0 10px" }}>{company}</h3>
-            <h4 style={{ textAlign: "right", marginBottom: 0, fontSize: "26px", fontWeight: 500 }}>{year}</h4>
+            <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "32px", fontWeight: 500, margin: "0 0 8px", color: "#fff" }}>{company}</h3>
+            <p style={{ color: "#94a3b8", fontSize: "14px", margin: 0 }}>{year}</p>
             <AnimatePresence>
                 {hovered && (
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.25 }}
                         style={{
                             position: "absolute",
                             inset: 0,
-                            backgroundColor: "#03cd69",
-                            padding: "50px",
+                            backgroundColor: "#1a1a1a",
+                            padding: "40px",
                             zIndex: 1,
+                            borderLeft: "2px solid #94a3b8",
                         }}
                     >
-                        <h5 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "32px", fontWeight: 500, margin: "0 0 10px" }}>{role}</h5>
-                        <div style={{ fontSize: "14px", color: "#000", marginBottom: "20px" }}>{period}</div>
-                        <p style={{ marginTop: "20px", marginBottom: "20px" }}>{description}</p>
-                        {posts.map((post, i) => (
-                            <div key={i} style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "10px" }}>
-                                <Image src="/resume/arrow-right.svg" alt="" width={20} height={20} />
-                                <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "18px", fontWeight: 500 }}>{post}</span>
-                            </div>
-                        ))}
+                        <p style={{ color: "#94a3b8", fontSize: "12px", margin: "0 0 8px", textTransform: "uppercase", letterSpacing: "0.1em" }}>{period}</p>
+                        <h4 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "24px", fontWeight: 500, margin: "0 0 12px", color: "#fff" }}>{role}</h4>
+                        <p style={{ color: "#a1a1aa", fontSize: "14px", margin: "0 0 20px", lineHeight: "1.6" }}>{description}</p>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                            {posts.map((post, i) => (
+                                <span key={i} style={{
+                                    fontSize: "11px",
+                                    color: "#94a3b8",
+                                    border: "1px solid rgba(148,163,184,0.3)",
+                                    padding: "4px 12px",
+                                    letterSpacing: "0.05em",
+                                }}>{post}</span>
+                            ))}
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -99,266 +124,306 @@ function ExperienceCard({ company, year, role, period, description, posts }: {
 }
 
 export default function ResumePage() {
-    const [activeSection, setActiveSection] = useState("");
-
     return (
-        <main style={{ fontFamily: "'Poppins', sans-serif", backgroundColor: "#fff", color: "#333", fontSize: "18px", lineHeight: "1.3em" }}>
-            {/* Custom font */}
+        <main style={{
+            fontFamily: "'Inter', sans-serif",
+            backgroundColor: "#0a0a0a",
+            color: "#ffffff",
+            fontSize: "16px",
+            lineHeight: "1.6",
+            WebkitFontSmoothing: "antialiased",
+        }}>
             <style>{`
                 @font-face {
                     font-family: 'ClashGrotesk';
                     src: url('/resume/clashgrotesk-semibold.woff2') format('woff2');
                     font-weight: 600;
-                    font-style: normal;
                 }
                 @font-face {
                     font-family: 'ClashGrotesk';
                     src: url('/resume/clashgrotesk-medium.woff2') format('woff2');
                     font-weight: 500;
-                    font-style: normal;
                 }
-                :root {
-                    --spring-green: #03cd69;
-                    --white-smoke: #f5f5f5;
-                    --black: #000;
-                    --white: #fff;
-                }
-                .nav-link-item {
-                    color: #000;
-                    border-bottom: 3px solid transparent;
-                    margin: 0 20px;
-                    padding: 0;
+                .resume-nav-link {
+                    color: rgba(255,255,255,0.6);
                     text-decoration: none;
-                    transition: border 0.3s ease-in-out;
-                    font-size: 18px;
+                    font-size: 13px;
+                    font-weight: 500;
+                    letter-spacing: 0.02em;
+                    transition: color 0.2s;
+                    padding: 4px 0;
+                    border-bottom: 1px solid transparent;
                 }
-                .nav-link-item:hover {
-                    border-bottom: 3px solid #03cd69;
+                .resume-nav-link:hover {
+                    color: #fff;
+                    border-bottom-color: #94a3b8;
                 }
-                .btn-primary {
-                    border: 1px solid #000;
-                    color: #000;
-                    background-color: transparent;
-                    padding: 12px 30px;
-                    font-size: 18px;
+                .resume-btn {
+                    border: 1px solid rgba(255,255,255,0.15);
+                    color: #fff;
+                    background: transparent;
+                    padding: 10px 24px;
+                    font-size: 13px;
+                    font-weight: 500;
                     text-decoration: none;
-                    transition: all 0.3s ease-in-out;
+                    letter-spacing: 0.05em;
+                    transition: all 0.25s;
                     cursor: pointer;
-                    font-family: 'Poppins', sans-serif;
+                    font-family: 'Inter', sans-serif;
+                    display: inline-block;
                 }
-                .btn-primary:hover {
-                    border-color: #03cd69;
-                    background-color: #03cd69;
+                .resume-btn:hover {
+                    background: rgba(148,163,184,0.1);
+                    border-color: #94a3b8;
                 }
-                .project-item-link {
+                .resume-btn-accent {
+                    background: #fff;
+                    color: #0a0a0a;
+                    border-color: #fff;
+                    font-weight: 600;
+                }
+                .resume-btn-accent:hover {
+                    background: #94a3b8;
+                    border-color: #94a3b8;
+                    color: #0a0a0a;
+                }
+                .project-link {
                     text-decoration: none;
                     display: block;
                 }
-                .project-item-link:hover .project-image-inner {
-                    transform: scale(1.05);
+                .project-img-wrap {
+                    overflow: hidden;
+                    margin-bottom: 20px;
                 }
-                .project-image-inner {
-                    transition: transform 0.5s ease;
+                .project-img-inner {
+                    transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
                 }
-                .social-item {
-                    background-color: #f5f5f5;
-                    margin-top: 20px;
-                    padding: 20px;
+                .project-link:hover .project-img-inner {
+                    transform: scale(1.04);
+                }
+                .social-card {
+                    background: #111;
+                    border: 1px solid rgba(255,255,255,0.06);
+                    padding: 20px 24px;
                     text-decoration: none;
                     display: block;
-                    transition: background-color 0.3s;
+                    transition: border-color 0.25s, background 0.25s;
+                    margin-top: 12px;
                 }
-                .social-item:hover {
-                    background-color: #03cd69;
+                .social-card:hover {
+                    border-color: rgba(148,163,184,0.4);
+                    background: #1a1a1a;
                 }
-                .footer-link-item {
-                    border-bottom: 3px solid transparent;
+                .footer-link {
+                    color: rgba(255,255,255,0.5);
                     text-decoration: none;
-                    color: #000;
-                    transition: border-color 0.3s ease-in-out;
+                    font-size: 13px;
+                    transition: color 0.2s;
                 }
-                .footer-link-item:hover {
-                    border-bottom-color: #03cd69;
+                .footer-link:hover { color: #fff; }
+                .form-input-dark {
+                    background: #111;
+                    border: 1px solid rgba(255,255,255,0.08);
+                    color: #fff;
+                    height: 52px;
+                    padding: 0 18px;
+                    font-size: 14px;
+                    font-family: 'Inter', sans-serif;
+                    outline: none;
+                    width: 100%;
+                    transition: border-color 0.2s;
+                    box-sizing: border-box;
                 }
-                .skill-list {
-                    padding-left: 20px;
-                    margin: 0;
+                .form-input-dark::placeholder { color: rgba(255,255,255,0.3); }
+                .form-input-dark:focus { border-color: #94a3b8; }
+                .form-textarea-dark {
+                    background: #111;
+                    border: 1px solid rgba(255,255,255,0.08);
+                    color: #fff;
+                    height: 140px;
+                    padding: 14px 18px;
+                    font-size: 14px;
+                    font-family: 'Inter', sans-serif;
+                    outline: none;
+                    width: 100%;
+                    resize: none;
+                    transition: border-color 0.2s;
+                    box-sizing: border-box;
                 }
-                .skill-list li {
-                    margin-bottom: 10px;
-                }
+                .form-textarea-dark::placeholder { color: rgba(255,255,255,0.3); }
+                .form-textarea-dark:focus { border-color: #94a3b8; }
                 @keyframes spin-slow {
                     from { transform: rotate(0deg); }
                     to { transform: rotate(360deg); }
                 }
-                .rotating-circle {
-                    animation: spin-slow 10s linear infinite;
+                .rotating-circle { animation: spin-slow 12s linear infinite; }
+                .skill-tag {
+                    font-size: 12px;
+                    color: #94a3b8;
+                    border: 1px solid rgba(148,163,184,0.25);
+                    padding: 4px 12px;
+                    letter-spacing: 0.04em;
+                    display: inline-block;
+                    margin: 4px 4px 4px 0;
                 }
             `}</style>
 
-            {/* Navbar */}
-            <nav style={{ backgroundColor: "transparent", paddingTop: "20px", paddingBottom: "20px" }}>
-                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px", display: "grid", gridTemplateColumns: "0.25fr 1fr", alignItems: "center" }}>
-                    <Link href="/">
-                        <Image src="/resume/jacq.svg" alt="Logo" width={80} height={40} style={{ display: "block" }} />
+            {/* ── Navbar ─────────────────────────────────────────────── */}
+            <nav style={{
+                position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
+                backgroundColor: "rgba(10,10,10,0.85)",
+                backdropFilter: "blur(12px)",
+                borderBottom: "1px solid rgba(255,255,255,0.05)",
+                height: "56px",
+                display: "flex", alignItems: "center",
+            }}>
+                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px", width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Link href="/" style={{ textDecoration: "none" }}>
+                        <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "16px", fontWeight: 600, color: "#fff", letterSpacing: "0.02em" }}>SK</span>
                     </Link>
-                    <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-                        <nav style={{ paddingRight: "20px", display: "flex" }}>
-                            <a href="#about" className="nav-link-item">About me</a>
-                            <a href="#experience" className="nav-link-item">Experience</a>
-                            <a href="#project" className="nav-link-item">Projects</a>
-                            <a href="#contact" className="nav-link-item">Contact me</a>
-                        </nav>
-                        <a href="#contact" className="btn-primary">Hire me</a>
+                    <div style={{ display: "flex", gap: "32px", alignItems: "center" }}>
+                        <a href="#about" className="resume-nav-link">About</a>
+                        <a href="#experience" className="resume-nav-link">Experience</a>
+                        <a href="#project" className="resume-nav-link">Projects</a>
+                        <a href="#contact" className="resume-nav-link">Contact</a>
                     </div>
+                    <a href="#contact" className="resume-btn resume-btn-accent" style={{ fontSize: "12px", padding: "8px 20px" }}>Hire me</a>
                 </div>
             </nav>
 
-            {/* Hero Section */}
-            <section style={{ paddingTop: "80px", paddingBottom: "20px", overflow: "hidden" }}>
+            {/* ── Hero ───────────────────────────────────────────────── */}
+            <section style={{ paddingTop: "120px", paddingBottom: "40px", overflow: "hidden" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px", position: "relative" }}>
-                    {/* Hero content */}
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "20px", marginBottom: "300px" }}>
-                        <h1 style={{
-                            fontFamily: "'ClashGrotesk', sans-serif",
-                            color: "#000",
-                            textTransform: "uppercase",
-                            fontSize: "clamp(80px, 10vw, 150px)",
-                            fontWeight: 600,
-                            margin: 0,
-                            lineHeight: "1.1em",
-                        }}>
+                    {/* Big name */}
+                    <div style={{ marginBottom: "280px" }}>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                            style={{
+                                fontFamily: "'ClashGrotesk', sans-serif",
+                                color: "#fff",
+                                textTransform: "uppercase",
+                                fontSize: "clamp(72px, 10vw, 140px)",
+                                fontWeight: 600,
+                                margin: "0 0 24px",
+                                lineHeight: "1em",
+                                letterSpacing: "-0.02em",
+                            }}
+                        >
                             Sushant<br />Kumar
-                        </h1>
-                        <p style={{ color: "#000", width: "35%", minWidth: "280px", margin: 0 }}>
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            style={{ color: "#a1a1aa", maxWidth: "380px", margin: "0 0 32px", lineHeight: "1.7" }}
+                        >
                             AI Systems Engineer building production-grade intelligent systems.
-                        </p>
-                        <div style={{ display: "inline-block" }}>
-                            <a href="#contact" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-                                <Image src="/resume/arrow-right.svg" alt="Arrow" width={40} height={40} style={{ border: "3px solid #03cd69", backgroundColor: "#03cd69", borderRadius: "50%", padding: "8px" }} />
-                                <div style={{ border: "2px solid #000", borderRadius: "50%", width: "38px", height: "38px", marginLeft: "-18px" }} />
-                                <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "18px", fontWeight: 500 }}>Download CV</span>
+                        </motion.p>
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.4 }}>
+                            <a href="/resume.pdf" className="resume-btn" style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+                                Download CV
                             </a>
-                        </div>
+                        </motion.div>
                     </div>
 
-                    {/* Hero contact info (right side) */}
-                    <div style={{ position: "absolute", right: "30px", top: "80px", maxWidth: "300px" }}>
-                        <div style={{ marginBottom: "20px" }}>
-                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "42px", fontWeight: 500, margin: "0 0 10px" }}>Lets Work Together</h2>
-                            <p style={{ fontSize: "14px", margin: "0 0 5px" }}>I am Available at</p>
-                            <p style={{ margin: "0 0 5px" }}>your@email.com</p>
-                            <p style={{ margin: 0 }}>+1 234 567 890</p>
+                    {/* Right side contact card */}
+                    <div style={{ position: "absolute", right: "30px", top: "120px", maxWidth: "280px" }}>
+                        <div style={{ borderLeft: "1px solid rgba(255,255,255,0.1)", paddingLeft: "24px" }}>
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 12px" }}>Available for work</p>
+                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "28px", fontWeight: 500, margin: "0 0 16px", color: "#fff", lineHeight: "1.2" }}>Let's Work Together</h2>
+                            <p style={{ color: "#a1a1aa", fontSize: "14px", margin: "0 0 4px" }}>your@email.com</p>
+                            <p style={{ color: "#a1a1aa", fontSize: "14px", margin: 0 }}>+1 234 567 890</p>
                         </div>
                     </div>
 
                     {/* Hero image */}
-                    <div style={{ position: "absolute", right: "30px", bottom: "0", width: "380px" }}>
-                        <div style={{ position: "relative" }}>
-                            <Image src="/resume/hero-image.webp" alt="Hero" width={380} height={500} style={{ display: "block", width: "100%", height: "auto" }} />
-                        </div>
+                    <div style={{ position: "absolute", right: "30px", bottom: "0", width: "340px" }}>
+                        <Image src="/resume/hero-image.webp" alt="Sushant Kumar" width={340} height={440} style={{ display: "block", width: "100%", height: "auto", filter: "grayscale(20%)" }} />
                     </div>
 
-                    {/* Rotating circle text */}
-                    <div style={{ position: "absolute", right: "380px", bottom: "60px" }}>
-                        <Image src="/resume/rounded-circle.png" alt="Rotating circle" width={120} height={120} className="rotating-circle" />
+                    {/* Rotating circle */}
+                    <div style={{ position: "absolute", right: "350px", bottom: "60px" }}>
+                        <Image src="/resume/rounded-circle.png" alt="" width={110} height={110} className="rotating-circle" style={{ filter: "invert(1) opacity(0.5)" }} />
                     </div>
 
                     {/* Signature */}
                     <div style={{ position: "absolute", left: "30px", bottom: "0" }}>
-                        <Image src="/resume/signature.png" alt="Signature" width={200} height={80} style={{ opacity: 0.8 }} />
+                        <Image src="/resume/signature.png" alt="Signature" width={180} height={70} style={{ opacity: 0.35, filter: "invert(1)" }} />
                     </div>
                 </div>
             </section>
 
-            {/* About Section */}
-            <section id="about" style={{ paddingTop: "120px", paddingBottom: "120px" }}>
-                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    {/* About title paragraph with project reveals */}
-                    <div style={{ borderTop: "2px solid #000", paddingTop: "20px", marginBottom: "0" }}>
-                        <p style={{ fontSize: "clamp(24px, 3vw, 42px)", fontFamily: "'ClashGrotesk', sans-serif", fontWeight: 500, lineHeight: "1.1em", margin: 0 }}>
-                            I'm Sushant <span style={{ display: "inline-block", width: "80px", height: "3px", backgroundColor: "#03cd69", verticalAlign: "middle", margin: "0 10px" }} /> a self-taught AI systems engineer based in India. I started as a software developer, but now I do a mix of everything from
-                        </p>
-                    </div>
-                    <div style={{ borderTop: "2px solid #000", paddingTop: "20px", paddingBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <p style={{ fontSize: "clamp(24px, 3vw, 42px)", fontFamily: "'ClashGrotesk', sans-serif", fontWeight: 500, lineHeight: "1.1em", margin: 0 }}>ML Engineering</p>
-                        <div style={{ overflow: "hidden", width: "200px", height: "120px", position: "relative" }}>
-                            <Image src="/resume/01.webp" alt="ML Engineering" fill style={{ objectFit: "cover" }} />
-                        </div>
-                    </div>
-                    <div style={{ borderTop: "2px solid #000", paddingTop: "20px", paddingBottom: "20px" }}>
-                        <p style={{ fontSize: "clamp(24px, 3vw, 42px)", fontFamily: "'ClashGrotesk', sans-serif", fontWeight: 500, lineHeight: "1.1em", margin: 0 }}>,</p>
-                    </div>
-                    <div style={{ borderTop: "2px solid #000", paddingTop: "20px", paddingBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <p style={{ fontSize: "clamp(24px, 3vw, 42px)", fontFamily: "'ClashGrotesk', sans-serif", fontWeight: 500, lineHeight: "1.1em", margin: 0 }}>System Design</p>
-                        <div style={{ overflow: "hidden", width: "200px", height: "120px", position: "relative" }}>
-                            <Image src="/resume/02.webp" alt="System Design" fill style={{ objectFit: "cover" }} />
-                        </div>
-                    </div>
-                    <div style={{ borderTop: "2px solid #000", paddingTop: "20px", paddingBottom: "20px" }}>
-                        <p style={{ fontSize: "clamp(24px, 3vw, 42px)", fontFamily: "'ClashGrotesk', sans-serif", fontWeight: 500, lineHeight: "1.1em", margin: 0 }}>,</p>
-                    </div>
-                    <div style={{ borderTop: "2px solid #000", paddingTop: "20px", paddingBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <p style={{ fontSize: "clamp(24px, 3vw, 42px)", fontFamily: "'ClashGrotesk', sans-serif", fontWeight: 500, lineHeight: "1.1em", margin: 0 }}>Full-Stack Development</p>
-                        <div style={{ overflow: "hidden", width: "200px", height: "120px", position: "relative" }}>
-                            <Image src="/resume/03.jpg" alt="Full-Stack" fill style={{ objectFit: "cover" }} />
-                        </div>
-                    </div>
-                    <div style={{ borderTop: "2px solid #000", borderBottom: "2px solid #000", paddingTop: "20px", paddingBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <p style={{ fontSize: "clamp(24px, 3vw, 42px)", fontFamily: "'ClashGrotesk', sans-serif", fontWeight: 500, lineHeight: "1.1em", margin: 0 }}>& DevOps</p>
-                        <div style={{ overflow: "hidden", width: "200px", height: "120px", position: "relative" }}>
-                            <Image src="/resume/04.webp" alt="DevOps" fill style={{ objectFit: "cover" }} />
-                        </div>
-                    </div>
+            {/* ── Divider ────────────────────────────────────────────── */}
+            <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
+                <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.06)" }} />
+            </div>
 
-                    {/* Personal Info + Education grid */}
-                    <div style={{ display: "grid", gridTemplateColumns: "0.75fr 1.25fr", gap: "50px", marginTop: "100px" }}>
+            {/* ── About ──────────────────────────────────────────────── */}
+            <section id="about" style={{ paddingTop: "100px", paddingBottom: "100px" }}>
+                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
+                    {/* Skill rows */}
+                    {[
+                        { label: "ML Engineering", img: "/resume/01.webp" },
+                        { label: "System Design", img: "/resume/02.webp" },
+                        { label: "Full-Stack Development", img: "/resume/03.jpg" },
+                        { label: "& DevOps", img: "/resume/04.webp" },
+                    ].map((item, i) => (
+                        <div key={i} style={{
+                            borderTop: "1px solid rgba(255,255,255,0.06)",
+                            display: "flex", justifyContent: "space-between", alignItems: "center",
+                            padding: "20px 0",
+                        }}>
+                            <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(22px, 3vw, 38px)", fontWeight: 500, color: "#fff" }}>{item.label}</span>
+                            <div style={{ overflow: "hidden", width: "160px", height: "90px", position: "relative", flexShrink: 0 }}>
+                                <Image src={item.img} alt={item.label} fill style={{ objectFit: "cover", filter: "grayscale(30%)" }} />
+                            </div>
+                        </div>
+                    ))}
+                    <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
+
+                    {/* Personal info + Education */}
+                    <div style={{ display: "grid", gridTemplateColumns: "0.75fr 1.25fr", gap: "60px", marginTop: "80px" }}>
                         {/* Personal Info */}
                         <div>
-                            <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "20px" }}>
-                                <Image src="/resume/pen.svg" alt="Pen" width={30} height={30} />
-                                <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "42px", fontWeight: 500, margin: 0 }}>Personal Info</h3>
-                            </div>
-                            <p>Building scalable AI solutions at the intersection of machine learning and software engineering.</p>
-                            <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "15px" }}>
-                                <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                                    <Image src="/resume/pin-map-fill.svg" alt="Location" width={20} height={20} />
-                                    <span>Your City, Your Country</span>
-                                </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                                    <Image src="/resume/mailbox2.svg" alt="Email" width={20} height={20} />
-                                    <span>your@email.com</span>
-                                </div>
-                                <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                                    <Image src="/resume/headset.svg" alt="Phone" width={20} height={20} />
-                                    <span>+1 234 567 890</span>
-                                </div>
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Personal Info</p>
+                            <p style={{ color: "#a1a1aa", lineHeight: "1.7", margin: "0 0 28px" }}>
+                                Building scalable AI solutions at the intersection of machine learning and software engineering.
+                            </p>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                                {[
+                                    { icon: "📍", text: "Your City, Your Country" },
+                                    { icon: "✉️", text: "your@email.com" },
+                                    { icon: "📞", text: "+1 234 567 890" },
+                                ].map((item, i) => (
+                                    <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px", color: "#a1a1aa", fontSize: "14px" }}>
+                                        <span>{item.icon}</span>
+                                        <span>{item.text}</span>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
                         {/* Education */}
                         <div>
-                            <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "20px" }}>
-                                <Image src="/resume/graduation-hat-svgrepo-com.svg" alt="Education" width={40} height={40} />
-                                <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "42px", fontWeight: 500, margin: 0 }}>Education</h3>
-                            </div>
-                            <div>
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 24px" }}>Education</p>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
                                 {[
-                                    { place: "Your University", date: "2020 - 2024", degree: "B.Tech in Computer Science (HONORS)", desc: "Specialized in AI/ML systems and distributed computing." },
-                                    { place: "Your School", date: "2018 - 2020", degree: "Higher Secondary Education", desc: "Science stream with Mathematics and Computer Science." },
+                                    { place: "Your University", date: "2020 – 2024", degree: "B.Tech in Computer Science", desc: "Specialized in AI/ML systems and distributed computing." },
+                                    { place: "Your School", date: "2018 – 2020", degree: "Higher Secondary Education", desc: "Science stream with Mathematics and Computer Science." },
                                 ].map((edu, i) => (
-                                    <div key={i} style={{ display: "grid", gridTemplateColumns: "auto 20px 1fr", gap: "20px", marginBottom: "30px", alignItems: "start" }}>
-                                        <div>
-                                            <p style={{ fontWeight: 600, margin: "0 0 5px" }}>{edu.place}</p>
-                                            <div style={{ fontSize: "14px", color: "#666" }}>{edu.date}</div>
-                                        </div>
+                                    <div key={i} style={{ display: "flex", gap: "20px" }}>
                                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "4px" }}>
-                                            <div style={{ width: "12px", height: "12px", borderRadius: "50%", backgroundColor: "#03cd69", border: "2px solid #000" }} />
-                                            <div style={{ width: "2px", flex: 1, backgroundColor: "#ddd", marginTop: "4px" }} />
+                                            <div style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#94a3b8", flexShrink: 0 }} />
+                                            {i === 0 && <div style={{ width: "1px", flex: 1, backgroundColor: "rgba(255,255,255,0.1)", marginTop: "8px" }} />}
                                         </div>
                                         <div>
-                                            <p style={{ fontFamily: "'ClashGrotesk', sans-serif", fontWeight: 500, fontSize: "20px", margin: "0 0 8px" }}>{edu.degree}</p>
-                                            <p style={{ fontSize: "14px", color: "#666", margin: 0 }}>{edu.desc}</p>
+                                            <p style={{ color: "#94a3b8", fontSize: "12px", margin: "0 0 4px" }}>{edu.date}</p>
+                                            <p style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "18px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>{edu.degree}</p>
+                                            <p style={{ color: "#a1a1aa", fontSize: "13px", margin: "0 0 4px" }}>{edu.place}</p>
+                                            <p style={{ color: "#71717a", fontSize: "13px", margin: 0 }}>{edu.desc}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -368,199 +433,158 @@ export default function ResumePage() {
                 </div>
             </section>
 
-            {/* Experience Section */}
-            <section id="experience" style={{ paddingTop: "120px", paddingBottom: "120px" }}>
+            {/* ── Experience ─────────────────────────────────────────── */}
+            <section id="experience" style={{ paddingTop: "100px", paddingBottom: "100px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    <div style={{ textAlign: "center", marginBottom: "50px" }}>
-                        <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "68px", fontWeight: 500, margin: 0 }}>In a previous life</h2>
-                    </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "50px" }}>
-                        <ExperienceCard company="Company 1" year="Year 2023 - Present" role="Senior AI Engineer" period="January 2023 - Present" description="Building production-grade ML systems and intelligent automation pipelines." posts={["ML Ops", "System Design"]} />
-                        <ExperienceCard company="Company 2" year="Year 2021 - 2023" role="Full-Stack Developer" period="June 2021 - December 2022" description="Developed scalable web applications and RESTful APIs serving millions of users." posts={["React Development", "Backend Engineering"]} />
-                        <ExperienceCard company="Company 3" year="Year 2020 - 2021" role="Software Engineer" period="January 2020 - May 2021" description="Designed and implemented microservices architecture for enterprise applications." posts={["Python Development", "API Design"]} />
-                        <ExperienceCard company="Company 4" year="Year 2019 - 2020" role="Software Intern" period="June 2019 - December 2019" description="Contributed to frontend development and learned industry best practices." posts={["JavaScript", "UI Development"]} />
-                    </div>
-                </div>
-            </section>
-
-            {/* Counter Section */}
-            <section style={{ paddingTop: "0", paddingBottom: "0" }}>
-                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    <div style={{ border: "5px solid #03cd69", backgroundColor: "#000", padding: "30px" }}>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "50px" }}>
-                            {[
-                                { num: "04", label: "Companies Worked" },
-                                { num: "09", label: "Freelancer Projects" },
-                                { num: "03", label: "Total Degrees" },
-                                { num: "05", label: "Years of Experience" },
-                            ].map((item, i) => (
-                                <div key={i} style={{ color: "#fff", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                    <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", color: "#fff", fontSize: "68px", fontWeight: 500, margin: "0 0 10px" }}>{item.num}</h2>
-                                    <p style={{ margin: 0, color: "#fff" }}>{item.label}</p>
-                                </div>
-                            ))}
-                        </div>
+                    <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Career</p>
+                    <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 500, margin: "0 0 60px", color: "#fff", lineHeight: "1.1" }}>In a previous life</h2>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2px" }}>
+                        <ExperienceCard company="Company 1" year="2023 – Present" role="Senior AI Engineer" period="January 2023 – Present" description="Building production-grade ML systems and intelligent automation pipelines." posts={["ML Ops", "System Design", "Python"]} />
+                        <ExperienceCard company="Company 2" year="2021 – 2023" role="Full-Stack Developer" period="June 2021 – December 2022" description="Developed scalable web applications and RESTful APIs serving millions of users." posts={["React", "Node.js", "PostgreSQL"]} />
+                        <ExperienceCard company="Company 3" year="2020 – 2021" role="Software Engineer" period="January 2020 – May 2021" description="Designed and implemented microservices architecture for enterprise applications." posts={["Python", "Django", "Docker"]} />
+                        <ExperienceCard company="Company 4" year="2019 – 2020" role="Software Intern" period="June 2019 – December 2019" description="Contributed to frontend development and learned industry best practices." posts={["JavaScript", "APIs", "React"]} />
                     </div>
                 </div>
             </section>
 
-            {/* Skills Section */}
-            <section style={{ paddingTop: "120px", paddingBottom: "0" }}>
+            {/* ── Counter ────────────────────────────────────────────── */}
+            <section style={{ backgroundColor: "#0a0a0a", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "start" }}>
-                        {/* Skill image */}
-                        <div style={{ textAlign: "center", position: "relative" }}>
-                            <Image src="/resume/about-skill.webp" alt="Skills" width={500} height={600} style={{ width: "100%", height: "auto", position: "relative", zIndex: 1 }} />
-                            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "60%", backgroundColor: "#f5f5f5", zIndex: 0 }} />
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr" }}>
+                        {[
+                            { num: "04", label: "Companies Worked" },
+                            { num: "09", label: "Freelance Projects" },
+                            { num: "03", label: "Certifications" },
+                            { num: "05", label: "Years Experience" },
+                        ].map((item, i) => (
+                            <div key={i} style={{
+                                padding: "48px 30px",
+                                textAlign: "center",
+                                borderRight: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                            }}>
+                                <div style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "56px", fontWeight: 600, color: "#fff", lineHeight: 1 }}>{item.num}</div>
+                                <div style={{ color: "#94a3b8", fontSize: "13px", marginTop: "8px", letterSpacing: "0.04em" }}>{item.label}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── Skills ─────────────────────────────────────────────── */}
+            <section style={{ paddingTop: "100px", paddingBottom: "100px" }}>
+                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "start" }}>
+                        {/* Image */}
+                        <div style={{ position: "relative" }}>
+                            <Image src="/resume/about-skill.webp" alt="Skills" width={560} height={680} style={{ width: "100%", height: "auto", display: "block", filter: "grayscale(20%)" }} />
+                            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "50%", background: "linear-gradient(to top, #0a0a0a, transparent)", zIndex: 1 }} />
                         </div>
 
-                        {/* Skill accordions */}
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "68px", fontWeight: 500, margin: "0 0 30px" }}>Skillsets</h2>
+                        {/* Accordions */}
+                        <div>
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Expertise</p>
+                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 4vw, 56px)", fontWeight: 500, margin: "0 0 40px", color: "#fff", lineHeight: "1.1" }}>Skillsets</h2>
                             <Accordion title="Machine Learning & AI">
-                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "50px" }}>
-                                    <ul className="skill-list"><li>Deep Learning</li><li>NLP & LLMs</li><li>Computer Vision</li></ul>
-                                    <ul className="skill-list"><li>MLOps & Deployment</li><li>Model Optimization</li><li>Data Pipelines</li></ul>
-                                </div>
-                                <div style={{ display: "flex", gap: "30px", marginTop: "20px" }}>
-                                    <Image src="/resume/adobe-photoshop-2.svg" alt="Tool" width={50} height={50} />
-                                    <Image src="/resume/figma-1.svg" alt="Tool" width={50} height={50} />
+                                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                                    {["Deep Learning", "NLP & LLMs", "Computer Vision", "MLOps", "Model Optimization", "Data Pipelines"].map(s => <span key={s} className="skill-tag">{s}</span>)}
                                 </div>
                             </Accordion>
                             <Accordion title="Full-Stack Development">
-                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "50px" }}>
-                                    <ul className="skill-list"><li>React / Next.js</li><li>Node.js / Python</li></ul>
-                                    <ul className="skill-list"><li>REST & GraphQL APIs</li><li>PostgreSQL / MongoDB</li></ul>
-                                </div>
-                                <div style={{ display: "flex", gap: "30px", marginTop: "20px" }}>
-                                    <Image src="/resume/sketch-2.svg" alt="Tool" width={50} height={50} />
-                                    <Image src="/resume/invision.svg" alt="Tool" width={50} height={50} />
+                                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                                    {["React / Next.js", "Node.js", "Python / FastAPI", "REST & GraphQL", "PostgreSQL", "MongoDB"].map(s => <span key={s} className="skill-tag">{s}</span>)}
                                 </div>
                             </Accordion>
                             <Accordion title="DevOps & Cloud">
-                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "50px" }}>
-                                    <ul className="skill-list"><li>Docker & Kubernetes</li></ul>
-                                    <ul className="skill-list"><li>AWS / GCP</li></ul>
+                                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                                    {["Docker", "Kubernetes", "AWS", "GCP", "CI/CD", "Terraform"].map(s => <span key={s} className="skill-tag">{s}</span>)}
                                 </div>
                             </Accordion>
                             <Accordion title="System Design">
-                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "50px" }}>
-                                    <ul className="skill-list"><li>Distributed Systems</li></ul>
-                                    <ul className="skill-list"><li>Microservices</li></ul>
+                                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                                    {["Distributed Systems", "Microservices", "Event-Driven Architecture", "API Design", "Caching Strategies"].map(s => <span key={s} className="skill-tag">{s}</span>)}
                                 </div>
                             </Accordion>
-                            <div style={{ display: "grid", gridTemplateColumns: "0.5fr 1.5fr", gap: "30px", marginTop: "auto", paddingTop: "30px" }}>
-                                <div style={{ display: "flex", gap: "20px" }}>
-                                    <Image src="/resume/webflow-icon.png" alt="Webflow" width={50} height={50} />
-                                    <Image src="/resume/shopify.svg" alt="Shopify" width={50} height={50} />
-                                </div>
-                                <p>Currently building AI-powered web applications and intelligent automation systems.</p>
-                            </div>
+                            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Projects Section */}
-            <section id="project" style={{ paddingTop: "120px", paddingBottom: "0" }}>
+            {/* ── Projects ───────────────────────────────────────────── */}
+            <section id="project" style={{ paddingTop: "100px", paddingBottom: "100px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "50px" }}>
-                        {/* Left column */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px" }}>
+                        {/* Left */}
                         <div>
-                            <div style={{ marginBottom: "50px" }}>
-                                <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "68px", fontWeight: 500, margin: "0 0 20px" }}>Showcase</h2>
-                                <p>Selected projects demonstrating technical excellence and innovation in AI systems.</p>
-                            </div>
-                            <div style={{ display: "grid", gap: "100px" }}>
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Selected Work</p>
+                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 4vw, 56px)", fontWeight: 500, margin: "0 0 48px", color: "#fff", lineHeight: "1.1" }}>Showcase</h2>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "64px" }}>
                                 {[
-                                    { img: "/resume/01.webp", title: "AI Product Design", desc: "A production-grade AI system for intelligent product recommendations" },
+                                    { img: "/resume/01.webp", title: "AI Product Design", desc: "Production-grade AI system for intelligent product recommendations" },
                                     { img: "/resume/02.webp", title: "ML Pipeline", desc: "End-to-end machine learning pipeline with automated retraining" },
                                 ].map((proj, i) => (
-                                    <a key={i} href="#" className="project-item-link">
-                                        <div style={{ marginBottom: "20px", overflow: "hidden" }}>
-                                            <div className="project-image-inner">
-                                                <Image src={proj.img} alt={proj.title} width={600} height={400} style={{ width: "100%", height: "auto", display: "block" }} />
+                                    <a key={i} href="#" className="project-link">
+                                        <div className="project-img-wrap">
+                                            <div className="project-img-inner">
+                                                <Image src={proj.img} alt={proj.title} width={600} height={380} style={{ width: "100%", height: "auto", display: "block", filter: "grayscale(10%)" }} />
                                             </div>
                                         </div>
-                                        <div style={{ display: "grid", gridTemplateColumns: "1.5fr 0.5fr", gap: "16px", justifyContent: "space-between" }}>
+                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
                                             <div>
-                                                <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "32px", fontWeight: 500, margin: "0 0 8px" }}>{proj.title}</h3>
-                                                <p style={{ margin: 0, fontSize: "16px" }}>{proj.desc}</p>
+                                                <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>{proj.title}</h3>
+                                                <p style={{ color: "#71717a", fontSize: "14px", margin: 0 }}>{proj.desc}</p>
                                             </div>
-                                            <div style={{ display: "flex", alignItems: "flex-start" }}>
-                                                <Image src="/resume/arrow-right.svg" alt="Arrow" width={40} height={40} style={{ border: "3px solid #03cd69", backgroundColor: "#03cd69", borderRadius: "50%", padding: "8px" }} />
-                                                <div style={{ border: "2px solid #000", borderRadius: "50%", width: "38px", height: "38px", marginLeft: "-18px" }} />
-                                            </div>
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.5" style={{ flexShrink: 0, marginTop: "4px" }}><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
                                         </div>
                                     </a>
                                 ))}
-                            </div>
-                            <div style={{ marginTop: "50px" }}>
-                                <a href="#" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-                                    <Image src="/resume/arrow-right.svg" alt="Arrow" width={40} height={40} style={{ border: "3px solid #03cd69", backgroundColor: "#03cd69", borderRadius: "50%", padding: "8px" }} />
-                                    <div style={{ border: "2px solid #000", borderRadius: "50%", width: "38px", height: "38px", marginLeft: "-18px" }} />
-                                    <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "18px", fontWeight: 500 }}>View All Work</span>
-                                </a>
                             </div>
                         </div>
 
-                        {/* Right column */}
-                        <div>
-                            <div style={{ display: "grid", gap: "100px" }}>
-                                {[
-                                    { img: "/resume/03.jpg", title: "System Architecture", desc: "Distributed system design for high-availability applications" },
-                                ].map((proj, i) => (
-                                    <a key={i} href="#" className="project-item-link">
-                                        <div style={{ marginBottom: "20px", overflow: "hidden" }}>
-                                            <div className="project-image-inner">
-                                                <Image src={proj.img} alt={proj.title} width={600} height={400} style={{ width: "100%", height: "auto", display: "block" }} />
-                                            </div>
-                                        </div>
-                                        <div style={{ display: "grid", gridTemplateColumns: "1.5fr 0.5fr", gap: "16px" }}>
-                                            <div>
-                                                <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "32px", fontWeight: 500, margin: "0 0 8px" }}>{proj.title}</h3>
-                                                <p style={{ margin: 0, fontSize: "16px" }}>{proj.desc}</p>
-                                            </div>
-                                            <div style={{ display: "flex", alignItems: "flex-start" }}>
-                                                <Image src="/resume/arrow-right.svg" alt="Arrow" width={40} height={40} style={{ border: "3px solid #03cd69", backgroundColor: "#03cd69", borderRadius: "50%", padding: "8px" }} />
-                                                <div style={{ border: "2px solid #000", borderRadius: "50%", width: "38px", height: "38px", marginLeft: "-18px" }} />
-                                            </div>
-                                        </div>
-                                    </a>
-                                ))}
-                            </div>
+                        {/* Right */}
+                        <div style={{ display: "flex", flexDirection: "column", gap: "64px" }}>
+                            <a href="#" className="project-link">
+                                <div className="project-img-wrap">
+                                    <div className="project-img-inner">
+                                        <Image src="/resume/03.jpg" alt="System Architecture" width={600} height={380} style={{ width: "100%", height: "auto", display: "block", filter: "grayscale(10%)" }} />
+                                    </div>
+                                </div>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
+                                    <div>
+                                        <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>System Architecture</h3>
+                                        <p style={{ color: "#71717a", fontSize: "14px", margin: 0 }}>Distributed system design for high-availability applications</p>
+                                    </div>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.5" style={{ flexShrink: 0, marginTop: "4px" }}><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
+                                </div>
+                            </a>
 
                             {/* Testimonial */}
-                            <div style={{ marginTop: "100px", marginBottom: "100px" }}>
-                                <div style={{ backgroundColor: "#f5f5f5", padding: "50px", position: "relative" }}>
-                                    <Image src="/resume/quote.svg" alt="Quote" width={50} height={50} style={{ position: "absolute", top: "0", right: "0", margin: "30px" }} />
-                                    <p>"Sushant delivered an exceptional AI system that transformed our data pipeline. His technical depth and attention to detail are unmatched."</p>
-                                    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "30px" }}>
-                                        <Image src="/resume/01-1.webp" alt="Author" width={50} height={50} style={{ borderRadius: "50%" }} />
-                                        <div>
-                                            <div style={{ fontFamily: "'Poppins', sans-serif", fontSize: "20px", color: "#000" }}>Dennis Barrett</div>
-                                            <div style={{ fontSize: "14px" }}>Founder of TechCo</div>
-                                        </div>
+                            <div style={{ backgroundColor: "#111", border: "1px solid rgba(255,255,255,0.06)", padding: "40px", position: "relative" }}>
+                                <div style={{ color: "#94a3b8", fontSize: "40px", lineHeight: 1, marginBottom: "16px", fontFamily: "Georgia, serif" }}>"</div>
+                                <p style={{ color: "#a1a1aa", lineHeight: "1.7", margin: "0 0 24px", fontSize: "15px" }}>
+                                    "Sushant delivered an exceptional AI system that transformed our data pipeline. His technical depth and attention to detail are unmatched."
+                                </p>
+                                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                                    <Image src="/resume/01-1.webp" alt="Author" width={40} height={40} style={{ borderRadius: "50%", filter: "grayscale(20%)" }} />
+                                    <div>
+                                        <div style={{ color: "#fff", fontSize: "14px", fontWeight: 500 }}>Dennis Barrett</div>
+                                        <div style={{ color: "#71717a", fontSize: "12px" }}>Founder, TechCo</div>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* 4th project */}
-                            <a href="#" className="project-item-link">
-                                <div style={{ marginBottom: "20px", overflow: "hidden" }}>
-                                    <div className="project-image-inner">
-                                        <Image src="/resume/04.webp" alt="Project 4" width={600} height={400} style={{ width: "100%", height: "auto", display: "block" }} />
+                            <a href="#" className="project-link">
+                                <div className="project-img-wrap">
+                                    <div className="project-img-inner">
+                                        <Image src="/resume/04.webp" alt="DevOps Automation" width={600} height={380} style={{ width: "100%", height: "auto", display: "block", filter: "grayscale(10%)" }} />
                                     </div>
                                 </div>
-                                <div style={{ display: "grid", gridTemplateColumns: "1.5fr 0.5fr", gap: "16px" }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
                                     <div>
-                                        <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "32px", fontWeight: 500, margin: "0 0 8px" }}>DevOps Automation</h3>
-                                        <p style={{ margin: 0, fontSize: "16px" }}>CI/CD pipeline automation with intelligent rollback capabilities</p>
+                                        <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>DevOps Automation</h3>
+                                        <p style={{ color: "#71717a", fontSize: "14px", margin: 0 }}>CI/CD pipeline automation with intelligent rollback capabilities</p>
                                     </div>
-                                    <div style={{ display: "flex", alignItems: "flex-start" }}>
-                                        <Image src="/resume/arrow-right.svg" alt="Arrow" width={40} height={40} style={{ border: "3px solid #03cd69", backgroundColor: "#03cd69", borderRadius: "50%", padding: "8px" }} />
-                                        <div style={{ border: "2px solid #000", borderRadius: "50%", width: "38px", height: "38px", marginLeft: "-18px" }} />
-                                    </div>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.5" style={{ flexShrink: 0, marginTop: "4px" }}><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
                                 </div>
                             </a>
                         </div>
@@ -568,57 +592,55 @@ export default function ResumePage() {
                 </div>
             </section>
 
-            {/* Footer / Contact */}
-            <footer id="contact" style={{ paddingTop: "100px", paddingBottom: "10px" }}>
+            {/* ── Contact / Footer ───────────────────────────────────── */}
+            <footer id="contact" style={{ paddingTop: "100px", paddingBottom: "40px", backgroundColor: "#0a0a0a" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "68px", fontWeight: 500, width: "60%", marginBottom: "80px", lineHeight: "1.1em" }}>
+                    <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Get in touch</p>
+                    <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 500, maxWidth: "700px", marginBottom: "80px", color: "#fff", lineHeight: "1.1" }}>
                         That's it! Now it's your turn to say hi.
                     </h2>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "100px", marginBottom: "50px" }}>
-                        {/* Social links */}
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", marginBottom: "60px" }}>
+                        {/* Social */}
                         <div>
-                            <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "32px", fontWeight: 500, margin: "0 0 0" }}>Follow me on the net</h3>
+                            <p style={{ color: "#a1a1aa", fontSize: "14px", margin: "0 0 4px" }}>Follow me on the net</p>
                             {[
-                                { icon: "/resume/twitter.svg", name: "Twitter", desc: "Most controversial Place", href: "https://twitter.com/" },
-                                { icon: "/resume/instagram.svg", name: "Instagram", desc: "Most Lovable Place", href: "https://instagram.com/" },
-                                { icon: "/resume/dribble.svg", name: "Dribbble", desc: "All Designers visit this regularly", href: "https://dribbble.com/" },
-                            ].map((social, i) => (
-                                <a key={i} href={social.href} target="_blank" rel="noreferrer" className="social-item">
-                                    <div style={{ display: "grid", gridTemplateColumns: "0.25fr 1.75fr", gap: "30px", alignItems: "center" }}>
-                                        <Image src={social.icon} alt={social.name} width={60} height={60} />
+                                { icon: "/resume/twitter.svg", name: "Twitter", desc: "Most controversial place", href: "https://twitter.com/" },
+                                { icon: "/resume/instagram.svg", name: "Instagram", desc: "Most lovable place", href: "https://instagram.com/" },
+                                { icon: "/resume/dribble.svg", name: "Dribbble", desc: "All designers visit this", href: "https://dribbble.com/" },
+                            ].map((s, i) => (
+                                <a key={i} href={s.href} target="_blank" rel="noreferrer" className="social-card">
+                                    <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                                        <Image src={s.icon} alt={s.name} width={36} height={36} style={{ filter: "invert(1) opacity(0.7)" }} />
                                         <div>
-                                            <p style={{ color: "#000", margin: "0 0 5px", fontWeight: 500 }}>{social.name}</p>
-                                            <div style={{ fontSize: "14px" }}>{social.desc}</div>
+                                            <div style={{ color: "#fff", fontSize: "14px", fontWeight: 500 }}>{s.name}</div>
+                                            <div style={{ color: "#71717a", fontSize: "12px" }}>{s.desc}</div>
                                         </div>
                                     </div>
                                 </a>
                             ))}
                         </div>
 
-                        {/* Contact form */}
-                        <div>
-                            <form style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "30px 30px" }}>
-                                <input type="text" placeholder="Name" style={{ border: "2px solid #f5f5f5", backgroundColor: "#f5f5f5", height: "56px", padding: "10px 20px", fontSize: "14px", outline: "none", fontFamily: "'Poppins', sans-serif" }} />
-                                <input type="email" placeholder="Email" required style={{ border: "2px solid #f5f5f5", backgroundColor: "#f5f5f5", height: "56px", padding: "10px 20px", fontSize: "14px", outline: "none", fontFamily: "'Poppins', sans-serif" }} />
-                                <input type="tel" placeholder="Phone" style={{ border: "2px solid #f5f5f5", backgroundColor: "#f5f5f5", height: "56px", padding: "10px 20px", fontSize: "14px", outline: "none", fontFamily: "'Poppins', sans-serif" }} />
-                                <input type="text" placeholder="Subject" required style={{ border: "2px solid #f5f5f5", backgroundColor: "#f5f5f5", height: "56px", padding: "10px 20px", fontSize: "14px", outline: "none", fontFamily: "'Poppins', sans-serif" }} />
-                                <textarea placeholder="Your Message...." style={{ gridColumn: "1 / -1", border: "2px solid #f5f5f5", backgroundColor: "#f5f5f5", height: "150px", padding: "10px 20px", fontSize: "14px", outline: "none", resize: "none", fontFamily: "'Poppins', sans-serif" }} />
-                                <button type="submit" className="btn-primary" style={{ gridColumn: "1 / -1" }}>Submit</button>
-                            </form>
-                        </div>
+                        {/* Form */}
+                        <form style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                            <input type="text" placeholder="Name" className="form-input-dark" />
+                            <input type="email" placeholder="Email" required className="form-input-dark" />
+                            <input type="tel" placeholder="Phone" className="form-input-dark" />
+                            <input type="text" placeholder="Subject" required className="form-input-dark" />
+                            <textarea placeholder="Your message..." className="form-textarea-dark" style={{ gridColumn: "1 / -1" }} />
+                            <button type="submit" className="resume-btn resume-btn-accent" style={{ gridColumn: "1 / -1", height: "52px", fontSize: "13px", letterSpacing: "0.06em" }}>
+                                Send Message
+                            </button>
+                        </form>
                     </div>
 
                     {/* Footer bottom */}
-                    <div style={{ display: "grid", gridTemplateColumns: "0.75fr 1fr", gap: "30px", border: "2px solid #000", padding: "20px 30px" }}>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", alignItems: "center" }}>
-                            <a href="#" className="footer-link-item">Projects</a>
-                            <a href="#" className="footer-link-item">GitHub</a>
-                            <a href="#" className="footer-link-item">LinkedIn</a>
-                        </div>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", alignItems: "center" }}>
-                            <a href="#" className="footer-link-item">About</a>
-                            <a href="#" className="footer-link-item">Contact</a>
-                            <div style={{ color: "#000", fontSize: "16px", marginTop: "15px", width: "100%" }}>© 2026 Sushant Kumar</div>
+                    <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <p style={{ color: "#71717a", fontSize: "13px", margin: 0 }}>© 2026 Sushant Kumar. All rights reserved.</p>
+                        <div style={{ display: "flex", gap: "24px" }}>
+                            <a href="#" className="footer-link">GitHub</a>
+                            <a href="#" className="footer-link">LinkedIn</a>
+                            <Link href="/" className="footer-link">← Back to Portfolio</Link>
                         </div>
                     </div>
                 </div>
