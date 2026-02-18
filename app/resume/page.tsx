@@ -11,7 +11,7 @@ export default function ResumePage() {
             <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                     <Link href="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full" />
+                        <div className="w-8 h-8 bg-linear-to-br from-blue-500 to-purple-600 rounded-full" />
                         <span className="text-xl font-semibold">Portfolio</span>
                     </Link>
                     <div className="hidden md:flex items-center gap-8 text-sm">
@@ -46,8 +46,8 @@ export default function ResumePage() {
                         </a>
                     </motion.div>
                     <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.2 }} className="relative">
-                        <div className="aspect-square rounded-3xl bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10" />
+                        <div className="aspect-square rounded-3xl bg-linear-to-br from-blue-100 to-purple-100 relative overflow-hidden">
+                            <div className="absolute inset-0 bg-linear-to-br from-blue-500/10 to-purple-500/10" />
                             <div className="absolute  bottom-0 left-0 right-0 p-8 bg-white/80 backdrop-blur-sm">
                                 <h3 className="text-2xl font-semibold mb-2">Let's Work Together</h3>
                                 <p className="text-sm text-gray-600 mb-1">I am Available at</p>
@@ -200,7 +200,7 @@ export default function ResumePage() {
                                 viewport={{ once: true }}
                                 className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition cursor-pointer"
                             >
-                                <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 relative group-hover:scale-105 transition-transform duration-500" />
+                                <div className="aspect-video bg-linear-to-br from-blue-100 to-purple-100 relative group-hover:scale-105 transition-transform duration-500" />
                                 <div className="p-6">
                                     <h3 className="text-2xl font-semibold mb-2">Project {i + 1}</h3>
                                     <p className="text-gray-600 mb-4">
