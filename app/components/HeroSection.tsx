@@ -29,11 +29,11 @@ export default function HeroSection() {
     const scrollHintOpacity = useTransform(springProgress, [0, 0.04], [1, 0]);
 
     return (
-        <section ref={containerRef} className="relative h-[600vh] bg-luxury-black">
+        <section ref={containerRef} className="relative h-[900vh] bg-luxury-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
                     folderPath="/new_portfolio_animation"
-                    frameCount={60}
+                    frameCount={80}
                     startFrame={0}
                     filePrefix="Cinematic_applestyle_product_1080p_202602151_"
                     digitPadding={3}
@@ -51,24 +51,51 @@ export default function HeroSection() {
                         }}
                         className="text-center px-6 max-w-7xl"
                     >
-                        {/* Main name with Apple-style gradient */}
-                        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-semibold tracking-tighter mb-6 bg-linear-to-b from-white via-gray-200 to-gray-500 bg-clip-text text-transparent leading-[0.9]"
-                            style={{
-                                textShadow: '0 0 80px rgba(255,255,255,0.1)',
-                                WebkitTextStroke: '0.5px rgba(255,255,255,0.1)'
-                            }}>
-                            Sushant Kumar
-                        </h1>
+                        {/* Main name — grey gradient. Drop-shadow lives on the wrapper div
+                            because filter + webkit-background-clip:text conflict on the same element. */}
+                        <div style={{ filter: "drop-shadow(0 2px 16px rgba(0,0,0,0.8))" }}>
+                            <h1
+                                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight mb-10 leading-[0.95]"
+                                style={{
+                                    background: "linear-gradient(180deg, #ffffff 0%, #a0a0a0 55%, #6B6B6B 100%)",
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
+                                    backgroundClip: "text",
+                                    transform: "scale(0.975)",
+                                    transformOrigin: "center",
+                                    display: "inline-block",
+                                }}
+                            >
+                                Sushant Kumar
+                            </h1>
+                        </div>
 
                         {/* Subtitle */}
-                        <h2 className="text-2xl md:text-4xl font-light tracking-wide text-gray-400 mb-4 uppercase"
-                            style={{ letterSpacing: '0.15em' }}>
+                        <h2
+                            className="text-2xl md:text-4xl font-medium mb-6"
+                            style={{
+                                color: "#E4E4E7",
+                                letterSpacing: "0.03em",
+                                textShadow: "0 1px 12px rgba(0,0,0,0.85), 0 0 30px rgba(0,0,0,0.5)",
+                                transform: "scale(1.02)",
+                                transformOrigin: "center",
+                                display: "block",
+                            }}
+                        >
                             AI Systems Engineer
                         </h2>
 
-                        {/* Apple-style tagline */}
-                        <p className="text-base md:text-xl text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
-                            Building production-grade intelligent systems.
+                        {/* One-liner */}
+                        <p
+                            className="text-base md:text-xl font-light leading-relaxed"
+                            style={{
+                                color: "#C4C4C8",
+                                textShadow: "0 1px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.6)",
+                                transform: "scale(1.02)",
+                                display: "inline-block",
+                            }}
+                        >
+                            Designing and deploying scalable AI systems.
                         </p>
                     </motion.div>
                 </div>
