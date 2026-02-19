@@ -11,12 +11,11 @@ export default function HeroSection() {
         offset: ["start start", "end start"]
     });
 
-    // Spring-smooth the raw scroll value — this is the key fix for mouse-wheel jitter.
-    // stiffness + damping tuned so wheel ticks glide like a trackpad.
+    // Spring — tight and responsive, not sluggish
     const springProgress = useSpring(scrollYProgress, {
-        stiffness: 60,
-        damping: 22,
-        mass: 0.4,
+        stiffness: 200,
+        damping: 25,
+        mass: 0.3,
         restDelta: 0.0001,
     });
 
@@ -30,7 +29,7 @@ export default function HeroSection() {
     const scrollHintOpacity = useTransform(springProgress, [0, 0.04], [1, 0]);
 
     return (
-        <section ref={containerRef} className="relative h-[3000vh] bg-luxury-black">
+        <section ref={containerRef} className="relative h-[600vh] bg-luxury-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 <ImageSequence
                     folderPath="/new_portfolio_animation"

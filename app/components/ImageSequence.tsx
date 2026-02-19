@@ -68,7 +68,8 @@ export default function ImageSequence({
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // Render loop — smooth inertia layer bridges discrete mouse-wheel jumps
+    // Render loop — smoothing is handled upstream by useSpring in HeroSection.
+    // We just lerp gently for sub-frame blending.
     useEffect(() => {
         if (!isLoaded || images.length === 0) return;
 
@@ -86,34 +87,15 @@ export default function ImageSequence({
         let animationFrameId: number;
         let currentFrame = 0;
 
-        // Inertia state — sits between raw scrollYProgress and the lerp
-        // This converts discrete mouse-wheel jumps into a continuous glide
-        let smoothedProgress = activeProgress.get();
-        let velocity = 0;
-        const FRICTION = 0.88;  // momentum bleed-off per frame (lower = more glide)
-        const SPRING = 0.06;  // pull-strength toward raw target per frame
-
         const render = () => {
-            const rawProgress = activeProgress.get();
-
-            // Spring toward raw scroll value, then bleed off velocity with friction
-            velocity += (rawProgress - smoothedProgress) * SPRING;
-            velocity *= FRICTION;
-            smoothedProgress += velocity;
-
-            // Snap exactly to target once settled (prevents infinite micro-drift)
-            if (Math.abs(rawProgress - smoothedProgress) < 0.00005 && Math.abs(velocity) < 0.00005) {
-                smoothedProgress = rawProgress;
-                velocity = 0;
-            }
-
+            const progress = activeProgress.get();
             const targetFrame = Math.min(
                 frameCount - 1,
-                Math.max(0, smoothedProgress * (frameCount - 1))
+                Math.max(0, progress * (frameCount - 1))
             );
 
             // Gentle lerp for sub-frame blending
-            currentFrame += (targetFrame - currentFrame) * 0.08;
+            currentFrame += (targetFrame - currentFrame) * 0.3;
 
             const frameIndex = Math.round(currentFrame);
 
