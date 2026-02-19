@@ -1,5 +1,4 @@
 import HeroSection from "./components/HeroSection";
-import TechStack from "./components/TechStack";
 import Projects from "./components/Projects";
 import StickyNavbar from "./components/StickyNavbar";
 

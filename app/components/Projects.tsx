@@ -25,8 +25,10 @@ const projects = [
 
 export default function Projects() {
     return (
-        <section id="projects" className="py-32 bg-[#191919] px-6 md:px-12 border-t border-white/5">
-            <div className="max-w-7xl mx-auto">
+        <section id="projects" className="relative py-32 bg-[#111111] px-6 md:px-12">
+            {/* Gradient fade from hero black into this section */}
+            <div className="absolute top-0 left-0 right-0 h-40 bg-linear-to-b from-luxury-black to-transparent pointer-events-none z-10" />
+            <div className="max-w-7xl mx-auto relative z-20">
                 <motion.h3
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}

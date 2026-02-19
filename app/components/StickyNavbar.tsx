@@ -28,26 +28,26 @@ export default function StickyNavbar() {
         }
     };
 
-    // Track active section
+    // Track active section by scroll position — reliable even with very tall sections
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setActiveSection(entry.target.id);
-                    }
-                });
-            },
-            { threshold: 0.3 }
-        );
+        const sectionIds = ["introduction", "projects", "contact"];
 
-        const sections = ["introduction", "projects", "contact"];
-        sections.forEach((id) => {
-            const element = document.getElementById(id);
-            if (element) observer.observe(element);
-        });
+        const updateActive = () => {
+            const scrollPos = window.scrollY + window.innerHeight * 0.3; // 30% down the viewport
 
-        return () => observer.disconnect();
+            let current = sectionIds[0];
+            for (const id of sectionIds) {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop <= scrollPos) {
+                    current = id;
+                }
+            }
+            setActiveSection(current);
+        };
+
+        window.addEventListener("scroll", updateActive, { passive: true });
+        updateActive(); // run once on mount
+        return () => window.removeEventListener("scroll", updateActive);
     }, []);
 
     const navItems = [
@@ -71,7 +71,9 @@ export default function StickyNavbar() {
                     <button
                         key={id}
                         onClick={() => scrollToSection(id)}
-                        className={`hover:text-white hover:-translate-y-0.5 transition-all duration-200 ${activeSection === id ? "text-white" : ""
+                        className={`transition-all duration-200 ${activeSection === id
+                            ? "text-white font-semibold -translate-y-0.5"
+                            : "text-white/50 font-medium hover:text-white hover:-translate-y-0.5"
                             }`}
                     >
                         {label}
