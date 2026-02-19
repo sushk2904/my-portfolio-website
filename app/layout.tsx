@@ -10,8 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sony WH-1000XM6 | Silence, Perfected",
-  description: "Experience the next generation of noise cancelling.",
+  title: "Sushant Kumar | AI Systems Engineer",
+  description: "Designing and deploying scalable AI systems.",
 };
 
 export default function RootLayout({
