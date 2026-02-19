@@ -68,7 +68,7 @@ export default function ImageSequence({
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // Buttery smooth render loop with frame interpolation
+    // Render loop — smooth inertia layer bridges discrete mouse-wheel jumps
     useEffect(() => {
         if (!isLoaded || images.length === 0) return;
 
@@ -80,46 +80,56 @@ export default function ImageSequence({
         });
         if (!canvas || !ctx) return;
 
-        // High-quality rendering settings
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = "high";
 
         let animationFrameId: number;
         let currentFrame = 0;
 
+        // Inertia state — sits between raw scrollYProgress and the lerp
+        // This converts discrete mouse-wheel jumps into a continuous glide
+        let smoothedProgress = activeProgress.get();
+        let velocity = 0;
+        const FRICTION = 0.88;  // momentum bleed-off per frame (lower = more glide)
+        const SPRING = 0.06;  // pull-strength toward raw target per frame
+
         const render = () => {
-            const currentProgress = activeProgress.get();
+            const rawProgress = activeProgress.get();
+
+            // Spring toward raw scroll value, then bleed off velocity with friction
+            velocity += (rawProgress - smoothedProgress) * SPRING;
+            velocity *= FRICTION;
+            smoothedProgress += velocity;
+
+            // Snap exactly to target once settled (prevents infinite micro-drift)
+            if (Math.abs(rawProgress - smoothedProgress) < 0.00005 && Math.abs(velocity) < 0.00005) {
+                smoothedProgress = rawProgress;
+                velocity = 0;
+            }
+
             const targetFrame = Math.min(
                 frameCount - 1,
-                Math.max(0, currentProgress * (frameCount - 1))
+                Math.max(0, smoothedProgress * (frameCount - 1))
             );
 
-            // Lower lerp = smoother, more gradual transitions
-            const lerpFactor = 0.37; // Reduced from 0.2
-            currentFrame += (targetFrame - currentFrame) * lerpFactor;
+            // Gentle lerp for sub-frame blending
+            currentFrame += (targetFrame - currentFrame) * 0.08;
 
             const frameIndex = Math.round(currentFrame);
 
             if (images[frameIndex]) {
                 const img = images[frameIndex];
-
-                // Calculate cover fit
                 const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
                 const x = (canvas.width / 2) - (img.width / 2) * scale;
                 const y = (canvas.height / 2) - (img.height / 2) * scale;
-                const width = img.width * scale;
-                const height = img.height * scale;
-
-                // Clear canvas first for clean rendering
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(img, x, y, width, height);
+                ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
             }
 
             animationFrameId = requestAnimationFrame(render);
         };
 
         render();
-
         return () => cancelAnimationFrame(animationFrameId);
     }, [isLoaded, images, activeProgress, frameCount]);
 
