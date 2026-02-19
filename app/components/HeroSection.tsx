@@ -28,8 +28,9 @@ export default function HeroSection() {
     // Scroll hint fades out once user begins scrolling
     const scrollHintOpacity = useTransform(springProgress, [0, 0.04], [1, 0]);
 
-    // Glass card 1 — visible at load, fades out BEFORE name appears (name starts at 0.04)
+    // Glass card 1 — visible at load, fades out to the LEFT before name appears
     const card1Opacity = useTransform(springProgress, [0, 0.02, 0.04], [1, 1, 0]);
+    const card1X = useTransform(springProgress, [0, 0.02, 0.04], [0, 0, -24]);
 
     // Glass card 1.5 — RIGHT SIDE: enters from right, exits to left
     const card15Opacity = useTransform(springProgress, [0.26, 0.34, 0.44, 0.52], [0, 1, 1, 0]);
@@ -167,7 +168,7 @@ export default function HeroSection() {
 
                 {/* ── Glass card 1: Welcome ─────────────────────── */}
                 <motion.div
-                    style={{ opacity: card1Opacity }}
+                    style={{ opacity: card1Opacity, x: card1X }}
                     className="absolute top-18 left-10 md:left-10 z-20 max-w-xs"
                 >
                     <div style={{
