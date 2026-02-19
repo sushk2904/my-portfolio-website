@@ -319,7 +319,7 @@ export default function ResumePage() {
                             transition={{ duration: 0.8, delay: 0.2 }}
                             style={{ color: "#a1a1aa", maxWidth: "380px", margin: "0 0 32px", lineHeight: "1.7" }}
                         >
-                            AI Systems Engineer building production-grade intelligent systems.
+                            Building scalable AI systems from <br /> research to production.
                         </motion.p>
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.4 }}>
                             <a href="/resume.pdf" className="resume-btn" style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
@@ -350,8 +350,8 @@ export default function ResumePage() {
                     </div>
 
                     {/* Signature */}
-                    <div style={{ position: "absolute", left: "30px", bottom: "0" }}>
-                        <Image src="/resume/signature.png" alt="Signature" width={180} height={70} style={{ opacity: 0.35, filter: "invert(1)" }} />
+                    <div style={{ position: "absolute", left: "225px", bottom: "20px" }}>
+                        <Image src="/resume/singature-removebg-preview.png" alt="Signature" width={100} height={90} style={{ opacity: 0.9, filter: "invert(1)" }} />
                     </div>
                 </div>
             </section>
