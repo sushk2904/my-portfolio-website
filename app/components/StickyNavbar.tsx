@@ -88,6 +88,71 @@ export default function StickyNavbar() {
                 >
                     Resume
                 </Link>
+
+                {/* Annotation: visible only when Projects section is active */}
+                <motion.div
+                    initial={{ opacity: 0, y: 10, rotate: -4 }}
+                    animate={activeSection === "projects" ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="absolute top-12 right-[-10px] pointer-events-none select-none w-48 flex flex-col items-end"
+                >
+                    <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap');`}</style>
+
+                    {/* Arrow pointing up-left towards button (mirrored) */}
+                    <svg
+                        width="45"
+                        height="35"
+                        viewBox="0 0 50 40"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="mr-8 mb-1"
+                        style={{ transform: "rotate(25deg) scaleX(-1)" }}
+                    >
+                        {/* Spiral path */}
+                        <motion.path
+                            d="M 40 35 C 30 35, 10 30, 10 10"
+                            stroke="rgba(255,255,255,0.3)"
+                            strokeWidth="1.2"
+                            strokeLinecap="round"
+                            fill="none"
+                            initial={{ pathLength: 0 }}
+                            animate={activeSection === "projects" ? { pathLength: 1 } : { pathLength: 0 }}
+                            transition={{ duration: 1.2, ease: "easeInOut" }}
+                        />
+                        {/* Arrowhead */}
+                        <motion.path
+                            d="M 10 10 L 16 14 M 10 10 L 9 18"
+                            stroke="rgba(255,255,255,0.3)"
+                            strokeWidth="1.2"
+                            strokeLinecap="round"
+                            fill="none"
+                            initial={{ opacity: 0 }}
+                            animate={activeSection === "projects" ? { opacity: 1 } : { opacity: 0 }}
+                            transition={{ delay: 1.0, duration: 0.2 }}
+                        />
+                    </svg>
+
+                    {/* Handwritten text */}
+                    <div className="text-right mr-6 -mt-2">
+                        <p style={{
+                            fontFamily: "'Caveat', cursive",
+                            fontSize: "14px",
+                            color: "rgba(255,255,255,0.6)",
+                            lineHeight: 1.2,
+                            whiteSpace: "nowrap",
+                        }}>
+                            full story in here
+                        </p>
+                        <p style={{
+                            fontFamily: "'Caveat', cursive",
+                            fontSize: "11px",
+                            color: "rgba(255,255,255,0.3)",
+                            whiteSpace: "nowrap",
+                        }}>
+                            & detailed case studies
+                        </p>
+                    </div>
+                </motion.div>
             </div>
         </motion.nav>
     );
