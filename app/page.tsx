@@ -7,20 +7,10 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-luxury-black">
       <StickyNavbar />
-      <HeroSection />
-      <TechStack />
+      <div id="introduction">
+        <HeroSection />
+      </div>
       <Projects />
-
-      {/* About Section */}
-      <section id="about" className="py-32 bg-luxury-black px-6 md:px-12 border-t border-white/5">
-        <div className="max-w-4xl mx-auto">
-          <h3 className="text-4xl md:text-5xl font-semibold text-white mb-12 tracking-tight">About</h3>
-          <p className="text-lg text-gray-400 leading-relaxed">
-            AI Systems Engineer specializing in production-grade intelligent systems.
-            Building scalable solutions at the intersection of machine learning and software engineering.
-          </p>
-        </div>
-      </section>
 
       {/* Contact Section */}
       <section id="contact" className="py-32 bg-[#191919] px-6 md:px-12 border-t border-white/5">

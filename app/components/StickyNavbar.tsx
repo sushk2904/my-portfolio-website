@@ -41,7 +41,7 @@ export default function StickyNavbar() {
             { threshold: 0.3 }
         );
 
-        const sections = ["experience", "stack", "about", "contact"];
+        const sections = ["introduction", "projects", "contact"];
         sections.forEach((id) => {
             const element = document.getElementById(id);
             if (element) observer.observe(element);
@@ -51,9 +51,8 @@ export default function StickyNavbar() {
     }, []);
 
     const navItems = [
-        { label: "Experience", id: "experience" },
-        { label: "Stack", id: "stack" },
-        { label: "About", id: "about" },
+        { label: "Introduction", id: "introduction" },
+        { label: "Projects", id: "projects" },
         { label: "Contact", id: "contact" }
     ];
 
