@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, useMotionTemplate } from "framer-motion";
 import { useRef } from "react";
 import ImageSequence from "./ImageSequence";
 
@@ -11,14 +11,23 @@ export default function HeroSection() {
         offset: ["start start", "end start"]
     });
 
-    // Optimized Apple-style reveal: faster, lighter animations
-    const textOpacity = useTransform(scrollYProgress, [0, 0.03, 0.15, 0.25], [0, 1, 1, 0]);
-    const textScale = useTransform(scrollYProgress, [0, 0.03, 0.12], [0.98, 1, 1.02]);
-    const textBlur = useTransform(scrollYProgress, [0, 0.03], [4, 0]); // Reduced from 8px
+    // Spring-smooth the raw scroll value — this is the key fix for mouse-wheel jitter.
+    // stiffness + damping tuned so wheel ticks glide like a trackpad.
+    const springProgress = useSpring(scrollYProgress, {
+        stiffness: 60,
+        damping: 22,
+        mass: 0.4,
+        restDelta: 0.0001,
+    });
+
+    // Text overlay driven by the spring value so text also glides smoothly
+    const textOpacity = useTransform(springProgress, [0, 0.03, 0.15, 0.25], [0, 1, 1, 0]);
+    const textScale = useTransform(springProgress, [0, 0.03, 0.12], [0.98, 1, 1.02]);
+    const textBlur = useTransform(springProgress, [0, 0.03], [4, 0]);
     const filter = useMotionTemplate`blur(${textBlur}px)`;
 
     // Scroll hint fades out once user begins scrolling
-    const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.04], [1, 0]);
+    const scrollHintOpacity = useTransform(springProgress, [0, 0.04], [1, 0]);
 
     return (
         <section ref={containerRef} className="relative h-[3000vh] bg-luxury-black">
@@ -30,7 +39,7 @@ export default function HeroSection() {
                     filePrefix="Cinematic_applestyle_product_1080p_202602151_"
                     digitPadding={3}
                     className="opacity-75"
-                    scrollProgress={scrollYProgress}
+                    scrollProgress={springProgress}
                 />
 
                 {/* Apple-style text overlay */}
