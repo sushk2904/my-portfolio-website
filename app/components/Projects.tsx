@@ -35,7 +35,7 @@ export default function Projects() {
                     viewport={{ once: true }}
                     className="text-2xl md:text-4xl font-medium text-white mb-16 tracking-tight"
                 >
-                    Selected Work
+                    Projects
                 </motion.h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
