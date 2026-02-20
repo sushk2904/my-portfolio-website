@@ -11,6 +11,7 @@ interface ImageSequenceProps {
     digitPadding?: number;
     className?: string;
     scrollProgress?: MotionValue<number>;
+    onLoad?: () => void;
 }
 
 export default function ImageSequence({
@@ -20,7 +21,8 @@ export default function ImageSequence({
     filePrefix = "ezgif-frame-",
     digitPadding = 3,
     className = "",
-    scrollProgress
+    scrollProgress,
+    onLoad,
 }: ImageSequenceProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [images, setImages] = useState<HTMLImageElement[]>([]);
@@ -45,6 +47,7 @@ export default function ImageSequence({
                 loadedCount++;
                 if (loadedCount === frameCount) {
                     setIsLoaded(true);
+                    onLoad?.();
                 }
             };
             loadedImages.push(img);

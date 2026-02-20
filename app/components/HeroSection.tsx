@@ -1,11 +1,12 @@
 "use client";
 
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import ImageSequence from "./ImageSequence";
 
 export default function HeroSection() {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [loaded, setLoaded] = useState(false);
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end start"]
@@ -55,6 +56,7 @@ export default function HeroSection() {
                     digitPadding={3}
                     className="opacity-75"
                     scrollProgress={springProgress}
+                    onLoad={() => setLoaded(true)}
                 />
 
                 {/* Lighting ramp: dark overlay fades away on load for a product-reveal feel */}
@@ -131,7 +133,7 @@ export default function HeroSection() {
 
                 {/* ── Scroll hint: stacked arrows on the right ───── */}
                 <motion.div
-                    style={{ opacity: scrollHintOpacity }}
+                    style={{ opacity: loaded ? scrollHintOpacity : 0 }}
                     className="absolute right-87 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-1 pointer-events-none select-none"
                 >
                     {/* Vertical "scroll" label */}
@@ -172,7 +174,7 @@ export default function HeroSection() {
 
                 {/* ── Glass card 1: Welcome ─────────────────────── */}
                 <motion.div
-                    style={{ opacity: card1Opacity }}
+                    style={{ opacity: loaded ? card1Opacity : 0 }}
                     className="absolute top-18 left-10 md:left-10 z-20 max-w-xs"
                 >
                     <div style={{
