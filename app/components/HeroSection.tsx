@@ -175,7 +175,7 @@ export default function HeroSection() {
                 {/* ── Glass card 1: Welcome ─────────────────────── */}
                 <motion.div
                     style={{ opacity: loaded ? card1Opacity : 0 }}
-                    className="absolute top-18 left-10 md:left-10 z-20 max-w-xs"
+                    className="absolute top-16 left-10 md:left-7 z-20 max-w-xs"
                 >
                     <div style={{
                         background: "rgba(30, 30, 30, 0.42)",
