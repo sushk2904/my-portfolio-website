@@ -91,62 +91,64 @@ export default function StickyNavbar() {
 
                 {/* Annotation: visible only when Projects section is active */}
                 <motion.div
-                    initial={{ opacity: 0, y: 10, rotate: -4 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={activeSection === "projects" ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="absolute top-12 right-[-10px] pointer-events-none select-none w-48 flex flex-col items-end"
+                    className="absolute top-10 right-[-24px] pointer-events-none select-none w-64 flex flex-col items-end"
                 >
                     <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap');`}</style>
 
-                    {/* Arrow pointing up-left towards button (mirrored) */}
-                    <svg
-                        width="45"
-                        height="35"
-                        viewBox="0 0 50 40"
+                    {/* Spiral arrow — larger, with a looping slow rotate */}
+                    <motion.svg
+                        width="80"
+                        height="65"
+                        viewBox="0 0 90 70"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="mr-8 mb-1"
-                        style={{ transform: "rotate(25deg) scaleX(-1)" }}
+                        className="mr-10 mb-0"
+                        style={{ transform: "rotate(20deg) scaleX(-1)" }}
+                        animate={activeSection === "projects" ? { rotate: [20, 24, 20] } : {}}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                     >
-                        {/* Spiral path */}
+                        {/* Main spiral curve */}
                         <motion.path
-                            d="M 40 35 C 30 35, 10 30, 10 10"
-                            stroke="rgba(255,255,255,0.3)"
-                            strokeWidth="1.2"
+                            d="M 75 62 C 60 62, 20 55, 14 30 C 10 14, 22 4, 36 8 C 50 12, 52 28, 38 32 C 26 36, 16 28, 20 18"
+                            stroke="rgba(255,255,255,0.4)"
+                            strokeWidth="1.6"
                             strokeLinecap="round"
                             fill="none"
-                            initial={{ pathLength: 0 }}
-                            animate={activeSection === "projects" ? { pathLength: 1 } : { pathLength: 0 }}
-                            transition={{ duration: 1.2, ease: "easeInOut" }}
+                            initial={{ pathLength: 0, opacity: 0 }}
+                            animate={activeSection === "projects" ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+                            transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
                         />
                         {/* Arrowhead */}
                         <motion.path
-                            d="M 10 10 L 16 14 M 10 10 L 9 18"
-                            stroke="rgba(255,255,255,0.3)"
-                            strokeWidth="1.2"
+                            d="M 20 18 L 27 22 M 20 18 L 18 26"
+                            stroke="rgba(255,255,255,0.4)"
+                            strokeWidth="1.6"
                             strokeLinecap="round"
                             fill="none"
                             initial={{ opacity: 0 }}
                             animate={activeSection === "projects" ? { opacity: 1 } : { opacity: 0 }}
-                            transition={{ delay: 1.0, duration: 0.2 }}
+                            transition={{ delay: 1.4, duration: 0.25 }}
                         />
-                    </svg>
+                    </motion.svg>
 
                     {/* Handwritten text */}
-                    <div className="text-right mr-6 -mt-2">
+                    <div className="text-right mr-8 -mt-1">
                         <p style={{
                             fontFamily: "'Caveat', cursive",
-                            fontSize: "14px",
-                            color: "rgba(255,255,255,0.6)",
-                            lineHeight: 1.2,
+                            fontSize: "17px",
+                            color: "rgba(255,255,255,0.65)",
+                            lineHeight: 1.25,
                             whiteSpace: "nowrap",
                         }}>
                             full story in here
                         </p>
                         <p style={{
                             fontFamily: "'Caveat', cursive",
-                            fontSize: "11px",
-                            color: "rgba(255,255,255,0.3)",
+                            fontSize: "13px",
+                            color: "rgba(255,255,255,0.32)",
                             whiteSpace: "nowrap",
                         }}>
                             & detailed case studies
