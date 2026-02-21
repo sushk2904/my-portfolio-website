@@ -340,12 +340,12 @@ export default function ResumePage() {
                     </div>
 
                     {/* Hero image */}
-                    <div style={{ position: "absolute", right: "30px", bottom: "0", width: "340px" }}>
+                    <div style={{ position: "absolute", right: "350px", bottom: "0", width: "340px" }}>
                         <Image src="/resume/hero-image.webp" alt="Sushant Kumar" width={340} height={440} style={{ display: "block", width: "100%", height: "auto", filter: "grayscale(20%)" }} />
                     </div>
 
                     {/* Rotating circle */}
-                    <div style={{ position: "absolute", right: "350px", bottom: "60px" }}>
+                    <div style={{ position: "absolute", right: "450px", bottom: "60px" }}>
                         <Image src="/resume/rounded-circle.png" alt="" width={110} height={110} className="rotating-circle" style={{ filter: "invert(1) opacity(0.5)" }} />
                     </div>
 
