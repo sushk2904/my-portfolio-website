@@ -98,41 +98,39 @@ export default function StickyNavbar() {
                 >
                     <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap');`}</style>
 
-                    {/* Spiral arrow — larger, with a looping slow rotate */}
-                    <motion.svg
-                        width="80"
-                        height="65"
-                        viewBox="0 0 90 70"
+                    {/* Curvy arrow — mirrored, S-curve centerline, tip points toward Resume */}
+                    <svg
+                        width="56"
+                        height="56"
+                        viewBox="0 0 56 56"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="mr-10 mb-0"
-                        style={{ transform: "rotate(20deg) scaleX(-1)" }}
-                        animate={activeSection === "projects" ? { rotate: [20, 24, 20] } : {}}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        className="mr-8 mb-1"
+                        style={{ transform: "scaleX(-1)" }}
                     >
-                        {/* Main spiral curve */}
+                        {/* Cubic S-curve: bottom-left → bows right → tip at upper-left */}
                         <motion.path
-                            d="M 75 62 C 60 62, 20 55, 14 30 C 10 14, 22 4, 36 8 C 50 12, 52 28, 38 32 C 26 36, 16 28, 20 18"
-                            stroke="rgba(255,255,255,0.4)"
-                            strokeWidth="1.6"
+                            d="M 8 50 C 8 22, 48 32, 48 8"
+                            stroke="rgba(255,255,255,0.45)"
+                            strokeWidth="1.5"
                             strokeLinecap="round"
                             fill="none"
                             initial={{ pathLength: 0, opacity: 0 }}
                             animate={activeSection === "projects" ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                            transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+                            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                         />
-                        {/* Arrowhead */}
+                        {/* Arrowhead at tip pointing upward */}
                         <motion.path
-                            d="M 20 18 L 27 22 M 20 18 L 18 26"
-                            stroke="rgba(255,255,255,0.4)"
-                            strokeWidth="1.6"
+                            d="M 48 8 L 42 16 M 48 8 L 54 16"
+                            stroke="rgba(255,255,255,0.45)"
+                            strokeWidth="1.5"
                             strokeLinecap="round"
                             fill="none"
                             initial={{ opacity: 0 }}
                             animate={activeSection === "projects" ? { opacity: 1 } : { opacity: 0 }}
-                            transition={{ delay: 1.4, duration: 0.25 }}
+                            transition={{ delay: 0.8, duration: 0.2 }}
                         />
-                    </motion.svg>
+                    </svg>
 
                     {/* Handwritten text */}
                     <div className="text-right mr-8 -mt-1">
