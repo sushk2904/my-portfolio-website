@@ -229,7 +229,7 @@ export default function HeroSection() {
                 {/* ── Glass card 2: Brief intro ─────────────────── */}
                 <motion.div
                     style={{ opacity: card2Opacity, x: card2X }}
-                    className="absolute bottom-20 left-10 md:left-3 z-20 max-w-sm"
+                    className="absolute bottom-16 left-10 md:left-3 z-20 max-w-sm"
                 >
                     <div style={{
                         background: "rgba(30, 30, 30, 0.42)",
