@@ -345,7 +345,7 @@ export default function ResumePage() {
                     </div>
 
                     {/* Rotating circle */}
-                    <div style={{ position: "absolute", right: "450px", bottom: "60px" }}>
+                    <div style={{ position: "absolute", right: "500px", bottom: "60px" }}>
                         <Image src="/resume/rounded-circle.png" alt="" width={110} height={110} className="rotating-circle" style={{ filter: "invert(1) opacity(0.5)" }} />
                     </div>
 
