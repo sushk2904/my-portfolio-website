@@ -340,13 +340,33 @@ export default function ResumePage() {
                     </div>
 
                     {/* Hero image */}
-                    <div style={{ position: "absolute", right: "350px", bottom: "0", width: "340px" }}>
-                        <Image src="/resume/hero-image.webp" alt="Sushant Kumar" width={340} height={440} style={{ display: "block", width: "100%", height: "auto", filter: "grayscale(20%)" }} />
+                    <div style={{ position: "absolute", right: "350px", bottom: "0", width: "390px" }}>
+                        <Image src="/resume/new_hero_image_v2.png" alt="Sushant Kumar" width={340} height={440} style={{ display: "block", width: "100%", height: "auto", filter: "grayscale(20%)" }} />
                     </div>
 
                     {/* Rotating circle */}
-                    <div style={{ position: "absolute", right: "500px", bottom: "60px" }}>
-                        <Image src="/resume/rounded-circle.png" alt="" width={110} height={110} className="rotating-circle" style={{ filter: "invert(1) opacity(0.5)" }} />
+                    <div style={{ position: "absolute", right: "-15px", top: "-10px", width: "100px", height: "100px" }} className="rotating-circle">
+                        <svg viewBox="0 0 120 120" style={{ overflow: "visible" }}>
+                            {/* Hidden path for the text to follow: Starts bottom (60,110), goes clockwise through left to top to right */}
+                            <path id="textCircle" d="M 60,110 A 50,50 0 1 1 60,10 A 50,50 0 1 1 60,110" fill="none" />
+
+                            {/* Text centered at the exact top of the circle */}
+                            <text fill="#ffffff" fontSize="13" fontWeight="500" letterSpacing="0.32em" style={{ textTransform: "uppercase", opacity: 0.6 }}>
+                                <textPath href="#textCircle" startOffset="50%" textAnchor="middle">
+                                    AI Systems Engineer
+                                </textPath>
+                            </text>
+
+                            {/* The red/magenta arc at the bottom connecting the text ends */}
+                            <path
+                                d="M 19 100 A 52 52 0 0 0 103 100"
+                                fill="none"
+                                stroke="#9d0a5e"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                style={{ opacity: 0.8 }}
+                            />
+                        </svg>
                     </div>
 
                     {/* Signature */}
