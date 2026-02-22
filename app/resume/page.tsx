@@ -492,8 +492,8 @@ export default function ResumePage() {
                                 <div style={{ position: "absolute", left: "50%", top: "8px", bottom: "8px", width: "1px", backgroundColor: "rgba(255,255,255,0.08)", transform: "translateX(-50%)", zIndex: 0 }} />
 
                                 {[
-                                    { institution: "IIT Bombay", date: "2021 – 2025", degree: "B.Tech in Computer Science", desc: "Specializing in AI/ML, distributed systems and large-scale software architecture." },
-                                    { institution: "Junior College", date: "2019 – 2021", degree: "Higher Secondary — Science", desc: "Mathematics, Physics, Computer Science with distinction." },
+                                    { institution: "Amity University, Uttar Pradesh", date: "2024 – 2028 | CGPA: 8.30 / 10", degree: "B.Tech in Computer Science", desc: "Focused coursework in AI/ML, distributed systems, and large-scale software architecture." },
+                                    { institution: "Vidya Bal Bhawan Sr. Sec. School", date: "2021 – 2023", degree: "Senior Secondary — Science", desc: "Mathematics, Physics, Chemistry, Computer Science and English" },
                                 ].map((edu, i, arr) => (
                                     <>
                                         <div key={`left-${i}`} style={{ textAlign: "right", paddingBottom: i < arr.length - 1 ? "40px" : "0" }}>
@@ -517,15 +517,77 @@ export default function ResumePage() {
 
 
             {/* ── Experience ─────────────────────────────────────────── */}
-            <section id="experience" style={{ paddingTop: "60px", paddingBottom: "100px", backgroundColor: "#080808" }}>
+            <section id="experience" style={{ paddingTop: "80px", paddingBottom: "120px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Career</p>
-                    <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 500, margin: "0 0 60px", color: "#fff", lineHeight: "1.1" }}>In a previous life</h2>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2px" }}>
-                        <ExperienceCard company="Company 1" year="2023 – Present" role="Senior AI Engineer" period="January 2023 – Present" description="Building production-grade ML systems and intelligent automation pipelines." posts={["ML Ops", "System Design", "Python"]} />
-                        <ExperienceCard company="Company 2" year="2021 – 2023" role="Full-Stack Developer" period="June 2021 – December 2022" description="Developed scalable web applications and RESTful APIs serving millions of users." posts={["React", "Node.js", "PostgreSQL"]} />
-                        <ExperienceCard company="Company 3" year="2020 – 2021" role="Software Engineer" period="January 2020 – May 2021" description="Designed and implemented microservices architecture for enterprise applications." posts={["Python", "Django", "Docker"]} />
-                        <ExperienceCard company="Company 4" year="2019 – 2020" role="Software Intern" period="June 2019 – December 2019" description="Contributed to frontend development and learned industry best practices." posts={["JavaScript", "APIs", "React"]} />
+                    <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 40px" }}>Experience</p>
+
+                    {/* Minimal Horizontal Timeline */}
+                    <div style={{ position: "relative" }}>
+                        {/* Thin horizontal line across section */}
+                        <div style={{ position: "absolute", top: "4px", left: 0, right: 0, height: "1px", backgroundColor: "rgba(255,255,255,0.06)" }} />
+
+                        {/* Timeline Node Container */}
+                        <motion.div
+                            initial="rest"
+                            whileHover="hover"
+                            animate="rest"
+                            style={{ position: "relative", display: "inline-block", paddingTop: "32px", cursor: "crosshair" }}
+                        >
+                            {/* Glowing Circular Node */}
+                            <motion.div
+                                variants={{
+                                    rest: { backgroundColor: "#3f3f46", boxShadow: "0 0 0 0 rgba(16, 185, 129, 0)", scale: 1 },
+                                    hover: { backgroundColor: "#10b981", boxShadow: "0 0 0 8px rgba(16, 185, 129, 0.15)", scale: 1.2 }
+                                }}
+                                transition={{ duration: 0.3 }}
+                                style={{
+                                    position: "absolute", top: "0", left: "0",
+                                    width: "9px", height: "9px", borderRadius: "50%",
+                                    zIndex: 10
+                                }}
+                            />
+
+                            {/* Node Visible Content */}
+                            <div style={{ maxWidth: "500px", paddingRight: "40px" }}>
+                                <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px" }}>2025 — Present</p>
+                                <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>Research Assistant (Applied AI)</h3>
+                                <p style={{ color: "#a1a1aa", fontSize: "15px", margin: "0 0 16px" }}>BIT Lab under Dokyun Lee</p>
+                                <p style={{ color: "#71717a", fontSize: "14px", lineHeight: "1.6", margin: 0 }}>
+                                    Working on scalable AI systems and research on model behavior, dataset-induced skill analysis, and production-oriented ML experimentation.
+                                </p>
+                            </div>
+
+                            {/* Expanded Hover Tile */}
+                            <motion.div
+                                variants={{
+                                    rest: { opacity: 0, y: 15, scale: 0.96, pointerEvents: "none" },
+                                    hover: { opacity: 1, y: 0, scale: 1, pointerEvents: "auto" }
+                                }}
+                                transition={{ duration: 0.3, ease: "easeOut" }}
+                                style={{
+                                    position: "absolute", top: "100%", left: "08px",
+                                    marginTop: "24px", width: "420px", padding: "32px",
+                                    backgroundColor: "rgba(10, 10, 10, 0.6)",
+                                    backdropFilter: "blur(24px)",
+                                    WebkitBackdropFilter: "blur(24px)",
+                                    border: "1px solid rgba(255,255,255,0.06)",
+                                    borderRadius: "16px",
+                                    boxShadow: "0 30px 60px rgba(0,0,0,0.6)",
+                                    zIndex: 50
+                                }}
+                            >
+                                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+                                    <div style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#10b981" }} />
+                                    <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "16px", fontWeight: 500, color: "#fff" }}>Key Research Areas</span>
+                                </div>
+                                <ul style={{ margin: 0, paddingLeft: "16px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.7", display: "flex", flexDirection: "column", gap: "12px" }}>
+                                    <li style={{ paddingLeft: "6px" }}>Engineering scalable intelligence systems translating empirical findings to production models.</li>
+                                    <li style={{ paddingLeft: "6px" }}>Analyzing LLM behavioral changes driven by dataset distribution shifts.</li>
+                                    <li style={{ paddingLeft: "6px" }}>Building pipelines for dataset-induced skill capability testing.</li>
+                                    <li style={{ paddingLeft: "6px" }}>Architecting experiments addressing real-world ML adoption hurdles.</li>
+                                </ul>
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
