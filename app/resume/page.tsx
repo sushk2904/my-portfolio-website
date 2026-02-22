@@ -445,6 +445,75 @@ export default function ResumePage() {
                 </div>
             </section>
 
+            {/* ── Personal Info + Education ────────────────────────────────── */}
+            <section id="about" style={{ paddingTop: "60px", paddingBottom: "80px" }}>
+                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-80px" }}
+                        transition={{ duration: 0.8 }}
+                        style={{ display: "grid", gridTemplateColumns: "0.6fr 1.4fr", gap: "80px", alignItems: "start" }}
+                    >
+                        {/* ── Personal Info ── */}
+                        <div>
+                            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
+                                <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "18px", fontWeight: 500, color: "#fff" }}>Personal Info</span>
+                            </div>
+                            <p style={{ color: "#a1a1aa", fontSize: "14px", lineHeight: "1.7", margin: "0 0 28px", maxWidth: "280px" }}>
+                                Building scalable AI solutions at the intersection of machine learning and software engineering.
+                            </p>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                                {[
+                                    { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>, text: "Mumbai, India" },
+                                    { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>, text: "sushantk2904@gmail.com" },
+                                    { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" /></svg>, text: "+91 98913 43285" },
+                                ].map((item, i) => (
+                                    <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px", color: "#a1a1aa", fontSize: "14px" }}>
+                                        <span style={{ color: "#6b7280", flexShrink: 0 }}>{item.icon}</span>
+                                        <span>{item.text}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* ── Education Timeline ── */}
+                        <div>
+                            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "36px" }}>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg>
+                                <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "18px", fontWeight: 500, color: "#fff" }}>Education</span>
+                            </div>
+                            <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "0" }}>
+                                {/* Vertical connecting line */}
+                                <div style={{ position: "absolute", left: "50%", top: "8px", bottom: "8px", width: "1px", backgroundColor: "rgba(255,255,255,0.08)", transform: "translateX(-50%)" }} />
+
+                                {[
+                                    { institution: "IIT Bombay", date: "2021 – 2025", degree: "B.Tech in Computer Science", desc: "Specializing in AI/ML, distributed systems and large-scale software architecture." },
+                                    { institution: "Junior College", date: "2019 – 2021", degree: "Higher Secondary — Science", desc: "Mathematics, Physics, Computer Science with distinction." },
+                                ].map((edu, i, arr) => (
+                                    <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "24px", alignItems: "start", marginBottom: i < arr.length - 1 ? "40px" : "0" }}>
+                                        {/* Left: institution + date */}
+                                        <div style={{ textAlign: "right" }}>
+                                            <p style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "16px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>{edu.institution}</p>
+                                            <p style={{ color: "#6b7280", fontSize: "13px", margin: 0 }}>{edu.date}</p>
+                                        </div>
+                                        {/* Center: green dot */}
+                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "4px", zIndex: 1 }}>
+                                            <div style={{ width: "10px", height: "10px", borderRadius: "50%", backgroundColor: "#10b981", border: "2px solid #0a0a0a", boxShadow: "0 0 0 3px rgba(16,185,129,0.2)", flexShrink: 0 }} />
+                                        </div>
+                                        {/* Right: degree + desc */}
+                                        <div>
+                                            <p style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "16px", fontWeight: 500, color: "#fff", margin: "0 0 6px" }}>{edu.degree}</p>
+                                            <p style={{ color: "#71717a", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>{edu.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
 
 
             {/* ── Experience ─────────────────────────────────────────── */}
