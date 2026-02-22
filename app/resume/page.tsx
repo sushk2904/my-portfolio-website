@@ -415,7 +415,7 @@ export default function ResumePage() {
             </section>
 
             {/* ── Typographical Statement ──────────────────────────────────── */}
-            <section style={{ padding: "0px 0 80px", position: "relative", zIndex: 10 }}>
+            <section style={{ padding: "0px 0 40px", position: "relative", zIndex: 10 }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <motion.h3
                         initial={{ opacity: 0, y: 30 }}
@@ -445,85 +445,10 @@ export default function ResumePage() {
                 </div>
             </section>
 
-            {/* ── Divider ────────────────────────────────────────────── */}
-            <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.06)" }} />
-            </div>
 
-            {/* ── About ──────────────────────────────────────────────── */}
-            <section id="about" style={{ paddingTop: "100px", paddingBottom: "100px" }}>
-                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    {/* Skill rows */}
-                    {[
-                        { label: "ML Engineering", img: "/resume/01.webp" },
-                        { label: "System Design", img: "/resume/02.webp" },
-                        { label: "Full-Stack Development", img: "/resume/03.jpg" },
-                        { label: "& DevOps", img: "/resume/04.webp" },
-                    ].map((item, i) => (
-                        <div key={i} style={{
-                            borderTop: "1px solid rgba(255,255,255,0.06)",
-                            display: "flex", justifyContent: "space-between", alignItems: "center",
-                            padding: "20px 0",
-                        }}>
-                            <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(22px, 3vw, 38px)", fontWeight: 500, color: "#fff" }}>{item.label}</span>
-                            <div style={{ overflow: "hidden", width: "160px", height: "90px", position: "relative", flexShrink: 0 }}>
-                                <Image src={item.img} alt={item.label} fill style={{ objectFit: "cover", filter: "grayscale(30%)" }} />
-                            </div>
-                        </div>
-                    ))}
-                    <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
-
-                    {/* Personal info + Education */}
-                    <div style={{ display: "grid", gridTemplateColumns: "0.75fr 1.25fr", gap: "60px", marginTop: "80px" }}>
-                        {/* Personal Info */}
-                        <div>
-                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Personal Info</p>
-                            <p style={{ color: "#a1a1aa", lineHeight: "1.7", margin: "0 0 28px" }}>
-                                Building scalable AI solutions at the intersection of machine learning and software engineering.
-                            </p>
-                            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                                {[
-                                    { icon: "📍", text: "Your City, Your Country" },
-                                    { icon: "✉️", text: "your@email.com" },
-                                    { icon: "📞", text: "+1 234 567 890" },
-                                ].map((item, i) => (
-                                    <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px", color: "#a1a1aa", fontSize: "14px" }}>
-                                        <span>{item.icon}</span>
-                                        <span>{item.text}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Education */}
-                        <div>
-                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 24px" }}>Education</p>
-                            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-                                {[
-                                    { place: "Your University", date: "2020 – 2024", degree: "B.Tech in Computer Science", desc: "Specialized in AI/ML systems and distributed computing." },
-                                    { place: "Your School", date: "2018 – 2020", degree: "Higher Secondary Education", desc: "Science stream with Mathematics and Computer Science." },
-                                ].map((edu, i) => (
-                                    <div key={i} style={{ display: "flex", gap: "20px" }}>
-                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "4px" }}>
-                                            <div style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#94a3b8", flexShrink: 0 }} />
-                                            {i === 0 && <div style={{ width: "1px", flex: 1, backgroundColor: "rgba(255,255,255,0.1)", marginTop: "8px" }} />}
-                                        </div>
-                                        <div>
-                                            <p style={{ color: "#94a3b8", fontSize: "12px", margin: "0 0 4px" }}>{edu.date}</p>
-                                            <p style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "18px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>{edu.degree}</p>
-                                            <p style={{ color: "#a1a1aa", fontSize: "13px", margin: "0 0 4px" }}>{edu.place}</p>
-                                            <p style={{ color: "#71717a", fontSize: "13px", margin: 0 }}>{edu.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* ── Experience ─────────────────────────────────────────── */}
-            <section id="experience" style={{ paddingTop: "100px", paddingBottom: "100px", backgroundColor: "#080808" }}>
+            <section id="experience" style={{ paddingTop: "60px", paddingBottom: "100px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Career</p>
                     <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 500, margin: "0 0 60px", color: "#fff", lineHeight: "1.1" }}>In a previous life</h2>
