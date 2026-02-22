@@ -292,10 +292,10 @@ export default function ResumePage() {
             </nav>
 
             {/* ── Hero ───────────────────────────────────────────────── */}
-            <section style={{ paddingTop: "120px", paddingBottom: "40px", overflow: "hidden" }}>
-                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px", position: "relative" }}>
+            <section style={{ paddingTop: "120px", paddingBottom: "0px", overflow: "hidden" }}>
+                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px", position: "relative", minHeight: "500px" }}>
                     {/* Big name */}
-                    <div style={{ marginBottom: "280px" }}>
+                    <div style={{ marginBottom: "55px" }}>
                         <motion.h1
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -319,7 +319,7 @@ export default function ResumePage() {
                             transition={{ duration: 0.8, delay: 0.2 }}
                             style={{ color: "#a1a1aa", maxWidth: "380px", margin: "0 0 32px", lineHeight: "1.7" }}
                         >
-                            Building scalable AI systems from <br /> research to production.
+                            Developing scalable AI systems  <br /> from research to deployment for high impact.
                         </motion.p>
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.4 }}>
                             <a href="/resume.pdf" className="resume-btn" style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
@@ -330,7 +330,12 @@ export default function ResumePage() {
                     </div>
 
                     {/* Right side contact card */}
-                    <div style={{ position: "absolute", right: "90px", top: "140px", maxWidth: "280px" }}>
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.8 }}
+                        style={{ position: "absolute", right: "90px", top: "140px", maxWidth: "280px" }}
+                    >
                         <div style={{
                             background: "rgba(20, 20, 20, 0.6)",
                             backdropFilter: "blur(12px)",
@@ -347,22 +352,33 @@ export default function ResumePage() {
                             <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "28px", fontWeight: 500, margin: "0 0 16px", color: "#fff", lineHeight: "1.2" }}>Let's <br /> Work Together</h2>
                             <p style={{ color: "#a1a1aa", fontSize: "14px", margin: "0 0 6px", display: "flex", alignItems: "center", gap: "8px" }}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                your@email.com
+                                sushantk2904@gmail.com
                             </p>
                             <p style={{ color: "#a1a1aa", fontSize: "14px", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                +1 234 567 890
+                                +91 98913 43285
                             </p>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Hero image */}
-                    <div style={{ position: "absolute", right: "350px", bottom: "0", width: "390px" }}>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.6 }}
+                        style={{ position: "absolute", right: "350px", top: "19px", width: "390px" }}
+                    >
                         <Image src="/resume/new_hero_image_v2.png" alt="Sushant Kumar" width={340} height={440} style={{ display: "block", width: "100%", height: "auto", filter: "grayscale(20%)" }} />
-                    </div>
+                    </motion.div>
 
                     {/* Rotating circle */}
-                    <div style={{ position: "absolute", right: "-15px", top: "-10px", width: "100px", height: "100px" }} className="rotating-circle">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, delay: 1.0 }}
+                        style={{ position: "absolute", right: "-15px", top: "-10px", width: "100px", height: "100px" }}
+                        className="rotating-circle"
+                    >
                         <svg viewBox="0 0 120 120" style={{ overflow: "visible" }}>
                             {/* Hidden path for the text to follow: Starts bottom (60,110), goes clockwise through left to top to right */}
                             <path id="textCircle" d="M 60,110 A 50,50 0 1 1 60,10 A 50,50 0 1 1 60,110" fill="none" />
@@ -384,12 +400,48 @@ export default function ResumePage() {
                                 style={{ opacity: 0.8 }}
                             />
                         </svg>
-                    </div>
+                    </motion.div>
 
                     {/* Signature */}
-                    <div style={{ position: "absolute", left: "225px", bottom: "20px" }}>
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.7 }}
+                        style={{ position: "absolute", left: "370px", bottom: "130px" }}
+                    >
                         <Image src="/resume/singature-removebg-preview.png" alt="Signature" width={100} height={90} style={{ opacity: 0.9, filter: "invert(1)" }} />
-                    </div>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* ── Typographical Statement ──────────────────────────────────── */}
+            <section style={{ padding: "0px 0 80px", position: "relative", zIndex: 10 }}>
+                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
+                    <motion.h3
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.8 }}
+                        style={{
+                            fontFamily: "'ClashGrotesk', system-ui, sans-serif",
+                            fontSize: "clamp(28px, 4vw, 50px)",
+                            color: "#f8fafc",
+                            lineHeight: "1.5",
+                            fontWeight: 500,
+                            letterSpacing: "-0.01em",
+                            maxWidth: "1200px"
+                        }}
+                    >
+                        {"I'm Sushant, an "}
+                        <span style={{ borderBottom: "4px solid #10b981", paddingBottom: "2px" }}>AI systems engineer</span>
+                        {" focused on building "}
+                        <span style={{ borderBottom: "4px solid #10b981", paddingBottom: "2px" }}>scalable intelligence</span>
+                        {". I started with machine learning experiments and research implementations, and now I design & deploy "}
+                        <span style={{ borderBottom: "4px solid #10b981", paddingBottom: "2px" }}>production-ready AI systems</span>
+                        {" that operate at "}
+                        <span style={{ borderBottom: "4px solid #10b981", paddingBottom: "2px" }}>real-world scale</span>
+                        {"."}
+                    </motion.h3>
                 </div>
             </section>
 
