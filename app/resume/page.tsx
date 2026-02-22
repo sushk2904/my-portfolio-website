@@ -519,7 +519,10 @@ export default function ResumePage() {
             {/* ── Experience ─────────────────────────────────────────── */}
             <section id="experience" style={{ paddingTop: "80px", paddingBottom: "120px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 40px" }}>Experience</p>
+                    <div style={{ display: "inline-block", textAlign: "center" }}>
+                        <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Career</h2>
+                        <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 48px" }}>Experience</p>
+                    </div>
 
                     {/* Minimal Horizontal Timeline */}
                     <div style={{ position: "relative" }}>
