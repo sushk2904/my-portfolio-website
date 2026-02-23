@@ -525,85 +525,83 @@ export default function ResumePage() {
                     </div>
 
                     {/* Minimal Horizontal Timeline */}
-                    <div style={{ position: "relative" }}>
-                        {/* Thin horizontal line */}
-                        <div style={{ position: "absolute", top: "4px", left: 0, right: 0, height: "1px", backgroundColor: "rgba(255,255,255,0.06)" }} />
+                    <div style={{ display: "flex", flexDirection: "column" }}>
 
-                        <div style={{ position: "relative", paddingTop: "32px", display: "flex", alignItems: "flex-start", gap: "0" }}>
+                        {/* ── Line + Dot row (9px tall, dot centered on the line) ── */}
+                        <div style={{ position: "relative", height: "9px", display: "flex", alignItems: "center" }}>
+                            {/* Full-width horizontal line running through the center */}
+                            <div style={{ position: "absolute", left: 0, right: 0, top: "50%", height: "1px", backgroundColor: "rgba(255,255,255,0.08)", transform: "translateY(-50%)" }} />
 
-                            {/* ── Node (hover trigger only) ── */}
-                            <div style={{ position: "relative", flexShrink: 0, marginRight: "32px" }}>
+                            {/* Dot — hover trigger */}
+                            <motion.div
+                                initial="rest"
+                                whileHover="hover"
+                                animate="rest"
+                                style={{ position: "relative", zIndex: 10, cursor: "crosshair", flexShrink: 0 }}
+                            >
+                                {/* Circle */}
                                 <motion.div
-                                    onHoverStart={() => { }}
-                                    onHoverEnd={() => { }}
-                                    initial="rest"
-                                    whileHover="hover"
-                                    animate="rest"
-                                    style={{ position: "relative", cursor: "crosshair", width: "9px", marginTop: "6px" }}
+                                    variants={{
+                                        rest: { backgroundColor: "#3f3f46", boxShadow: "0 0 0 0 rgba(16,185,129,0)", scale: 1 },
+                                        hover: { backgroundColor: "#10b981", boxShadow: "0 0 0 10px rgba(16,185,129,0.12)", scale: 1.3 }
+                                    }}
+                                    transition={{ duration: 0.2 }}
+                                    style={{ width: "9px", height: "9px", borderRadius: "50%" }}
+                                />
+
+                                {/* Hover panel floats down-right of the dot */}
+                                <motion.div
+                                    variants={{
+                                        rest: { opacity: 0, y: 8, pointerEvents: "none" },
+                                        hover: { opacity: 1, y: 0, pointerEvents: "auto" }
+                                    }}
+                                    transition={{ duration: 0.22, ease: "easeOut" }}
+                                    style={{
+                                        position: "absolute",
+                                        top: "20px",
+                                        left: "0px",
+                                        width: "380px",
+                                        padding: "28px 30px",
+                                        backgroundColor: "rgba(8,8,8,0.88)",
+                                        backdropFilter: "blur(20px)",
+                                        WebkitBackdropFilter: "blur(20px)",
+                                        border: "1px solid rgba(255,255,255,0.07)",
+                                        borderRadius: "14px",
+                                        boxShadow: "0 24px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(16,185,129,0.06)",
+                                        zIndex: 100
+                                    }}
                                 >
-                                    {/* Circular node */}
-                                    <motion.div
-                                        variants={{
-                                            rest: { backgroundColor: "#3f3f46", boxShadow: "0 0 0 0 rgba(16,185,129,0)", scale: 1 },
-                                            hover: { backgroundColor: "#10b981", boxShadow: "0 0 0 10px rgba(16,185,129,0.12)", scale: 1.3 }
-                                        }}
-                                        transition={{ duration: 0.2 }}
-                                        style={{ position: "absolute", top: 0, left: 0, width: "9px", height: "9px", borderRadius: "50%", zIndex: 10 }}
-                                    />
-
-                                    {/* Hover panel — attached to node, floats right */}
-                                    <motion.div
-                                        variants={{
-                                            rest: { opacity: 0, y: 10, pointerEvents: "none" },
-                                            hover: { opacity: 1, y: 0, pointerEvents: "auto" }
-                                        }}
-                                        transition={{ duration: 0.22, ease: "easeOut" }}
-                                        style={{
-                                            position: "absolute",
-                                            top: "-16px",
-                                            left: "28px",
-                                            width: "380px",
-                                            padding: "28px 30px",
-                                            backgroundColor: "rgba(8,8,8,0.85)",
-                                            backdropFilter: "blur(20px)",
-                                            WebkitBackdropFilter: "blur(20px)",
-                                            border: "1px solid rgba(255,255,255,0.07)",
-                                            borderRadius: "14px",
-                                            boxShadow: "0 24px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(16,185,129,0.06)",
-                                            zIndex: 100
-                                        }}
-                                    >
-                                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "18px" }}>
-                                            <div style={{ width: "5px", height: "5px", borderRadius: "50%", backgroundColor: "#10b981", boxShadow: "0 0 6px rgba(16,185,129,0.6)" }} />
-                                            <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "14px", fontWeight: 500, color: "#fff", letterSpacing: "0.01em" }}>Key Research Areas</span>
-                                        </div>
-                                        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "12px" }}>
-                                            {[
-                                                "Engineering scalable intelligence systems translating empirical findings to production models.",
-                                                "Analyzing LLM behavioral changes driven by dataset distribution shifts.",
-                                                "Designing data acquisition pipelines for multimodal model evaluation.",
-                                            ].map((point, i) => (
-                                                <li key={i} style={{ display: "flex", gap: "10px", color: "#a1a1aa", fontSize: "13px", lineHeight: "1.65" }}>
-                                                    <span style={{ color: "#10b981", flexShrink: 0, marginTop: "2px" }}>›</span>
-                                                    <span>{point}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </motion.div>
+                                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "18px" }}>
+                                        <div style={{ width: "5px", height: "5px", borderRadius: "50%", backgroundColor: "#10b981", boxShadow: "0 0 6px rgba(16,185,129,0.6)" }} />
+                                        <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "14px", fontWeight: 500, color: "#fff" }}>Key Research Areas</span>
+                                    </div>
+                                    <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "12px" }}>
+                                        {[
+                                            "Built modular scraping systems across pre-existing multi-platform pipelines (7+ scrapers)",
+                                            "Developed 3 production-grade platform integrations handling multimodal data extraction.",
+                                            "Improved data collection throughput by ~20% in pre-existing pipelines by code refactoring",
+                                            "Maintained schema integrity and consistent structured storage of multimodal datasets.",
+                                        ].map((point, i) => (
+                                            <li key={i} style={{ display: "flex", gap: "10px", color: "#a1a1aa", fontSize: "13px", lineHeight: "1.65" }}>
+                                                <span style={{ color: "#10b981", flexShrink: 0 }}>›</span>
+                                                <span>{point}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </motion.div>
-                            </div>
-
-                            {/* ── Static text content ── */}
-                            <div style={{ maxWidth: "520px" }}>
-                                <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>2025 — Present</p>
-                                <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>Research Assistant (Applied AI)</h3>
-                                <p style={{ color: "#a1a1aa", fontSize: "15px", margin: "0 0 14px" }}>BIT Lab under Dokyun Lee</p>
-                                <p style={{ color: "#71717a", fontSize: "14px", lineHeight: "1.6", margin: 0 }}>
-                                    Engineering scalable AI research infrastructure and large-scale data acquisition systems supporting model behavior analysis and applied ML experiments.
-                                </p>
-                            </div>
-
+                            </motion.div>
                         </div>
+
+                        {/* ── Text content below the line ── */}
+                        <div style={{ paddingTop: "20px" }}>
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>2025 — Present</p>
+                            <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>Research Assistant (Applied AI)</h3>
+                            <p style={{ color: "#a1a1aa", fontSize: "15px", margin: "0 0 14px" }}>BIT Lab under Dokyun Lee</p>
+                            <p style={{ color: "#71717a", fontSize: "14px", lineHeight: "1.6", margin: 0, maxWidth: "520px" }}>
+                                Engineering scalable AI research infrastructure <br /> and large-scale data acquisition systems supporting <br /> model behavior analysis and applied ML experiments.
+                            </p>
+                        </div>
+
                     </div>
                 </div>
             </section>
