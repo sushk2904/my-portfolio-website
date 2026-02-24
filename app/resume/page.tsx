@@ -129,6 +129,30 @@ function ExperienceCard({ company, year, role, period, description, posts }: {
 }
 
 export default function ResumePage() {
+    const [formData, setFormData] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+    const [sent, setSent] = useState(false);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    const handleWhatsAppSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const { name, email, phone, subject, message } = formData;
+        const parts = [
+            name && `Name: ${name}`,
+            email && `Email: ${email}`,
+            phone && `Phone: ${phone}`,
+            subject && `Subject: ${subject}`,
+            message && `\n${message}`,
+        ].filter(Boolean).join("\n");
+
+        const waUrl = `https://wa.me/919891343285?text=${encodeURIComponent(parts)}`;
+        window.open(waUrl, "_blank", "noopener,noreferrer");
+        setSent(true);
+        setTimeout(() => setSent(false), 4000);
+    };
+
     return (
         <main style={{
             fontFamily: "'Inter', sans-serif",
@@ -290,6 +314,7 @@ export default function ResumePage() {
                         <a href="#about" className="resume-nav-link">About</a>
                         <a href="#experience" className="resume-nav-link">Experience</a>
                         <a href="#project" className="resume-nav-link">Projects</a>
+                        <a href="#coding" className="resume-nav-link">Coding</a>
                         <a href="#contact" className="resume-nav-link">Contact</a>
                     </div>
                     <a href="#contact" className="resume-btn resume-btn-accent" style={{ fontSize: "12px", padding: "8px 20px" }}>Hire me</a>
@@ -574,17 +599,19 @@ export default function ResumePage() {
                             </p>
                         </motion.div>
 
-                        {/* ── Line + Dot row (9px tall, dot centered on the line) ── */}
-                        <div style={{ position: "relative", height: "9px", display: "flex", alignItems: "center" }}>
-                            {/* Full-width horizontal line running through the center */}
-                            <div style={{ position: "absolute", left: 0, right: 0, top: "50%", height: "1px", backgroundColor: "rgba(255,255,255,0.08)", transform: "translateY(-50%)" }} />
+                        {/* ── Line + Dot row — hover on whole row triggers panel ── */}
+                        <motion.div
+                            initial="rest"
+                            whileHover="hover"
+                            animate="rest"
+                            style={{ position: "relative", height: "9px", display: "flex", alignItems: "center", cursor: "crosshair" }}
+                        >
+                            {/* Full-width horizontal line */}
+                            <div style={{ position: "absolute", left: 0, right: 0, top: "50%", height: "1px", backgroundColor: "rgba(255,255,255,0.22)", transform: "translateY(-50%)" }} />
 
-                            {/* Dot — hover trigger */}
+                            {/* Dot — inherits hover from parent */}
                             <motion.div
-                                initial="rest"
-                                whileHover="hover"
-                                animate="rest"
-                                style={{ position: "relative", zIndex: 10, cursor: "crosshair", flexShrink: 0 }}
+                                style={{ position: "relative", zIndex: 10, flexShrink: 0 }}
                             >
                                 {/* Circle */}
                                 <motion.div
@@ -637,7 +664,7 @@ export default function ResumePage() {
                                     </ul>
                                 </motion.div>
                             </motion.div>
-                        </div>
+                        </motion.div>
 
                         {/* ── Text content below the line ── */}
                         <div style={{ paddingTop: "20px" }}>
@@ -820,6 +847,130 @@ export default function ResumePage() {
                 </div>
             </section>
 
+            {/* ── Coding Profiles ─────────────────────────────────────── */}
+            <section id="coding" style={{ paddingTop: "100px", paddingBottom: "100px", backgroundColor: "#080808" }}>
+                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
+
+                    {/* Header */}
+                    <div style={{ marginBottom: "56px" }}>
+                        <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Coding</h2>
+                        <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: 0 }}>Profiles</p>
+                    </div>
+
+                    {/* Cards Grid */}
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1px", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px", overflow: "hidden" }}>
+                        {[
+                            {
+                                name: "LeetCode",
+                                handle: "sushk2904",
+                                href: "https://leetcode.com/u/sushk2904/",
+                                stat: "Solving DSA problems consistently",
+                                badge: "DSA",
+                                color: "#f89f1b",
+                                icon: (
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                                        <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z" />
+                                    </svg>
+                                ),
+                            },
+                            {
+                                name: "GitHub",
+                                handle: "sushk2904",
+                                href: "https://github.com/sushk2904",
+                                stat: "Open source · AI & systems projects",
+                                badge: "Open Source",
+                                color: "#94a3b8",
+                                icon: (
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                                        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                                    </svg>
+                                ),
+                            },
+                            {
+                                name: "Codeforces",
+                                handle: "sushk2904",
+                                href: "https://codeforces.com/profile/sushk2904",
+                                stat: "Competitive programming ",
+                                badge: "CP",
+                                color: "#3b82f6",
+                                icon: (
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                                        <path d="M4.5 7.5A1.5 1.5 0 0 1 6 9v10.5A1.5 1.5 0 0 1 4.5 21h-3A1.5 1.5 0 0 1 0 19.5V9a1.5 1.5 0 0 1 1.5-1.5h3zm9-4.5A1.5 1.5 0 0 1 15 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 19.5v-15A1.5 1.5 0 0 1 10.5 3h3zm9 7.5A1.5 1.5 0 0 1 24 12v7.5A1.5 1.5 0 0 1 22.5 21h-3A1.5 1.5 0 0 1 18 19.5V12a1.5 1.5 0 0 1 1.5-1.5h3z" />
+                                    </svg>
+                                ),
+                            },
+
+                        ].map((platform) => (
+                            <motion.a
+                                key={platform.name}
+                                href={platform.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                initial={{ opacity: 0, y: 16 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-60px" }}
+                                transition={{ duration: 0.5 }}
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    padding: "36px 40px",
+                                    backgroundColor: "#0e0e0e",
+                                    textDecoration: "none",
+                                    borderBottom: "1px solid rgba(255,255,255,0.06)",
+                                    transition: "background 0.25s",
+                                    position: "relative",
+                                    overflow: "hidden",
+                                }}
+                                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#141414")}
+                                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#0e0e0e")}
+                            >
+                                {/* Accent glow on left edge */}
+                                <div style={{
+                                    position: "absolute", left: 0, top: 0, bottom: 0,
+                                    width: "3px",
+                                    backgroundColor: platform.color,
+                                    opacity: 0.7,
+                                }} />
+
+                                {/* Icon + text */}
+                                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                                    <div style={{ color: platform.color, flexShrink: 0 }}>
+                                        {platform.icon}
+                                    </div>
+                                    <div>
+                                        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "4px" }}>
+                                            <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "20px", fontWeight: 500, color: "#fff" }}>
+                                                {platform.name}
+                                            </span>
+                                            <span style={{
+                                                fontSize: "10px", color: platform.color,
+                                                border: `1px solid ${platform.color}44`,
+                                                padding: "2px 8px",
+                                                letterSpacing: "0.08em",
+                                            }}>
+                                                {platform.badge}
+                                            </span>
+                                        </div>
+                                        <p style={{ color: "#6b7280", fontSize: "13px", margin: "0 0 4px" }}>
+                                            @{platform.handle}
+                                        </p>
+                                        <p style={{ color: "#a1a1aa", fontSize: "13px", margin: 0 }}>
+                                            {platform.stat}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Arrow */}
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.5" style={{ flexShrink: 0 }}>
+                                    <path d="M7 17L17 7M17 7H7M17 7v10" />
+                                </svg>
+                            </motion.a>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* ── Contact / Footer ───────────────────────────────────── */}
             <footer id="contact" style={{ paddingTop: "100px", paddingBottom: "40px", backgroundColor: "#0a0a0a" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
@@ -833,13 +984,14 @@ export default function ResumePage() {
                         <div>
                             <p style={{ color: "#a1a1aa", fontSize: "14px", margin: "0 0 4px" }}>Follow me on the net</p>
                             {[
-                                { icon: "/resume/twitter.svg", name: "X", desc: "Most controversial place", href: "https://x.com/sushantk2904" },
-                                { icon: "/resume/instagram.svg", name: "Instagram", desc: "Most lovable place", href: "https://www.instagram.com/imakepeoplegosushhh/" },
-                                { icon: "/resume/linkedin.jpeg", name: "LinkedIn", desc: "All working people visit this", href: "https://www.linkedin.com/in/sushantk2904/" },
+                                { icon: "/resume/x1com.png", name: "X", desc: "Most controversial place", href: "https://x.com/sushantk2904", w: 48, h: 48 },
+                                { icon: "/resume/iglogo.png", name: "Instagram", desc: "Most lovable place", href: "https://www.instagram.com/imakepeoplegosushhh/", w: 51, h: 48 },
+                                { icon: "/resume/linkedin.jpeg", name: "LinkedIn", desc: "All working people visit this", href: "https://www.linkedin.com/in/sushantk2904/", w: 48, h: 48 },
+                                { icon: "/resume/github.png", name: "GitHub", desc: "Techies head over to this", href: "https://github.com/sushk2904", w: 48, h: 48 },
                             ].map((s, i) => (
                                 <a key={i} href={s.href} target="_blank" rel="noreferrer" className="social-card">
                                     <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-                                        <Image src={s.icon} alt={s.name} width={36} height={36} style={{ filter: "invert(1) opacity(0.7)" }} />
+                                        <Image src={s.icon} alt={s.name} width={s.w} height={s.h} style={{ borderRadius: "10px", objectFit: "cover" }} />
                                         <div>
                                             <div style={{ color: "#fff", fontSize: "14px", fontWeight: 500 }}>{s.name}</div>
                                             <div style={{ color: "#71717a", fontSize: "12px" }}>{s.desc}</div>
@@ -849,15 +1001,73 @@ export default function ResumePage() {
                             ))}
                         </div>
 
-                        {/* Form */}
-                        <form style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-                            <input type="text" placeholder="Name" className="form-input-dark" />
-                            <input type="email" placeholder="Email" required className="form-input-dark" />
-                            <input type="tel" placeholder="Phone" className="form-input-dark" />
-                            <input type="text" placeholder="Subject" required className="form-input-dark" />
-                            <textarea placeholder="Your message..." className="form-textarea-dark" style={{ gridColumn: "1 / -1" }} />
-                            <button type="submit" className="resume-btn resume-btn-accent" style={{ gridColumn: "1 / -1", height: "52px", fontSize: "13px", letterSpacing: "0.06em" }}>
-                                Send Message
+                        {/* Form — sends to WhatsApp */}
+                        <form onSubmit={handleWhatsAppSubmit} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                            <input
+                                type="text" name="name" required
+                                placeholder="Name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                className="form-input-dark"
+                            />
+                            <input
+                                type="email" name="email" required
+                                placeholder="Email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className="form-input-dark"
+                            />
+                            <input
+                                type="tel" name="phone"
+                                placeholder="Phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                className="form-input-dark"
+                            />
+                            <input
+                                type="text" name="subject" required
+                                placeholder="Subject"
+                                value={formData.subject}
+                                onChange={handleChange}
+                                className="form-input-dark"
+                            />
+                            <textarea
+                                name="message" required
+                                placeholder="Your message..."
+                                value={formData.message}
+                                onChange={handleChange}
+                                className="form-textarea-dark"
+                                style={{ gridColumn: "1 / -1" }}
+                            />
+                            <button
+                                type="submit"
+                                className="resume-btn resume-btn-accent"
+                                style={{
+                                    gridColumn: "1 / -1",
+                                    height: "52px",
+                                    fontSize: "13px",
+                                    letterSpacing: "0.06em",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: "10px",
+                                    transition: "background 0.25s, color 0.25s",
+                                    backgroundColor: sent ? "#25D366" : undefined,
+                                    borderColor: sent ? "#25D366" : undefined,
+                                    color: sent ? "#fff" : undefined,
+                                }}
+                            >
+                                {sent ? (
+                                    <>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.93 11.93 0 0 0 12 0C5.37 0 0 5.37 0 12c0 2.12.55 4.18 1.6 6L0 24l6.18-1.57A11.93 11.93 0 0 0 12 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52ZM12 22c-1.85 0-3.67-.5-5.25-1.45l-.38-.22-3.67.93.97-3.56-.25-.4A9.93 9.93 0 0 1 2 12C2 6.48 6.48 2 12 2c2.65 0 5.14 1.03 7.01 2.99A9.93 9.93 0 0 1 22 12c0 5.52-4.48 10-10 10Zm5.46-7.54c-.3-.15-1.77-.87-2.04-.97-.28-.1-.48-.15-.68.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07a8.17 8.17 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3-.02-.46.13-.61.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.68-1.63-.93-2.23-.24-.58-.49-.5-.68-.51h-.58c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.13-.27-.2-.57-.35Z" /></svg>
+                                        Opening WhatsApp…
+                                    </>
+                                ) : (
+                                    <>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
+                                        Send via WhatsApp
+                                    </>
+                                )}
                             </button>
                         </form>
                     </div>
