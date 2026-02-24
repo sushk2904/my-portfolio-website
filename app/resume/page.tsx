@@ -132,7 +132,7 @@ export default function ResumePage() {
     return (
         <main style={{
             fontFamily: "'Inter', sans-serif",
-            backgroundColor: "#0a0a0a",
+            backgroundColor: "#080808",
             color: "#ffffff",
             fontSize: "16px",
             lineHeight: "1.6",
@@ -681,7 +681,7 @@ export default function ResumePage() {
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <div>
                         <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Skillsets</h2>
-                        <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 48px" }}>Expertise</p>
+                        <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "1px 75px 48px" }}>Expertise</p>
 
                         <div style={{ border: "1px solid rgba(255,255,255,0.2)", borderRadius: "12px", overflow: "hidden" }}>
 
@@ -743,8 +743,8 @@ export default function ResumePage() {
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px" }}>
                         {/* Left */}
                         <div>
-                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Selected Work</p>
-                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 4vw, 56px)", fontWeight: 500, margin: "0 0 48px", color: "#fff", lineHeight: "1.1" }}>Showcase</h2>
+                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Projects</h2>
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "10px 70px    48px" }}>Showcase</p>
                             <div style={{ display: "flex", flexDirection: "column", gap: "64px" }}>
                                 {[
                                     { img: "/resume/01.webp", title: "AI Product Design", desc: "Production-grade AI system for intelligent product recommendations" },
@@ -785,19 +785,20 @@ export default function ResumePage() {
                                 </div>
                             </a>
 
-                            {/* Testimonial */}
-                            <div style={{ backgroundColor: "#111", border: "1px solid rgba(255,255,255,0.06)", padding: "40px", position: "relative" }}>
-                                <div style={{ color: "#94a3b8", fontSize: "40px", lineHeight: 1, marginBottom: "16px", fontFamily: "Georgia, serif" }}>"</div>
-                                <p style={{ color: "#a1a1aa", lineHeight: "1.7", margin: "0 0 24px", fontSize: "15px" }}>
-                                    "Sushant delivered an exceptional AI system that transformed our data pipeline. His technical depth and attention to detail are unmatched."
-                                </p>
-                                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                                    <Image src="/resume/01-1.webp" alt="Author" width={40} height={40} style={{ borderRadius: "50%", filter: "grayscale(20%)" }} />
-                                    <div>
-                                        <div style={{ color: "#fff", fontSize: "14px", fontWeight: 500 }}>Dennis Barrett</div>
-                                        <div style={{ color: "#71717a", fontSize: "12px" }}>Founder, TechCo</div>
-                                    </div>
-                                </div>
+                            {/* Achievements */}
+                            <div style={{ backgroundColor: "#111", border: "1px solid rgba(255,255,255,0.1)", padding: "32px 40px", borderRadius: "8px" }}>
+                                <div style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 600, color: "#fff", marginBottom: "24px" }}>Achievements</div>
+                                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
+                                    {[
+
+                                        "Led my team to secure Second Runner-Up in Human Capital theme at the First Global AI Summit 2K26 Hackathon in Collaboration with TATA Advanced Systems Limited",
+                                    ].map((pt, i) => (
+                                        <li key={i} style={{ display: "flex", gap: "12px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.7" }}>
+                                            <span style={{ color: "#10b981", flexShrink: 0, fontSize: "16px" }}>›</span>
+                                            <span>{pt}</span>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
 
                             <a href="#" className="project-link">
