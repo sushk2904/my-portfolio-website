@@ -833,9 +833,9 @@ export default function ResumePage() {
                         <div>
                             <p style={{ color: "#a1a1aa", fontSize: "14px", margin: "0 0 4px" }}>Follow me on the net</p>
                             {[
-                                { icon: "/resume/twitter.svg", name: "Twitter", desc: "Most controversial place", href: "https://twitter.com/" },
-                                { icon: "/resume/instagram.svg", name: "Instagram", desc: "Most lovable place", href: "https://instagram.com/" },
-                                { icon: "/resume/dribble.svg", name: "Dribbble", desc: "All designers visit this", href: "https://dribbble.com/" },
+                                { icon: "/resume/twitter.svg", name: "X", desc: "Most controversial place", href: "https://x.com/sushantk2904" },
+                                { icon: "/resume/instagram.svg", name: "Instagram", desc: "Most lovable place", href: "https://www.instagram.com/imakepeoplegosushhh/" },
+                                { icon: "/resume/linkedin.jpeg", name: "LinkedIn", desc: "All working people visit this", href: "https://www.linkedin.com/in/sushantk2904/" },
                             ].map((s, i) => (
                                 <a key={i} href={s.href} target="_blank" rel="noreferrer" className="social-card">
                                     <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
