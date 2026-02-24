@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ─── Design tokens matching main site ───────────────────────────────────────
@@ -131,6 +131,26 @@ function ExperienceCard({ company, year, role, period, description, posts }: {
 export default function ResumePage() {
     const [formData, setFormData] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
     const [sent, setSent] = useState(false);
+    const [activeSection, setActiveSection] = useState("about");
+
+    // Track which section is in view
+    useEffect(() => {
+        const sections = ["about", "experience", "project", "coding", "contact"];
+        const observers: IntersectionObserver[] = [];
+
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const obs = new IntersectionObserver(
+                ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+                { threshold: 0.25 }
+            );
+            obs.observe(el);
+            observers.push(obs);
+        });
+
+        return () => observers.forEach(o => o.disconnect());
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -174,18 +194,22 @@ export default function ResumePage() {
                     font-weight: 500;
                 }
                 .resume-nav-link {
-                    color: rgba(255,255,255,0.6);
+                    color: rgba(255,255,255,0.45);
                     text-decoration: none;
                     font-size: 13px;
                     font-weight: 500;
                     letter-spacing: 0.02em;
-                    transition: color 0.2s;
+                    transition: color 0.25s, transform 0.25s, text-shadow 0.25s;
                     padding: 4px 0;
-                    border-bottom: 1px solid transparent;
+                    display: inline-block;
                 }
                 .resume-nav-link:hover {
-                    color: #fff;
-                    border-bottom-color: #94a3b8;
+                    color: rgba(255,255,255,0.85);
+                    transform: translateY(-1px);
+                }
+                .resume-nav-link--active {
+                    color: #ffffff !important;
+                    transform: translateY(-2px);
                 }
                 .resume-btn {
                     border: 1px solid rgba(255,255,255,0.15);
@@ -306,23 +330,39 @@ export default function ResumePage() {
                 height: "56px",
                 display: "flex", alignItems: "center",
             }}>
-                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px", width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px", width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative" }}>
                     <Link href="/" style={{ textDecoration: "none" }}>
                         <span style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "16px", fontWeight: 600, color: "#fff", letterSpacing: "0.02em" }}>SK</span>
                     </Link>
-                    <div style={{ display: "flex", gap: "32px", alignItems: "center" }}>
-                        <a href="#about" className="resume-nav-link">About</a>
-                        <a href="#experience" className="resume-nav-link">Experience</a>
-                        <a href="#project" className="resume-nav-link">Projects</a>
-                        <a href="#coding" className="resume-nav-link">Coding</a>
-                        <a href="#contact" className="resume-nav-link">Contact</a>
+
+                    {/* Center-pinned nav links */}
+                    <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "32px", alignItems: "center" }}>
+                        {([
+                            { href: "#about", label: "About" },
+                            { href: "#experience", label: "Experience" },
+                            { href: "#project", label: "Projects" },
+                            { href: "#coding", label: "Coding" },
+                            { href: "#contact", label: "Contact" },
+                        ] as { href: string; label: string }[]).map(({ href, label }) => {
+                            const id = href.replace("#", "");
+                            return (
+                                <a
+                                    key={id}
+                                    href={href}
+                                    className={`resume-nav-link${activeSection === id ? " resume-nav-link--active" : ""}`}
+                                >
+                                    {label}
+                                </a>
+                            );
+                        })}
                     </div>
+
                     <a href="#contact" className="resume-btn resume-btn-accent" style={{ fontSize: "12px", padding: "8px 20px" }}>Hire me</a>
                 </div>
             </nav>
 
             {/* ── Hero ───────────────────────────────────────────────── */}
-            <section style={{ paddingTop: "120px", paddingBottom: "0px", overflow: "hidden" }}>
+            <section id="about" style={{ paddingTop: "120px", paddingBottom: "0px", overflow: "hidden" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px", position: "relative", minHeight: "500px" }}>
                     {/* Big name */}
                     <div style={{ marginBottom: "55px" }}>
@@ -476,7 +516,7 @@ export default function ResumePage() {
             </section>
 
             {/* ── Personal Info + Education ────────────────────────────────── */}
-            <section id="about" style={{ paddingTop: "60px", paddingBottom: "80px" }}>
+            <section style={{ paddingTop: "60px", paddingBottom: "80px" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -765,7 +805,7 @@ export default function ResumePage() {
             </section>
 
             {/* ── Projects ───────────────────────────────────────────── */}
-            <section id="project" style={{ paddingTop: "100px", paddingBottom: "100px", backgroundColor: "#080808" }}>
+            <section id="project" style={{ paddingTop: "100px", paddingBottom: "77px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px" }}>
                         {/* Left */}
@@ -848,7 +888,7 @@ export default function ResumePage() {
             </section>
 
             {/* ── Coding Profiles ─────────────────────────────────────── */}
-            <section id="coding" style={{ paddingTop: "60px", paddingBottom: "60px", backgroundColor: "#080808" }}>
+            <section id="coding" style={{ paddingTop: "20px", paddingBottom: "60px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
 
                     {/* Header */}
@@ -878,7 +918,7 @@ export default function ResumePage() {
                                 handle: "sushk2904",
                                 href: "https://github.com/sushk2904",
                                 stat: "Open source · AI & systems projects",
-                                badge: "Open Source",
+                                badge: "Code Den",
                                 color: "#94a3b8",
                                 icon: (
                                     <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
