@@ -17,7 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
     const [open, setOpen] = useState(false);
     return (
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: "-1px" }}>
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.22)", marginTop: "-1px" }}>
             <button
                 onClick={() => setOpen(!open)}
                 style={{
@@ -25,7 +25,7 @@ function Accordion({ title, children }: { title: string; children: React.ReactNo
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    padding: "28px 0",
+                    padding: "28px 28px",
                     background: "none",
                     border: "none",
                     cursor: "pointer",
@@ -55,7 +55,12 @@ function Accordion({ title, children }: { title: string; children: React.ReactNo
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         style={{ overflow: "hidden" }}
                     >
-                        <div style={{ paddingBottom: "28px", color: "#a1a1aa" }}>{children}</div>
+                        <div style={{
+                            padding: "20px 28px 28px",
+                            color: "#a1a1aa",
+                            borderTop: "1px solid rgba(255,255,255,0.18)",
+                            backgroundColor: "rgba(255,255,255,0.03)",
+                        }}>{children}</div>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -675,79 +680,58 @@ export default function ResumePage() {
             <section style={{ paddingTop: "100px", paddingBottom: "100px" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <div>
+                        <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Skillsets</h2>
+                        <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 48px" }}>Expertise</p>
 
-                        {/* Accordions */}
-                        <div>
-                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Skillsets</h2>
-                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 83px 48px" }}>Expertise</p>
+                        <div style={{ border: "1px solid rgba(255,255,255,0.2)", borderRadius: "12px", overflow: "hidden" }}>
 
+                            {[
+                                {
+                                    title: "Machine Learning & AI",
+                                    techs: ["LangChain", "HuggingFace", "MLOps", "PyTorch"],
+                                    bullets: ["Built and deployed end-to-end training and inference pipelines", "Optimized models for latency, memory, and production constraints", "Designed evaluation workflows with reproducible experimentation"],
+                                },
+                                {
+                                    title: "Application Systems",
+                                    techs: ["React / Next.js", "Node.js", "Python / FastAPI", "REST", "GraphQL"],
+                                    bullets: ["Designed RESTful and GraphQL APIs with production-ready structure", "Built modular backend services with clear separation of concerns", "Implemented authentication, routing, and scalable API patterns"],
+                                },
+                                {
+                                    title: "Data Infrastructure",
+                                    techs: ["PostgreSQL", "Redis", "Schema Design", "Caching"],
+                                    bullets: ["Designed relational and NoSQL schemas optimized for query performance", "Implemented indexing and caching strategies for low-latency access", "Ensured data consistency, transactions, and reliability under load"],
+                                },
+                                {
+                                    title: "Infrastructure & DevOps",
+                                    techs: ["Docker", "Kubernetes", "AWS", "CI/CD"],
+                                    bullets: ["Containerized services and managed deployments across environments", "Automated build and deployment pipelines for consistent releases", "Orchestrated scalable services using container-based infrastructure"],
+                                },
+                                {
+                                    title: "System Architecture",
+                                    techs: ["Distributed Systems", "Scalability", "Fault Tolerance", "System Tradeoffs"],
+                                    bullets: ["Applied distributed systems principles while structuring backend architectures", "Modeled scalable system designs considering load, failure, and bottlenecks", "Evaluated architectural tradeoffs across consistency, latency, and complexity"],
+                                },
+                            ].map(({ title, techs, bullets }) => (
+                                <Accordion key={title} title={title}>
+                                    <div style={{ display: "flex", gap: "32px", alignItems: "flex-start" }}>
+                                        {/* Bullets — left column */}
+                                        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px", flex: 1 }}>
+                                            {bullets.map((pt, i) => (
+                                                <li key={i} style={{ display: "flex", gap: "10px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.6" }}>
+                                                    <span style={{ color: "#10b981", flexShrink: 0 }}>›</span><span>{pt}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        {/* Tags — right column, 2 per row */}
+                                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", flexShrink: 0, width: "260px" }}>
+                                            {techs.map(t => (
+                                                <span key={t} style={{ fontSize: "12px", color: "#fff", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "6px", padding: "6px 10px", backgroundColor: "#0d0d0d", whiteSpace: "nowrap", textAlign: "center" }}>{t}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </Accordion>
+                            ))}
 
-                            <Accordion title="Machine Learning & AI">
-                                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-                                    {[
-                                        "Built and deployed end-to-end training and inference pipelines",
-                                        "Optimized models for latency, memory, and production constraints",
-                                        "Designed evaluation workflows with reproducible experimentation",
-                                    ].map((pt, i) => (
-                                        <li key={i} style={{ display: "flex", gap: "10px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.6" }}>
-                                            <span style={{ color: "#10b981", flexShrink: 0 }}>›</span><span>{pt}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </Accordion>
-                            <Accordion title="Application Systems">
-                                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-                                    {[
-                                        "Designed RESTful and GraphQL APIs with production-ready structure",
-                                        "Built modular backend services with clear separation of concerns",
-                                        "Implemented authentication, routing, and scalable API patterns",
-                                    ].map((pt, i) => (
-                                        <li key={i} style={{ display: "flex", gap: "10px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.6" }}>
-                                            <span style={{ color: "#10b981", flexShrink: 0 }}>›</span><span>{pt}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </Accordion>
-                            <Accordion title="Data Infrastructure">
-                                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-                                    {[
-                                        "Designed relational and NoSQL schemas optimized for query performance",
-                                        "Implemented indexing and caching strategies for low-latency access",
-                                        "Ensured data consistency, transactions, and reliability under load",
-                                    ].map((pt, i) => (
-                                        <li key={i} style={{ display: "flex", gap: "10px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.6" }}>
-                                            <span style={{ color: "#10b981", flexShrink: 0 }}>›</span><span>{pt}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </Accordion>
-                            <Accordion title="Infrastructure & DevOps">
-                                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-                                    {[
-                                        "Containerized services and managed deployments across environments",
-                                        "Automated build and deployment pipelines for consistent releases",
-                                        "Orchestrated scalable services using container-based infrastructure",
-                                    ].map((pt, i) => (
-                                        <li key={i} style={{ display: "flex", gap: "10px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.6" }}>
-                                            <span style={{ color: "#10b981", flexShrink: 0 }}>›</span><span>{pt}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </Accordion>
-                            <Accordion title="System Architecture">
-                                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "10px" }}>
-                                    {[
-                                        "Applied distributed systems principles while structuring backend architectures",
-                                        "Modeled scalable system designs considering load, failure, and bottlenecks",
-                                        "Evaluated architectural tradeoffs across consistency, latency, and complexity",
-                                    ].map((pt, i) => (
-                                        <li key={i} style={{ display: "flex", gap: "10px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.6" }}>
-                                            <span style={{ color: "#10b981", flexShrink: 0 }}>›</span><span>{pt}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </Accordion>
-                            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
                         </div>
                     </div>
                 </div>
