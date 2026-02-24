@@ -848,7 +848,7 @@ export default function ResumePage() {
             </section>
 
             {/* ── Coding Profiles ─────────────────────────────────────── */}
-            <section id="coding" style={{ paddingTop: "100px", paddingBottom: "100px", backgroundColor: "#080808" }}>
+            <section id="coding" style={{ paddingTop: "60px", paddingBottom: "60px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
 
                     {/* Header */}
@@ -890,7 +890,7 @@ export default function ResumePage() {
                                 name: "Codeforces",
                                 handle: "sushk2904",
                                 href: "https://codeforces.com/profile/sushk2904",
-                                stat: "Competitive programming ",
+                                stat: "Competitive programming",
                                 badge: "CP",
                                 color: "#3b82f6",
                                 icon: (
@@ -915,15 +915,15 @@ export default function ResumePage() {
                                     alignItems: "center",
                                     justifyContent: "space-between",
                                     padding: "36px 40px",
-                                    backgroundColor: "#0e0e0e",
+                                    backgroundColor: "#111111",
                                     textDecoration: "none",
                                     borderBottom: "1px solid rgba(255,255,255,0.06)",
                                     transition: "background 0.25s",
                                     position: "relative",
                                     overflow: "hidden",
                                 }}
-                                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#141414")}
-                                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#0e0e0e")}
+                                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#161616")}
+                                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#111111")}
                             >
                                 {/* Accent glow on left edge */}
                                 <div style={{
@@ -972,7 +972,7 @@ export default function ResumePage() {
             </section>
 
             {/* ── Contact / Footer ───────────────────────────────────── */}
-            <footer id="contact" style={{ paddingTop: "100px", paddingBottom: "40px", backgroundColor: "#0a0a0a" }}>
+            <footer id="contact" style={{ paddingTop: "60px", paddingBottom: "40px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Get in touch</p>
                     <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 500, maxWidth: "700px", marginBottom: "80px", color: "#fff", lineHeight: "1.1" }}>
@@ -1076,8 +1076,6 @@ export default function ResumePage() {
                     <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <p style={{ color: "#71717a", fontSize: "13px", margin: 0 }}>© 2026 Sushant Kumar. All rights reserved.</p>
                         <div style={{ display: "flex", gap: "24px" }}>
-                            <a href="#" className="footer-link">GitHub</a>
-                            <a href="#" className="footer-link">LinkedIn</a>
                             <Link href="/" className="footer-link">← Back to Portfolio</Link>
                         </div>
                     </div>
