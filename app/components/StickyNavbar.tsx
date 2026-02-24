@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function StickyNavbar() {
     const { scrollY } = useScroll();
@@ -94,43 +95,19 @@ export default function StickyNavbar() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={activeSection === "projects" ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="absolute top-10 right-[-24px] pointer-events-none select-none w-64 flex flex-col items-end"
+                    className="absolute top-10 right-[8px] pointer-events-none select-none w-64 flex flex-col items-end"
                 >
                     <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap');`}</style>
 
-                    {/* Curvy arrow — mirrored, S-curve centerline, tip points toward Resume */}
-                    <svg
-                        width="56"
-                        height="56"
-                        viewBox="0 0 56 56"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="mr-8 mb-1"
-                        style={{ transform: "scaleX(-1)" }}
-                    >
-                        {/* Cubic S-curve: bottom-left → bows right → tip at upper-left */}
-                        <motion.path
-                            d="M 8 50 C 8 22, 48 32, 48 8"
-                            stroke="rgba(255,255,255,0.45)"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            fill="none"
-                            initial={{ pathLength: 0, opacity: 0 }}
-                            animate={activeSection === "projects" ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                        />
-                        {/* Arrowhead at tip pointing upward */}
-                        <motion.path
-                            d="M 48 8 L 42 16 M 48 8 L 54 16"
-                            stroke="rgba(255,255,255,0.45)"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            fill="none"
-                            initial={{ opacity: 0 }}
-                            animate={activeSection === "projects" ? { opacity: 1 } : { opacity: 0 }}
-                            transition={{ delay: 0.8, duration: 0.2 }}
-                        />
-                    </svg>
+                    {/* Uploaded arrow image */}
+                    <Image
+                        src="/resume/resume_pointing_arrow.png"
+                        alt="pointing arrow"
+                        width={90}
+                        height={120}
+                        className="mr-6 mb-1"
+                        style={{ objectFit: "contain", opacity: 0.8 }}
+                    />
 
                     {/* Handwritten text */}
                     <div className="text-right mr-8 -mt-1">

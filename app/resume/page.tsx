@@ -525,7 +525,24 @@ export default function ResumePage() {
                     </div>
 
                     {/* Minimal Horizontal Timeline */}
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: "flex", flexDirection: "column", position: "relative" }}>
+
+                        {/* ── Experience arrow — adjust 'top' and 'left' on the next line to reposition ── */}
+                        <Image
+                            src="/resume/experience_arrow.png"
+                            alt=""
+                            width={45}
+                            height={150}
+                            style={{
+                                position: "absolute",
+                                top: "-62px",   /* ← move up/down */
+                                left: "-35px",  /* ← move left/right */
+                                opacity: 0.7,
+                                pointerEvents: "none",
+                                userSelect: "none",
+                                transform: "scaleX(-1)", /* mirror so tip faces the dot on the left */
+                            }}
+                        />
 
                         {/* ── Line + Dot row (9px tall, dot centered on the line) ── */}
                         <div style={{ position: "relative", height: "9px", display: "flex", alignItems: "center" }}>
