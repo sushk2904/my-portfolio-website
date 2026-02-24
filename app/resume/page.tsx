@@ -654,7 +654,7 @@ export default function ResumePage() {
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr" }}>
                         {[
                             { num: "01", label: "Companies Worked" },
-                            { num: "05", label: "Projects" },
+                            { num: "04", label: "Projects" },
                             { num: "04", label: "Certifications" },
                             { num: "0-1", label: "Years Experience" },
                         ].map((item, i) => (
@@ -674,27 +674,27 @@ export default function ResumePage() {
             {/* ── Skills ─────────────────────────────────────────────── */}
             <section style={{ paddingTop: "100px", paddingBottom: "100px" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "start" }}>
-                        {/* Image */}
-                        <div style={{ position: "relative" }}>
-                            <Image src="/resume/about-skill.webp" alt="Skills" width={560} height={680} style={{ width: "100%", height: "auto", display: "block", filter: "grayscale(20%)" }} />
-                            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "50%", background: "linear-gradient(to top, #0a0a0a, transparent)", zIndex: 1 }} />
-                        </div>
+                    <div>
 
                         {/* Accordions */}
                         <div>
                             <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Skillsets</h2>
-                        <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 83px 48px" }}>Expertise</p>
-                    
-                            
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 83px 48px" }}>Expertise</p>
+
+
                             <Accordion title="Machine Learning & AI">
                                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                                     {["Deep Learning", "NLP & LLMs", "Computer Vision", "MLOps", "Model Optimization", "Data Pipelines"].map(s => <span key={s} className="skill-tag">{s}</span>)}
                                 </div>
                             </Accordion>
-                            <Accordion title="Full-Stack Development">
+                            <Accordion title="Application & Backend Systems">
                                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                                     {["React / Next.js", "Node.js", "Python / FastAPI", "REST & GraphQL", "PostgreSQL", "MongoDB"].map(s => <span key={s} className="skill-tag">{s}</span>)}
+                                </div>
+                            </Accordion>
+                            <Accordion title="Data Infrastructure">
+                                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                                    {["MongoDB", "PostgreSQL"].map(s => <span key={s} className="skill-tag">{s}</span>)}
                                 </div>
                             </Accordion>
                             <Accordion title="DevOps & Cloud">
