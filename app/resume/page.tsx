@@ -527,22 +527,47 @@ export default function ResumePage() {
                     {/* Minimal Horizontal Timeline */}
                     <div style={{ display: "flex", flexDirection: "column", position: "relative" }}>
 
-                        {/* ── Experience arrow — adjust 'top' and 'left' on the next line to reposition ── */}
-                        <Image
-                            src="/resume/experience_arrow.png"
-                            alt=""
-                            width={45}
-                            height={150}
+                        {/* ── Experience arrow + label ── */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 8 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 8 }}
+                            viewport={{ once: false, margin: "-60px" }}
+                            transition={{ duration: 0.6, ease: "easeOut" }}
                             style={{
                                 position: "absolute",
                                 top: "-62px",   /* ← move up/down */
-                                left: "-35px",  /* ← move left/right */
-                                opacity: 0.7,
+                                left: "-36px",  /* ← move left/right */
+                                display: "flex",
+                                alignItems: "flex-end",
+                                gap: "3px",
                                 pointerEvents: "none",
                                 userSelect: "none",
-                                transform: "scaleX(-1)", /* mirror so tip faces the dot on the left */
-                            }}
-                        />
+                            }}>
+                            <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap');`}</style>
+                            <Image
+                                src="/resume/experience_arrow.png"
+                                alt=""
+                                width={45}
+                                height={150}
+                                style={{
+                                    opacity: 0.8,
+                                    transform: "scaleX(-1)",
+                                    flexShrink: 0,
+                                }}
+                            />
+                            <p style={{
+                                fontFamily: "'ClashGrotesk', sans-serif",
+                                fontSize: "10px",
+                                opacity: 0.8,
+                                color: "rgba(255,255,255,0.6)",
+                                margin: "0 0 18px",
+                                whiteSpace: "nowrap",
+                                lineHeight: 1.2,
+                            }}>
+                                "View Details"
+                            </p>
+                        </motion.div>
 
                         {/* ── Line + Dot row (9px tall, dot centered on the line) ── */}
                         <div style={{ position: "relative", height: "9px", display: "flex", alignItems: "center" }}>
@@ -611,7 +636,7 @@ export default function ResumePage() {
 
                         {/* ── Text content below the line ── */}
                         <div style={{ paddingTop: "20px" }}>
-                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>2025 — Present</p>
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>Jan 2026 — Present</p>
                             <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>Research Assistant (Applied AI)</h3>
                             <p style={{ color: "#a1a1aa", fontSize: "15px", margin: "0 0 14px" }}>BIT Lab under Dokyun Lee</p>
                             <p style={{ color: "#71717a", fontSize: "14px", lineHeight: "1.6", margin: 0, maxWidth: "520px" }}>
@@ -628,10 +653,10 @@ export default function ResumePage() {
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr" }}>
                         {[
-                            { num: "04", label: "Companies Worked" },
-                            { num: "09", label: "Freelance Projects" },
-                            { num: "03", label: "Certifications" },
-                            { num: "05", label: "Years Experience" },
+                            { num: "01", label: "Companies Worked" },
+                            { num: "05", label: "Projects" },
+                            { num: "04", label: "Certifications" },
+                            { num: "0-1", label: "Years Experience" },
                         ].map((item, i) => (
                             <div key={i} style={{
                                 padding: "48px 30px",
@@ -658,8 +683,10 @@ export default function ResumePage() {
 
                         {/* Accordions */}
                         <div>
-                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 16px" }}>Expertise</p>
-                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 4vw, 56px)", fontWeight: 500, margin: "0 0 40px", color: "#fff", lineHeight: "1.1" }}>Skillsets</h2>
+                            <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Skillsets</h2>
+                        <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 83px 48px" }}>Expertise</p>
+                    
+                            
                             <Accordion title="Machine Learning & AI">
                                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                                     {["Deep Learning", "NLP & LLMs", "Computer Vision", "MLOps", "Model Optimization", "Data Pipelines"].map(s => <span key={s} className="skill-tag">{s}</span>)}
@@ -821,6 +848,6 @@ export default function ResumePage() {
                     </div>
                 </div>
             </footer>
-        </main>
+        </main >
     );
 }
