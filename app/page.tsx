@@ -17,7 +17,7 @@ export default function Home() {
           <h3 className="text-4xl md:text-5xl font-semibold text-white mb-12 tracking-tight">Contact</h3>
           <p className="text-lg text-gray-400 mb-8">Let's build something exceptional together.</p>
           <a
-            href="mailto:your@email.com"
+            href="mailto:sushantk2904@gmail.com"
             className="inline-block bg-white text-black font-semibold px-8 py-3 rounded-full hover:bg-gray-200 transition-all"
           >
             Get in Touch
