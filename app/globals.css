@@ -9,6 +9,10 @@
   --font-sans: var(--font-inter);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --background: #0a0a0a;
   --foreground: #ffffff;
