@@ -83,23 +83,27 @@ export default function StickyNavbar() {
             </div>
 
             <div className="absolute right-6 md:right-12">
+                {/* Pulse ring — starts at Projects, stays till Contact */}
+                {(activeSection === "projects" || activeSection === "contact") && (
+                    <span className="absolute inset-0 rounded-full animate-ping bg-white/20 pointer-events-none" />
+                )}
+
                 <Link
                     href="/resume"
-                    className="bg-white text-black text-xs font-bold px-4 py-1.5 rounded-full hover:bg-luxury-gray transition-all inline-block"
+                    className="relative bg-white text-black text-xs font-bold px-4 py-1.5 rounded-full hover:bg-luxury-gray transition-all inline-block"
                 >
                     Resume
                 </Link>
 
-                {/* Annotation: visible only when Projects section is active */}
+                {/* Annotation: visible from Projects section onwards */}
                 <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={activeSection === "projects" ? { opacity: 1, y: 0 } : { opacity: 0, y: 5 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={(activeSection === "projects" || activeSection === "contact") ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                     className="absolute top-10 right-[8px] pointer-events-none select-none w-64 flex flex-col items-end"
                 >
                     <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap');`}</style>
 
-                    {/* Uploaded arrow image */}
                     <Image
                         src="/resume/resume_pointing_arrow.png"
                         alt="pointing arrow"
@@ -109,7 +113,6 @@ export default function StickyNavbar() {
                         style={{ objectFit: "contain", opacity: 0.8 }}
                     />
 
-                    {/* Handwritten text */}
                     <div className="text-right mr-8 -mt-1">
                         <p style={{
                             fontFamily: "'Caveat', cursive",
