@@ -744,7 +744,7 @@ export default function ResumePage() {
             </section>
 
             {/* ── Skills ─────────────────────────────────────────────── */}
-            <section style={{ paddingTop: "100px", paddingBottom: "100px" }}>
+            <section style={{ paddingTop: "100px", paddingBottom: "60px" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <div>
                         <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Skillsets</h2>
@@ -805,7 +805,7 @@ export default function ResumePage() {
             </section>
 
             {/* ── Projects ───────────────────────────────────────────── */}
-            <section id="project" style={{ paddingTop: "100px", paddingBottom: "77px", backgroundColor: "#080808" }}>
+            <section id="project" style={{ paddingTop: "60px", paddingBottom: "77px", backgroundColor: "#080808" }}>
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px" }}>
                         {/* Left */}
