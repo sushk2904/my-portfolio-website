@@ -12,7 +12,7 @@ export default function Home() {
       <Projects />
 
       {/* Contact Section */}
-      <section id="contact" className="py-32 bg-[#111111] px-6 md:px-12">
+      <section id="contact" className="py-32 bg- [#0a0a0a] px-6 md:px-12">
         <div className="max-w-4xl mx-auto text-center">
           <h3 className="text-4xl md:text-5xl font-semibold text-white mb-12 tracking-tight">Contact</h3>
           <p className="text-lg text-gray-400 mb-8">Let's build something exceptional together.</p>
