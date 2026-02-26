@@ -812,17 +812,12 @@ export default function ResumePage() {
                         <div>
                             <h2 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 600, color: "#fff", margin: "0 0 8px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>Projects</h2>
                             <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "10px 70px    48px" }}>Showcase</p>
-                            <div style={{ display: "flex", flexDirection: "column", gap: "64px" }}>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
                                 {[
-                                    { img: "/resume/01.webp", title: "AI Product Design", desc: "Production-grade AI system for intelligent product recommendations" },
-                                    { img: "/resume/02.webp", title: "ML Pipeline", desc: "End-to-end machine learning pipeline with automated retraining" },
+                                    { title: "AI Product Design", desc: "Production-grade AI system for intelligent product recommendations" },
+                                    { title: "ML Pipeline", desc: "End-to-end machine learning pipeline with automated retraining" },
                                 ].map((proj, i) => (
                                     <a key={i} href="#" className="project-link">
-                                        <div className="project-img-wrap">
-                                            <div className="project-img-inner">
-                                                <Image src={proj.img} alt={proj.title} width={600} height={380} style={{ width: "100%", height: "auto", display: "block", filter: "grayscale(10%)" }} />
-                                            </div>
-                                        </div>
                                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
                                             <div>
                                                 <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>{proj.title}</h3>
@@ -838,11 +833,6 @@ export default function ResumePage() {
                         {/* Right */}
                         <div style={{ display: "flex", flexDirection: "column", gap: "64px" }}>
                             <a href="#" className="project-link">
-                                <div className="project-img-wrap">
-                                    <div className="project-img-inner">
-                                        <Image src="/resume/03.jpg" alt="System Architecture" width={600} height={380} style={{ width: "100%", height: "auto", display: "block", filter: "grayscale(10%)" }} />
-                                    </div>
-                                </div>
                                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
                                     <div>
                                         <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>System Architecture</h3>
@@ -869,11 +859,6 @@ export default function ResumePage() {
                             </div>
 
                             <a href="#" className="project-link">
-                                <div className="project-img-wrap">
-                                    <div className="project-img-inner">
-                                        <Image src="/resume/04.webp" alt="DevOps Automation" width={600} height={380} style={{ width: "100%", height: "auto", display: "block", filter: "grayscale(10%)" }} />
-                                    </div>
-                                </div>
                                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
                                     <div>
                                         <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>DevOps Automation</h3>
