@@ -133,24 +133,35 @@ export default function ResumePage() {
     const [sent, setSent] = useState(false);
     const [activeSection, setActiveSection] = useState("about");
 
-    // Track which section is in view
+    // Track which section is in view — scroll-position approach works reliably
+    // regardless of section height (IntersectionObserver fails on short sections)
     useEffect(() => {
         const sections = ["about", "experience", "project", "coding", "contact"];
-        const observers: IntersectionObserver[] = [];
 
-        sections.forEach(id => {
-            const el = document.getElementById(id);
-            if (!el) return;
-            const obs = new IntersectionObserver(
-                ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
-                { threshold: 0.25 }
-            );
-            obs.observe(el);
-            observers.push(obs);
-        });
+        const updateActive = () => {
+            const scrollPos = window.scrollY + window.innerHeight * 0.3;
 
-        return () => observers.forEach(o => o.disconnect());
+            let current = sections[0];
+            for (const id of sections) {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop <= scrollPos) {
+                    current = id;
+                }
+            }
+            setActiveSection(current);
+        };
+
+        window.addEventListener("scroll", updateActive, { passive: true });
+        updateActive(); // run once on mount
+        return () => window.removeEventListener("scroll", updateActive);
     }, []);
+
+    const scrollToSection = (id: string) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const offset = el.getBoundingClientRect().top + window.scrollY - 64; // 64px = navbar height
+        window.scrollTo({ top: offset, behavior: "smooth" });
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -346,18 +357,25 @@ export default function ResumePage() {
                         ] as { href: string; label: string }[]).map(({ href, label }) => {
                             const id = href.replace("#", "");
                             return (
-                                <a
+                                <button
                                     key={id}
-                                    href={href}
+                                    onClick={() => scrollToSection(id)}
                                     className={`resume-nav-link${activeSection === id ? " resume-nav-link--active" : ""}`}
+                                    style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}
                                 >
                                     {label}
-                                </a>
+                                </button>
                             );
                         })}
                     </div>
 
-                    <a href="#contact" className="resume-btn resume-btn-accent" style={{ fontSize: "12px", padding: "8px 20px" }}>Hire me</a>
+                    <button
+                        onClick={() => scrollToSection("contact")}
+                        className="resume-btn resume-btn-accent"
+                        style={{ fontSize: "12px", padding: "8px 20px", cursor: "pointer", fontFamily: "inherit" }}
+                    >
+                        Hire me
+                    </button>
                 </div>
             </nav>
 
