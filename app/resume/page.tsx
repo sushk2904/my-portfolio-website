@@ -834,6 +834,7 @@ export default function ResumePage() {
                                 {[
                                     { title: "AI Product Design", desc: "Production-grade AI system for intelligent product recommendations" },
                                     { title: "ML Pipeline", desc: "End-to-end machine learning pipeline with automated retraining" },
+                                    { title: "System Architecture", desc: "Distributed system design for high-availability applications" },
                                 ].map((proj, i) => (
                                     <a key={i} href="#" className="project-link">
                                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
@@ -849,24 +850,14 @@ export default function ResumePage() {
                         </div>
 
                         {/* Right */}
-                        <div style={{ display: "flex", flexDirection: "column", gap: "64px" }}>
-                            <a href="#" className="project-link">
-                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
-                                    <div>
-                                        <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>System Architecture</h3>
-                                        <p style={{ color: "#71717a", fontSize: "14px", margin: 0 }}>Distributed system design for high-availability applications</p>
-                                    </div>
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.5" style={{ flexShrink: 0, marginTop: "4px" }}><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
-                                </div>
-                            </a>
-
+                        <div style={{ display: "flex", flexDirection: "column", paddingTop: "80px" }}>
                             {/* Achievements */}
                             <div style={{ backgroundColor: "#111", border: "1px solid rgba(255,255,255,0.1)", padding: "32px 40px", borderRadius: "8px" }}>
                                 <div style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 600, color: "#fff", marginBottom: "24px" }}>Achievements</div>
                                 <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
                                     {[
-
                                         "Led my team to secure Second Runner-Up in Human Capital theme at the First Global AI Summit 2K26 Hackathon in Collaboration with TATA Advanced Systems Limited",
+                                        "Won 3rd Prize in the Pitch Perfect event organized by Amity School of Engineering and Technology"
                                     ].map((pt, i) => (
                                         <li key={i} style={{ display: "flex", gap: "12px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.7" }}>
                                             <span style={{ color: "#10b981", flexShrink: 0, fontSize: "16px" }}>›</span>
@@ -876,7 +867,8 @@ export default function ResumePage() {
                                 </ul>
                             </div>
 
-                            <a href="#" className="project-link">
+                            {/* DevOps — marginTop aligns it with System Architecture row */}
+                            <a href="#" className="project-link" style={{ marginTop: "16px" }}>
                                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
                                     <div>
                                         <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>DevOps Automation</h3>
