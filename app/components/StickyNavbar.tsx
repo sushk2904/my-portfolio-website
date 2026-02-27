@@ -129,7 +129,6 @@ export default function StickyNavbar() {
                             color: "rgba(255,255,255,0.32)",
                             whiteSpace: "nowrap",
                         }}>
-                            & detailed case studies
                         </p>
                     </div>
                 </motion.div>

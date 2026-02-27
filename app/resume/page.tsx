@@ -474,7 +474,7 @@ export default function ResumePage() {
                             {/* Text centered at the exact top of the circle */}
                             <text fill="#ffffff" fontSize="13" fontWeight="500" letterSpacing="0.32em" style={{ textTransform: "uppercase", opacity: 0.6 }}>
                                 <textPath href="#textCircle" startOffset="50%" textAnchor="middle">
-                                    AI Systems Engineer
+                                    AI/ML Engineer
                                 </textPath>
                             </text>
 
