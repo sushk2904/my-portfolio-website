@@ -521,7 +521,7 @@ export default function ResumePage() {
                         }}
                     >
                         {"I'm Sushant, an "}
-                        <span style={{ borderBottom: "4px solid #10b981", paddingBottom: "2px" }}>AI systems engineer</span>
+                        <span style={{ borderBottom: "4px solid #10b981", paddingBottom: "2px" }}>AI/ML engineer</span>
                         {" focused on building "}
                         <span style={{ borderBottom: "4px solid #10b981", paddingBottom: "2px" }}>scalable intelligence</span>
                         {". I started with machine learning experiments and research implementations, and now I design & deploy "}
