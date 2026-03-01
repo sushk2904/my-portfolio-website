@@ -12,7 +12,7 @@ const projects = [
     {
         title: "DUNIYA",
         impact: "Emergent Multi-Agent Intelligence Simulation Framework",
-        tech: ["LangChain", "OpenAI API", "Redis", "FastAPI"],
+        tech: ["Python", "FastAPI", "Docker", "Redis", "PostgreSQL", "Langraph", "Streamlit"],
         link: "#"
     }
 ];
