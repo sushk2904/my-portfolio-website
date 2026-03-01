@@ -6,7 +6,7 @@ const projects = [
     {
         title: "TINAI",
         impact: "Reduced latency by 40% for large language models.",
-        tech: ["Python", "Ray", "Docker", "AWS"],
+        tech: ["Python", "FastAPI", "Docker", "Redis", "PostgreSQL", "HuggingFace"],
         link: "#"
     },
     {
