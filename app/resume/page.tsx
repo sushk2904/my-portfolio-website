@@ -834,7 +834,7 @@ export default function ResumePage() {
                                 {[
                                     { title: "TINAI", desc: "Adaptive AI Execution and Reliability Platform" },
                                     { title: "DUNIYA", desc: "Emergent Multi-Agent Intelligence Simulation Framework" },
-                                    { title: "System Architecture", desc: "Distributed system design for high-availability applications" },
+                                    { title: "SkillGenome", desc: "AI-Powered Hiring & Skill Management Platform" },
                                 ].map((proj, i) => (
                                     <a key={i} href="#" className="project-link">
                                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
