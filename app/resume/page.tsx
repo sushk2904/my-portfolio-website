@@ -1111,7 +1111,7 @@ export default function ResumePage() {
                     <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <p style={{ color: "#71717a", fontSize: "13px", margin: 0 }}>© 2026 Sushant Kumar. All rights reserved.</p>
                         <div style={{ display: "flex", gap: "24px" }}>
-                            <Link href="/" className="footer-link">← Back to Portfolio</Link>
+                            <a href="/" className="footer-link">← Back to Portfolio</a>
                         </div>
                     </div>
                 </div>

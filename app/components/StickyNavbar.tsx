@@ -88,12 +88,12 @@ export default function StickyNavbar() {
                     <span className="absolute inset-0 rounded-full animate-ping bg-white/20 pointer-events-none" />
                 )}
 
-                <Link
+                <a
                     href="/resume"
                     className="relative bg-white text-black text-xs font-bold px-4 py-1.5 rounded-full hover:bg-luxury-gray transition-all inline-block"
                 >
                     Resume
-                </Link>
+                </a>
 
                 {/* Annotation: visible from Projects section onwards */}
                 <motion.div
