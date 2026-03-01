@@ -832,8 +832,8 @@ export default function ResumePage() {
                             <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "10px 70px    48px" }}>Showcase</p>
                             <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
                                 {[
-                                    { title: "AI Product Design", desc: "Production-grade AI system for intelligent product recommendations" },
-                                    { title: "ML Pipeline", desc: "End-to-end machine learning pipeline with automated retraining" },
+                                    { title: "TINAI", desc: "Adaptive AI Execution and Reliability Platform" },
+                                    { title: "DUNIYA", desc: "Emergent Multi-Agent Intelligence Simulation Framework" },
                                     { title: "System Architecture", desc: "Distributed system design for high-availability applications" },
                                 ].map((proj, i) => (
                                     <a key={i} href="#" className="project-link">
