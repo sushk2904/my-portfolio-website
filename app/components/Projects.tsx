@@ -14,12 +14,6 @@ const projects = [
         impact: "Orchestrated multi-agent workflows for code generation.",
         tech: ["LangChain", "OpenAI API", "Redis", "FastAPI"],
         link: "#"
-    },
-    {
-        title: "Real-time Vision Pipeline",
-        impact: "Processed 30+ FPS video streams for anomaly detection.",
-        tech: ["PyTorch", "OpenCV", "Kafka", "PostgreSQL"],
-        link: "#"
     }
 ];
 
@@ -38,14 +32,14 @@ export default function Projects() {
                     Projects
                 </motion.h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {projects.map((project, index) => (
                         <motion.div
                             key={project.title}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
+                            initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.6, ease: "easeOut" }}
                             className="group relative p-8 bg-white/5 rounded-2xl border border-white/5 hover:border-luxury-accent/50 transition-colors duration-300 flex flex-col justify-between h-80"
                         >
                             <div>
