@@ -109,7 +109,7 @@ export default function HeroSection() {
                                 fontWeight: 500,
                             }}
                         >
-                            AI Systems Engineer
+                            AI / ML Engineer
                         </h2>
 
                         {/* One-liner */}
@@ -214,8 +214,8 @@ export default function HeroSection() {
                         <p className="text-[10px] uppercase tracking-[0.25em] text-white/35 mb-4 font-medium">Based in India</p>
                         <div className="flex flex-col gap-3">
                             <div>
-                                <p className="text-2xl font-semibold text-white" style={{ fontFamily: "'ClashGrotesk', sans-serif" }}>AI</p>
-                                <p className="text-[11px] text-white/40 mt-0.5 font-light">Systems Engineering</p>
+                                <p className="text-2xl font-semibold text-white" style={{ fontFamily: "'ClashGrotesk', sans-serif" }}>AI / ML</p>
+                                <p className="text-[11px] text-white/40 mt-0.5 font-light">Engineer</p>
                             </div>
                             <div className="w-full h-px bg-white/8" />
                             <div>
