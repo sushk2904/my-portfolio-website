@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 
 const projects = [
     {
-        title: "Distributed Inference Engine",
+        title: "TINAI",
         impact: "Reduced latency by 40% for large language models.",
         tech: ["Python", "Ray", "Docker", "AWS"],
         link: "#"
     },
     {
-        title: "Autonomous Agent Framework",
+        title: "    DUNIYA",
         impact: "Orchestrated multi-agent workflows for code generation.",
         tech: ["LangChain", "OpenAI API", "Redis", "FastAPI"],
         link: "#"
