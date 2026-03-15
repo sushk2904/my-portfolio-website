@@ -709,7 +709,7 @@ export default function ResumePage() {
                                     </div>
                                     <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "12px" }}>
                                         {[
-                                            "Built modular scraping systems across pre-existing multi-platform pipelines (7+ scrapers)",
+                                            "Built modular scraping systems across pre-existing multi-platform pipelines comprising of 8 scrapers",
                                             "Developed 3 production-grade platform integrations handling multimodal data extraction.",
                                             "Improved data collection throughput by ~20% in pre-existing pipelines by code refactoring",
                                             "Maintained schema integrity and consistent structured storage of multimodal datasets.",
@@ -727,8 +727,8 @@ export default function ResumePage() {
                         {/* ── Text content below the line ── */}
                         <div style={{ paddingTop: "20px" }}>
                             <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>Jan 2026 — Present</p>
-                            <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>Research Assistant (Applied AI)</h3>
-                            <p style={{ color: "#a1a1aa", fontSize: "15px", margin: "0 0 14px" }}>BIT Lab under Dokyun Lee</p>
+                            <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>Research Assistant in Applied AI</h3>
+                            <p style={{ color: "#a1a1aa", fontSize: "15px", margin: "0 0 14px" }}>Boston University - under Prof. Dokyun Lee</p>
                             <p style={{ color: "#71717a", fontSize: "14px", lineHeight: "1.6", margin: 0, maxWidth: "520px" }}>
                                 Engineering scalable AI research infrastructure <br /> and large-scale data acquisition systems supporting <br /> model behavior analysis and applied ML experiments.
                             </p>
