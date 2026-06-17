@@ -410,7 +410,7 @@ export default function ResumePage() {
                             Developing scalable AI systems  <br /> from research to deployment for high impact.
                         </motion.p>
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.4 }}>
-                            <a href="/resume.pdf" className="resume-btn" style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+                            <a href="/resume.pdf" download="Sushant_Kumar_Resume.pdf" className="resume-btn" style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
                                 Download CV
                             </a>
@@ -726,7 +726,7 @@ export default function ResumePage() {
 
                         {/* ── Text content below the line ── */}
                         <div style={{ paddingTop: "20px" }}>
-                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>Jan 2026 — Present</p>
+                            <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 10px" }}>Jan 2026 — March 2026</p>
                             <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, color: "#fff", margin: "0 0 4px" }}>Research Assistant in Applied AI</h3>
                             <p style={{ color: "#a1a1aa", fontSize: "15px", margin: "0 0 14px" }}>Boston University - under Prof. Dokyun Lee</p>
                             <p style={{ color: "#71717a", fontSize: "14px", lineHeight: "1.6", margin: 0, maxWidth: "520px" }}>
@@ -743,19 +743,78 @@ export default function ResumePage() {
                 <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 30px" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr" }}>
                         {[
-                            { num: "01", label: "Companies Worked" },
-                            { num: "04", label: "Projects" },
-                            { num: "04", label: "Certifications" },
-                            { num: "0-1", label: "Years Experience" },
+                            { num: "01", label: "Companies Worked", detail: "Business Insights through Text\n(BIT Lab)", href: "https://www.leedokyun.com/bitlab.html" },
+                            { num: "02", label: "Projects", detail: "SkillGenome \n TINAI" },
+                            { num: "04", label: "Certifications", detail: "Python for Everybody Dr. Chuck \nML Specialization Andrew Ng \nDL Specialization Andrew Ng \nIBM RAG and Agentic AI" },
+                            { num: "0-1", label: "Years Experience", detail: "Research Assistant in Applied AI(3 months)" },
                         ].map((item, i) => (
-                            <div key={i} style={{
-                                padding: "48px 30px",
-                                textAlign: "center",
-                                borderRight: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
-                            }}>
-                                <div style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "56px", fontWeight: 600, color: "#fff", lineHeight: 1 }}>{item.num}</div>
-                                <div style={{ color: "#94a3b8", fontSize: "13px", marginTop: "8px", letterSpacing: "0.04em" }}>{item.label}</div>
-                            </div>
+                            <motion.div
+                                key={i}
+                                initial="initial"
+                                whileHover="hover"
+                                style={{
+                                    padding: 0, // padding moved to inner link
+                                    textAlign: "center",
+                                    borderRight: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                                    position: "relative",
+                                    overflow: "hidden",
+                                }}
+                            >
+                                <a
+                                    href={item.href}
+                                    target={item.href ? "_blank" : undefined}
+                                    rel={item.href ? "noreferrer" : undefined}
+                                    style={{
+                                        display: "block",
+                                        padding: "48px 30px",
+                                        textDecoration: "none",
+                                        cursor: item.href ? "pointer" : "default"
+                                    }}
+                                >
+                                    {/* Base State */}
+                                    <motion.div
+                                        variants={{
+                                            initial: { y: 0, opacity: 1 },
+                                            hover: { y: 20, opacity: 0 }
+                                        }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <div style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "56px", fontWeight: 600, color: "#fff", lineHeight: 1 }}>{item.num}</div>
+                                        <div style={{ color: "#94a3b8", fontSize: "13px", marginTop: "8px", letterSpacing: "0.04em" }}>{item.label}</div>
+                                    </motion.div>
+
+                                    {/* Hover State — Swipe Down Overlay */}
+                                    <motion.div
+                                        variants={{
+                                            initial: { y: "-100%", opacity: 0 },
+                                            hover: { y: "0%", opacity: 1 }
+                                        }}
+                                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                        style={{
+                                            position: "absolute",
+                                            inset: 0,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            padding: "20px",
+                                            backgroundColor: "#0d0d0d", // Dark background for contrast
+                                            zIndex: 10
+                                        }}
+                                    >
+                                        <p style={{
+                                            color: "#fff",
+                                            fontSize: "14px",
+                                            fontWeight: 500,
+                                            margin: 0,
+                                            lineHeight: "1.4",
+                                            fontFamily: "'Inter', sans-serif",
+                                            whiteSpace: "pre-line"
+                                        }}>
+                                            {item.detail}
+                                        </p>
+                                    </motion.div>
+                                </a>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -832,11 +891,10 @@ export default function ResumePage() {
                             <p style={{ color: "#94a3b8", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em", margin: "10px 70px    48px" }}>Showcase</p>
                             <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
                                 {[
-                                    { title: "TINAI", desc: "Adaptive AI Execution and Reliability Platform" },
-                                    { title: "DUNIYA", desc: "Emergent Multi-Agent Intelligence Simulation Framework" },
-                                    { title: "SkillGenome", desc: "AI-Powered Hiring & Skill Management Platform" },
+                                    { title: "TINAI", desc: "Adaptive AI Execution and Reliability Platform", href: "https://github.com/sushk2904/tinai" },
+                                    { title: "SkillGenome", desc: "AI-Powered Hiring & Skill Management Platform", href: "https://github.com/sushk2904/sg-v2-final-main" },
                                 ].map((proj, i) => (
-                                    <a key={i} href="#" className="project-link">
+                                    <a key={i} href={proj.href} target="_blank" rel="noreferrer" className="project-link">
                                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
                                             <div>
                                                 <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>{proj.title}</h3>
@@ -850,14 +908,15 @@ export default function ResumePage() {
                         </div>
 
                         {/* Right */}
-                        <div style={{ display: "flex", flexDirection: "column", paddingTop: "80px" }}>
+                        <div style={{ display: "flex", flexDirection: "column", paddingTop: "53px" }}>
                             {/* Achievements */}
                             <div style={{ backgroundColor: "#111", border: "1px solid rgba(255,255,255,0.1)", padding: "32px 40px", borderRadius: "8px" }}>
                                 <div style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 600, color: "#fff", marginBottom: "24px" }}>Achievements</div>
                                 <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "14px" }}>
                                     {[
-                                        "Led my team to secure Second Runner-Up in Human Capital theme at the First Global AI Summit 2K26 Hackathon in Collaboration with TATA Advanced Systems Limited",
-                                        "Won 3rd Prize in the Pitch Perfect event organized by Amity School of Engineering and Technology"
+                                        "Led a team to secure Second Runner-Up in Human Capital theme at the First Global AI Summit 2K26 Hackathon in Collaboration with TATA Advanced Systems Limited",
+                                        "Won 3rd Prize in the Pitch Perfect event organized by Amity School of Engineering and Technology",
+                                        "Successfully led a team to secure a place in the Finals of India Innovates 2026, outperforming numerous competing teams nationwide."
                                     ].map((pt, i) => (
                                         <li key={i} style={{ display: "flex", gap: "12px", color: "#a1a1aa", fontSize: "14px", lineHeight: "1.7" }}>
                                             <span style={{ color: "#10b981", flexShrink: 0, fontSize: "16px" }}>›</span>
@@ -871,10 +930,7 @@ export default function ResumePage() {
                             <a href="#" className="project-link" style={{ marginTop: "16px" }}>
                                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px" }}>
                                     <div>
-                                        <h3 style={{ fontFamily: "'ClashGrotesk', sans-serif", fontSize: "22px", fontWeight: 500, margin: "0 0 6px", color: "#fff" }}>DevOps Automation</h3>
-                                        <p style={{ color: "#71717a", fontSize: "14px", margin: 0 }}>CI/CD pipeline automation with intelligent rollback capabilities</p>
                                     </div>
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.5" style={{ flexShrink: 0, marginTop: "4px" }}><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
                                 </div>
                             </a>
                         </div>
