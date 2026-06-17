@@ -1,6 +1,6 @@
 # Portfolio Refactor Walkthrough
 
-I have successfully transformed the **CraveLogic** website into a premium **AI Systems Engineer** portfolio for **Sushant Kumar**.
+I have successfully transformed the **Portfolio** website into a premium **AI Systems Engineer** portfolio for **Sushant Kumar**.
 
 ## Key Changes
 
