@@ -38,3 +38,6 @@ I have successfully transformed the **Portfolio** website into a premium **AI Sy
 ## Next Steps
 -   **Verify Animation**: Ensure the `portfolio_animation` sequence aligns correctly with the scroll height.
 -   **Content**: Replace placeholder project links with actual case studies.
+
+## Socials Section
+-   **Instagram**: I've added my instagram to the page.
